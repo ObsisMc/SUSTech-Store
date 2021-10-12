@@ -1,6 +1,12 @@
 # sustechstore
 
-> A Vue.js project
+> A Vue2.js project
+
+## Installation
+
+You should install element-ui
+
+
 
 ## Build Setup
 
