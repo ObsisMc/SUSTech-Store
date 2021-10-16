@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import mainpage from "../view/mainpage";
 import HelloWorld from '@/components/HelloWorld'
+import card from "../components/card";
 import notfound from "../view/notfound"
-import h_m_f from "../layout/h_m_f";
+import test from "../components/test";
 
 Vue.use(Router)
 
@@ -11,13 +13,18 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'h_m_f',
-      component: h_m_f
+      name: 'main',
+      component: mainpage
     },
     {
-      path: '/hello',
-      name: 'HelloWorld',
-      component: HelloWorld
+      path: '/test',
+      name: 'test',
+      component: test
+    },
+    {
+      path: '/card',
+      name: 'card',
+      component: card
     },
     {
       path: '/*',

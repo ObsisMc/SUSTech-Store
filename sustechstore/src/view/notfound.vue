@@ -138,7 +138,7 @@
           <div class="number">4</div>
         </div>
         <div class="subtitle">哎呀，看来你拐错弯了。</div>
-        <button v-on:click="returnmain">返回主界面</button>
+        <button v-on:click="returnmain">Take me home</button>
       </div>
     </div>
   </div>
