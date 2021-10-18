@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import GoodCard from "./GoodCard";
+import GoodCard from "../mainage/GoodCard";
 
 export default {
   name: "CollapsePanel",

@@ -1,7 +1,9 @@
 <template>
   <div id="mainpagediv">
     <el-container direction="vertical">
-      <mainhead id="anchormaintop"></mainhead>
+      <div>
+        <mainhead id="anchormaintop"></mainhead>
+      </div>
       <el-container direction="horizontal">
         <el-aside width="100px">
           <navigator id="nvgtr"> sdf</navigator>
@@ -9,7 +11,7 @@
 
         <el-main>
           <card></card>
-          <el-row>
+          <el-row id="anchormainclass">
             <el-col :span="18">
               <el-row>
                 <el-col :span="24">
@@ -30,8 +32,8 @@
             <br/>
 
           </el-row>
-          <p1>校园实时图</p1>
-          <el-row>
+          <h1>校园实时图</h1>
+          <el-row id="anchormainmap">
             <Map></Map>
           </el-row>
 
@@ -47,20 +49,19 @@
 </template>
 
 <script>
-import card from "../components/card";
-import navigator from "../components/navigator";
-import mainhead from "../components/mainhead";
-import GoodCard from "../components/GoodCard";
-import GoodCard2 from "../components/GoodCard2";
-import AreaTitle from "../components/AreaTitle";
-import Infinitelist from "../components/Infinitelist";
-import Map from "../components/Map";
+import card from "../components/mainage/card";
+import navigator from "../components/mainage/navigator";
+import mainhead from "../components/mainage/mainhead";
+import GoodCard from "../components/mainage/GoodCard";
+import GoodCard2 from "../components/mainage/GoodCard2";
+import Infinitelist from "../components/mainage/Infinitelist";
+import Map from "../components/mainage/Map";
 
 export default {
   name: "mainpage",
   components: {
     card, navigator, mainhead,
-    GoodCard, GoodCard2, AreaTitle, Infinitelist,
+    GoodCard, GoodCard2, Infinitelist,
     Map
   }
 }
@@ -69,6 +70,7 @@ export default {
 <style scoped>
 #mainpagediv {
   /*background: -webkit-repeating-linear-gradient(top, hsla(210, 100%, 63%, 0.5),hsla(0, 0%, 59%, 0),white);*/
+  /*background-color: #f4f4f4;*/
 }
 
 .mainhead {

@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import mainpage from "../view/mainpage";
-import HelloWorld from '@/components/HelloWorld'
-import card from "../components/card";
+import card from "../components/mainage/card";
 import notfound from "../view/notfound"
 import test from "../components/test";
+import searchpage from "../view/searchpage";
 
 Vue.use(Router)
 
@@ -15,6 +15,11 @@ export default new Router({
       path: '/',
       name: 'main',
       component: mainpage
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: searchpage
     },
     {
       path: '/test',
