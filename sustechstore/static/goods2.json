@@ -1,0 +1,10 @@
+{
+  "name": "goods",
+  "goods": [
+    {
+      "title": "汉堡",
+      "url": "",
+      "intro": "I bought  too many hamburgers and I think they are spoiled"
+    }
+  ]
+}

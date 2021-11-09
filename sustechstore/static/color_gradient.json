@@ -1,0 +1,35 @@
+[
+  {
+    "color": "radial-gradient(circle at 36.81% 52.33%, #e9ec81 0, #ece070 12.5%, #efd35f 25%, #f1c54d 37.5%, #f2b53c 50%, #f3a42d 62.5%, #f59422 75%, #f8831d 87.5%, #fa721f 100%)",
+    "cate": "orange"
+  },
+  {
+    "color": "radial-gradient(circle at 111.24% 14.64%, #ffdc67 0, #fec953 25%, #f2b53c 50%, #e6a123 75%, #dd8e05 100%)",
+    "cate": "orange"
+  },
+  {
+    "color": "radial-gradient(circle at 50% -20.71%, #e6f58f 0, #e9eb7f 10%, #ecdf6e 20%, #efd25d 30%, #f1c44d 40%, #f2b53c 50%, #f3a52d 60%, #f59522 70%, #f8851d 80%, #fa741e 90%, #fc6324 100%)",
+    "cate": "orange"
+  },
+  {
+    "color": "linear-gradient(180deg, #efd35e 0, #f0c953 16.67%, #f1c047 33.33%, #f2b53c 50%, #f3aa32 66.67%, #f49f29 83.33%, #f59522 100%)",
+    "cate": "orange"
+  },
+  {
+    "color": "radial-gradient(circle at 50% -20.71%, #abd9f4 0, #b0d8f6 6.25%, #b5d6f8 12.5%, #bbd5f8 18.75%, #c1d3f8 25%, #c8d2f8 31.25%, #ced0f6 37.5%, #d4cff4 43.75%, #dacdf2 50%, #e0cbef 56.25%, #e5caec 62.5%, #eac9e8 68.75%, #eec8e3 75%, #f2c7df 81.25%, #f5c6da 87.5%, #f8c6d5 93.75%, #f9c6d0 100%)",
+    "cate": "lightpink"
+  },
+  {
+    "color": "linear-gradient(180deg, #adffff 0, #a4ffff 25%, #9df2f2 50%, #97dade 75%, #92c5cb 100%)",
+    "cate": "lightblue"
+  },
+  {
+    "color": "radial-gradient(circle at 50% -20.71%, #ffdee5 0, #ffd7e3 10%, #ffcfe1 20%, #ffc6e0 30%, #fbbedf 40%, #f2b5de 50%, #e8adde 60%, #dda6df 70%, #d0a0e0 80%, #c39ce2 90%, #b498e5 100%)",
+    "cate": "pink"
+  },
+  {
+    "color": "linear-gradient(180deg, #ffffb1 0, #ffeca7 25%, #f2d59d 50%, #dcbf93 75%, #c7ac8a 100%)",
+    "cate": "lightyellow"
+  }
+
+]

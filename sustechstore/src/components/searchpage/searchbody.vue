@@ -33,7 +33,7 @@
 <script>
 import CollapsePanel from "./CollapsePanel";
 import Goodexhibition from "./goodexhibition";
-
+const axios = require('axios');
 export default {
   name: "searchbody",
   components: {Goodexhibition, CollapsePanel},
@@ -50,51 +50,7 @@ export default {
         content: 'Tab 2 content'
       }],
       tabIndex: 2,
-      good: [{
-        title: "好吃的汉堡",
-        url: "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-        intro: "I bought  too many hamburgers and I want to sell them"
-      },
-        {
-          title: "不好吃的汉堡",
-          url: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-          intro: "I bought  too many hamburgers and I think they are spoiled"
-        },
-        {
-          title: "不好吃的汉堡",
-          url: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-          intro: "I bought  too many hamburgers and I think they are spoiled"
-        },
-        {
-          title: "不好吃的汉堡",
-          url: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-          intro: "I bought  too many hamburgers and I think they are spoiled"
-        },
-        {
-          title: "不好吃的汉堡",
-          url: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-          intro: "I bought  too many hamburgers and I think they are spoiled"
-        },
-        {
-          title: "不好吃的汉堡",
-          url: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-          intro: "I bought  too many hamburgers and I think they are spoiled"
-        },
-        {
-          title: "不好吃的汉堡",
-          url: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-          intro: "I bought  too many hamburgers and I think they are spoiled"
-        },
-        {
-          title: "好吃的鸟",
-          url: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-          intro: "I bought  too many hamburgers and I think they are spoiled"
-        },
-        {
-          title: "好吃的鸟",
-          url: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-          intro: "I bought  too many hamburgers and I think they are spoiled"
-        }]
+      good: null
     }
   },
   computed: {
@@ -102,6 +58,9 @@ export default {
     goodrow(o1) {
       return o1 * 4 - 1
     }
+  },
+  mounted(){
+    axios.get("@/../static/goods.json").then(response=>{this.good = response.data.goods})
   },
   methods: {
     addTab(targetName) {
