@@ -20,7 +20,7 @@
     </el-row>
     <br/>
     <div class="outerdiv">
-      <el-row v-for="o1 in Math.ceil(goodexhibition.good.length/goodexhibition.col)" :key="o1" :gutter="20">
+      <el-row v-for="o1 in Math.ceil(goodexhibition.good.length/goodexhibition.col)" :key="o1" :gutter="20" class="goodrow">
         <el-col :span="24/goodexhibition.col"
                 v-for="o2 in o1*goodexhibition.col>goodexhibition.good.length?goodexhibition.good.length-(o1-1)*goodexhibition.col:goodexhibition.col"
                 :key="o2">

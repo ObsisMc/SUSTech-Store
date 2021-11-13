@@ -14,21 +14,7 @@
     <searchnavigator></searchnavigator>
     <mainpageshow></mainpageshow>
     <el-container>
-<!--            <el-header height="100px;" style="background-color: rgba(43,183,179,0.08);">-->
-<!--              <span> This is flea fair</span>-->
-<!--              <div>-->
-<!--                <el-image :src="require('@/assets/mainpage/yidan_luoyi.jpg')"-->
-<!--                          style="height:300px;width:100%; float: right;" slot="reference" ></el-image>-->
-<!--              </div>-->
-<!--            </el-header>-->
-<!--      <el-header>-->
-<!--        <mainpageshow></mainpageshow>-->
-<!--      </el-header>-->
-<!--      <el-header>-->
-<!--      </el-header>-->
-
       <el-aside width="50px">
-<!--        <navigator id="nvgtr"> sdf</navigator>-->
       </el-aside>
       <el-main>
         <mainfilter></mainfilter>

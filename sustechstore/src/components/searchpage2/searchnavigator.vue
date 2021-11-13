@@ -12,6 +12,7 @@
       <el-menu-item index="2" style="font-size: 15px;">Errand proxy</el-menu-item>
       <el-menu-item index="3" style="font-size: 15px;" disabled>API excahnge</el-menu-item>
       <el-menu-item index="4" style="font-size: 15px;" disabled>More function</el-menu-item>
+
       <el-col span="1" class="menuitemright" >
         <router-link to="/">
           <el-button icon="el-icon-s-custom"  type="warning" size="small" circle></el-button>
@@ -25,6 +26,11 @@
       <el-col span="1" class="menuitemright" >
         <router-link to="/">
           <i class="el-icon-star-off menuitem" style="font-size: 25px; "></i>
+        </router-link>
+      </el-col>
+      <el-col span="1" class="menuitemright" >
+        <router-link to="/search">
+          <i class="el-icon-search" style="font-size: 25px;"></i>
         </router-link>
       </el-col>
 

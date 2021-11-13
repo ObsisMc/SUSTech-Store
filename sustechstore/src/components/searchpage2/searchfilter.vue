@@ -99,7 +99,7 @@
           trigger="click"
           >
           <el-image :src="addressfilter.dorm2.url"
-                    style="border-radius: 10px;height:150px;width:200px;" slot="reference"></el-image>
+                    style="border-radius: 10px;height:150px;width:200px; cursor: pointer;" slot="reference"></el-image>
           <el-select
             v-model="selectedaddress"
             multiple

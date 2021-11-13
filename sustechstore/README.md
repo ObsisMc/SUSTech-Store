@@ -1,12 +1,6 @@
 # sustechstore
 
-> A Vue2.js project
-
-## Installation
-
-You should install element-ui
-
-
+> A Vue.js project
 
 ## Build Setup
 
@@ -34,3 +28,22 @@ npm test
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+## Necessary requirement
+
+```bash
+# particles effect
+npm install vue-particles
+	# in main.js
+	import VueParticles from 'vue-particles'
+	Vue.use(VueParticles)
+	# in index.html
+	<script type="text/javascript" src="./static/live2d/L2Dwidget.min.js"></script>
+
+# less & less-loader
+npm install less-loader@5.0.0 -s
+	# in main.js
+	import less from 'less';
+	Vue.use(less);
+```
+
