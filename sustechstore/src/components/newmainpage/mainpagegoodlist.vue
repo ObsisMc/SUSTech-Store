@@ -37,7 +37,7 @@ export default {
     }
   },
   mounted() {
-    axios.get("@/../static/goods.json").then(response => {
+    axios.get("@/../static/goods.json").then(response => { // 要是是动态路由，需要再加一个../
       this.goods.good = response.data.goods
     })
   },

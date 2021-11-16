@@ -1,16 +1,39 @@
 <template>
   <div class="main">
     <el-row>
-      <el-card :body-style="{ padding: '0px' }" shadow="hover">
-<!--        <div slot="header" class="clearfix">-->
-<!--          <span><slot name="title">no title</slot></span>-->
-<!--          <el-button type="text" class="button" style="float: right;">操作按钮</el-button>-->
-<!--        </div>-->
-        <img :src="imgurl"  class="image">
-        <div class="bottom clearfix" style="height: 100px;">
-          <span><slot name="intro"></slot></span>
-        </div>
-      </el-card>
+      <div v-if="haveimage">
+        <el-card :body-style="{ padding: '0px' }" shadow="hover">
+          <el-image :src="imgurl" class="image" :preview-src-list="[imgurl]"></el-image>
+          <div class="bottom clearfix" style="height: 100px;">
+            <el-row>
+              <span class="title"><slot name="title"></slot></span>
+              <el-popover
+                placement="top-start"
+                width="200"
+                trigger="hover"
+                :open-delay="200"
+                content="He/She is so lazy that he/she doesn't write anything.">
+                <i class="el-icon-info detail" slot="reference"></i>
+              </el-popover>
+              <i class="el-icon-goods detail "></i>
+            </el-row>
+            <el-row>
+              <span style="margin:10px 1px;float: left;font-size:12px;"><slot name="intro"></slot></span>
+            </el-row>
+          </div>
+        </el-card>
+      </div>
+      <div v-if="!haveimage">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix" style="height: 15px;">
+            <span class="title" style="margin-left:0;"><slot name="title"></slot></span>
+          </div>
+          <div v-for="o in 10" :key="o" class="text item">
+            {{ '列表内容 ' + o }}
+          </div>
+
+        </el-card>
+      </div>
     </el-row>
   </div>
 </template>
@@ -18,13 +41,18 @@
 <script>
 export default {
   name: 'exhibition',
-  props: ['imgurl']
+  props: ['imgurl', 'msg']
   ,
   data() {
     return {
       test: ""
     }
   },
+  computed: {
+    haveimage() {
+      return this.imgurl !== '';
+    }
+  }
 }
 </script>
 
@@ -33,29 +61,48 @@ export default {
   width: 100%;
 }
 
+
 .el-card {
-  width: 200px;
-  /*height:300px;*/
-}
-
-.time {
-  font-size: 13px;
-  color: #999;
-}
-
-.bottom {
-  margin-top: 13px;
-  line-height: 12px;
-}
-
-.button {
-  padding: 0;
-  float: right;
+  width: 230px;
+  max-height: 300px;
 }
 
 .image {
   width: 100%;
+  height: 200px;
+}
+
+.title {
+  font-weight: bold;
+  float: left;
+  margin-left: 5px;
+
+}
+
+.bottom {
+  margin-top: 13px;
+}
+
+
+.image {
+  width: 100%;
   display: block;
+}
+
+.detail {
+  float: right;
+  font-size: 20px;
+  cursor: pointer;
+  color: grey;
+  margin: 5px 10px;
+}
+
+.text {
+  font-size: 14px;
+}
+
+.item {
+  margin-bottom: 10px;
 }
 
 .clearfix:before,

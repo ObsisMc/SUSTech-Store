@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
     <el-input
       placeholder="Please enter"
       prefix-icon="el-icon-search"
@@ -20,7 +20,8 @@
     </el-row>
     <br/>
     <div class="outerdiv">
-      <el-row v-for="o1 in Math.ceil(goodexhibition.good.length/goodexhibition.col)" :key="o1" :gutter="20" class="goodrow">
+      <el-row v-for="o1 in Math.ceil(goodexhibition.good.length/goodexhibition.col)" :key="o1" :gutter="20"
+              class="goodrow">
         <el-col :span="24/goodexhibition.col"
                 v-for="o2 in o1*goodexhibition.col>goodexhibition.good.length?goodexhibition.good.length-(o1-1)*goodexhibition.col:goodexhibition.col"
                 :key="o2">
@@ -56,7 +57,11 @@ export default {
       },
       sort: "relevance",
       goodexhibition: {
-        good: null,
+        good:[{
+          "title": "default",
+          "url": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+          "intro": "No info"
+        }],
         col: 4
       }
 
@@ -84,6 +89,10 @@ export default {
 .sortitem {
   float: left;
   margin: 10px;
+}
+
+.goodrow {
+  margin-bottom: 20px;
 }
 
 /deep/ .el-button--warning {
@@ -118,6 +127,7 @@ export default {
   overflow-x: hidden;
   height: 530px;
 }
+
 .outerdiv::-webkit-scrollbar {
   width: 10px;
   background-color: #fff;
@@ -130,9 +140,11 @@ export default {
   border-radius: 6px;
   /* 滚动条的圆角宽度 */
 }
+
 .outerdiv:hover::-webkit-scrollbar-thumb:hover {
   background-color: #c0cecc;
 }
+
 .outerdiv:hover::-webkit-scrollbar-thumb:vertical {
   background-color: rgba(193, 193, 193, 0.79);
   border-radius: 6px;

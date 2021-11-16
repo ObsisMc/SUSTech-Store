@@ -13,6 +13,7 @@
       <div :style="{backgroundImage: color, backgroundSize:'contain'}"
            class="textshow">
         <span>
+          {{msg}}
           22222222222222222222222222222222222222222222222222222222222222222222222222222
           22222222222222222222222222222222222222222222222222222222222222222222222222222
           22222222222222222222222222222222222222222222222222222222222222222222222222222
@@ -29,7 +30,7 @@
       placement="top-start"
       width="200"
       trigger="hover"
-      open-delay="200"
+      :open-delay="200"
       content="He/She is so lazy that he/she doesn't write anything.">
       <i class="el-icon-info detail" slot="reference"></i>
     </el-popover>
@@ -45,7 +46,7 @@ import axios from "axios";
 
 export default {
   name: "singlegood",
-  props: ['imgurl'],
+  props: ['imgurl','msg'],
   data() {
     return {
       test: "",

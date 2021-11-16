@@ -134,7 +134,9 @@ export default {
   },
   methods: {
     // 提交登录
-    submitForm () {},
+    submitForm () {
+      this.$router.push('/main');
+    },
     // 重复动画
     drawFrame () {
       // eslint-disable-next-line

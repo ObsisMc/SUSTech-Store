@@ -2,6 +2,9 @@
   <div class="hoverscrollbar">
     <el-row>
       <br/> <span style="font-weight: bold;float: left; padding-left:30px;">Filter</span>
+      <el-button icon="el-icon-refresh-right" circle size="mini" @click="resetfilter"></el-button>
+      <el-button icon="el-icon-check" circle size="mini" @click="confirmfilter"></el-button>
+
       <el-divider></el-divider>
     </el-row>
     <el-row>
@@ -14,7 +17,7 @@
       </el-checkbox-group>
       <el-tag
         :key="tag"
-        v-for="tag in classfilter[0].dynamicTags"
+        v-for="tag in classfilter.dynamicTags"
         closable
         :disable-transitions="false"
         @close="handleClose(tag)">
@@ -22,8 +25,8 @@
       </el-tag>
       <el-input
         class="input-new-tag"
-        v-if="classfilter[1].inputVisible"
-        v-model="classfilter[2].inputValue"
+        v-if="classfilter.inputVisible"
+        v-model="classfilter.inputValue"
         ref="saveTagInput"
         size="small"
         style="width:70%;"
@@ -38,12 +41,12 @@
     </el-row>
     <el-row>
       <span class="filtertitle">User Type</span><br/><br/>
-      <el-button :type="usrfilter[2].hasselect" @click="validchanusr" circle size="normal"
+      <el-button :type="usrfilter.hasselect" @click="validchanusr" circle size="normal"
                  icon="el-icon-user-solid" style="margin-bottom: 5px;"></el-button>
       <br/>
       <el-switch
-        v-model="usrfilter[0].value"
-        :disabled="usrfilter[1].changeusrvalid"
+        v-model="usrfilter.value"
+        :disabled="usrfilter.changeusrvalid"
         active-color="#13ce66"
         inactive-color="#ff4949"
         active-text="买家"
@@ -57,18 +60,18 @@
         <span class="filtertitle">Rating</span><br/><br/>
       </el-row>
       <el-row style="position: relative;left:-10px;">
-        <el-col span="6" style="position: relative;top:-12px;">
-          <el-checkbox v-model="ratingfilter[2].ratingvalid"></el-checkbox>
+        <el-col :span="6" style="position: relative;top:-12px;">
+          <el-checkbox v-model="ratingfilter.ratingvalid"></el-checkbox>
         </el-col>
-        <el-col span="14" style="position: center;">
+        <el-col :span="14" style="position: center;">
           <el-rate
-            v-model="ratingfilter[0].rating"
-            :colors="ratingfilter[1].colors"
-            :disabled="!ratingfilter[2].ratingvalid"
+            v-model="ratingfilter.rating"
+            :colors="ratingfilter.colors"
+            :disabled="!ratingfilter.ratingvalid"
             style="line-height: 10px;">
           </el-rate>
         </el-col>
-        <el-col span="1" style="position: relative;left:-20px;">
+        <el-col :span="1" style="position: relative;left:-20px;">
           above
         </el-col>
         <br/>
@@ -97,9 +100,10 @@
           placement="right"
           width="300px;"
           trigger="click"
-          >
+        >
           <el-image :src="addressfilter.dorm2.url"
-                    style="border-radius: 10px;height:150px;width:200px; cursor: pointer;" slot="reference"></el-image>
+                    style="border-radius: 10px;height:150px;width:200px; cursor: pointer;"
+                    slot="reference"></el-image>
           <el-select
             v-model="selectedaddress"
             multiple
@@ -114,7 +118,6 @@
             </el-option>
           </el-select>
         </el-popover>
-
       </el-row>
     </el-row>
   </div>
@@ -126,21 +129,21 @@ export default {
   data() {
     return {
       checkList: [],
-      usrfilter: [
-        {value: true},
-        {changeusrvalid: true},
-        {hasselect: ""},
-      ],
-      ratingfilter: [
-        {rating: 0},
-        {colors: ['#99A9BF', '#F7BA2A', '#FF9900']},// 等同于 { 2: '#99A9BF', 4: { value: '#F7BA2A', excluded: true }, 5: '#FF9900' }]
-        {ratingvalid: false}
-      ],
-      classfilter: [
-        {dynamicTags: []},
-        {inputVisible: false},
-        {inputValue: ''}
-      ],
+      usrfilter: {
+        value: true,
+        changeusrvalid: true,
+        hasselect: "",
+      },
+      ratingfilter: {
+        rating: 0,
+        colors: ['#99A9BF', '#F7BA2A', '#FF9900'],// 等同于 { 2: '#99A9BF', 4: { value: '#F7BA2A', excluded: true }, 5: '#FF9900' }]
+        ratingvalid: false
+      },
+      classfilter: {
+        dynamicTags: [],
+        inputVisible: false,
+        inputValue: ''
+      },
       pricefilter: {
         min: '',
         max: '',
@@ -149,41 +152,62 @@ export default {
         vaildinput: 0
       },
       addressfilter: {
-        dorm2:{label: "dorm2", value: "dorm2",url:require("@/assets/places/dorm2.jpg")},
-        lakedorm:{label: "lakedorm", value: "lakedorm"}
+        dorm2: {label: "dorm2", value: "dorm2", url: require("@/assets/places/dorm2.jpg")},
+        lakedorm: {label: "lakedorm", value: "lakedorm"}
       },
-      selectedaddress:[]
+      selectedaddress: []
 
     };
   },
   methods: {
+    resetfilter(){
+      this.checkList = [];
+      this.usrfilter.value=true;
+      this.usrfilter.changeusrvalid=true;
+      this.usrfilter.hasselect='';
+      this.ratingfilter.rating = 0;
+      this.ratingfilter.ratingvalid=false;
+      this.classfilter.dynamicTags=[];
+      this.classfilter.inputVisible=false;
+      this.classfilter.inputValue='';
+      this.pricefilter.min = '';
+      this.pricefilter.max = '';
+      this.pricefilter.confirmin = '0';
+      this.pricefilter.confirmax = '∞';
+      this.pricefilter.vaildinput = 0;
+      this.setpricefilter();
+      this.selectedaddress =[];
+    },
+    confirmfilter(){
+      alert("confirm filter");
+    },
     validchanusr() {
-      if (this.usrfilter[2].hasselect === "") {
-        this.usrfilter[2].hasselect = "primary";
-        this.usrfilter[1].changeusrvalid = false;
+      if (this.usrfilter.hasselect === "") {
+        this.usrfilter.hasselect = "primary";
+        this.usrfilter.changeusrvalid = false;
       } else {
-        this.usrfilter[2].hasselect = "";
-        this.usrfilter[1].changeusrvalid = true;
+        this.usrfilter.hasselect = "";
+        this.usrfilter.changeusrvalid = true;
       }
     },
     handleClose(tag) {
-      this.classfilter[0].dynamicTags.splice(this.classfilter[0].dynamicTags.indexOf(tag), 1);
+      this.classfilter.dynamicTags.splice(this.classfilter.dynamicTags.indexOf(tag), 1);
     },
 
     showInput() {
-      this.classfilter[1].inputVisible = true;
+      this.classfilter.inputVisible = true;
       this.$nextTick(_ => {
         this.$refs.saveTagInput.$refs.input.focus();
       });
     },
 
     handleInputConfirm() {
-      let inputValue = this.classfilter[2].inputValue;
+      let inputValue = this.classfilter.inputValue;
       if (inputValue) {
-        this.classfilter[0].dynamicTags.push(inputValue);
+        this.classfilter.dynamicTags.push(inputValue);
       }
-      this.classfilter[1].inputVisible = false;
-      this.classfilter[2].inputValue = '';
+      this.classfilter.inputVisible = false;
+      this.classfilter.inputValue = '';
     },
     setpricefilter() {
       if (this.pricefilter.min === '' && this.pricefilter.max === '') {
@@ -218,6 +242,9 @@ export default {
   font-weight: bold;
 
 }
+/deep/.el-divider--horizontal{
+  margin-top: 10px;
+}
 
 .el-checkbox {
   width: 50px;
@@ -248,6 +275,12 @@ export default {
 .el-tag + .el-tag {
   margin-left: 10px;
 
+}
+
+.el-carousel {
+  height: 200px;
+  width: 300px;
+  background-color: #99a9bf;
 }
 
 .hoverscrollbar {

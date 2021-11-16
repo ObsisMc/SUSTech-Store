@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row>
-      <el-col span="4">
+      <el-col :span="4">
         <el-select v-model="sortselect.value" style="width: 100px; border-radius: 20px; float: left; line-height: 4;">
           <el-option
             v-for="item in sortselect.option"
@@ -11,7 +11,7 @@
           </el-option>
         </el-select>
       </el-col>
-      <el-col span="16">
+      <el-col :span="16">
         <el-radio-group v-model="simplefilter.selected" style="">
           <el-radio-button label="All"></el-radio-button>
           <el-radio-button label="Study"></el-radio-button>
@@ -20,7 +20,7 @@
           <el-radio-button label="Living"></el-radio-button>
         </el-radio-group>
       </el-col>
-      <el-col span="4" >
+      <el-col :span="4" >
         <el-button @click="filter.show2 = !filter.show2" style="padding: 10px;border-radius:10px;width:100px; float: right;"><i
           class="el-icon-d-caret"></i> Filters
         </el-button>
@@ -29,7 +29,7 @@
     <el-collapse-transition>
       <div v-show="filter.show2" class="transition-box">
         <el-row :gutter="20">
-          <el-col span="5">
+          <el-col :span="5">
             <span style="float: left;"><strong>Tags</strong></span><br/>
             <el-input
               class="filteritem"
@@ -42,7 +42,7 @@
               clearable>
             </el-input>
           </el-col>
-          <el-col span="5">
+          <el-col :span="5">
             <span style="float: left;"><strong>Price range</strong></span>
             <span class="cleanbutton" v-if="filter.price.value!=='All'" @click="cleanPrice">clear</span><br/>
             <el-select v-model="filter.price.value" class="filteritem">
@@ -54,7 +54,7 @@
               </el-option>
             </el-select>
           </el-col>
-          <el-col span="5">
+          <el-col :span="5">
             <span style="float: left;"><strong>Timeframe</strong></span>
             <span class="cleanbutton" v-if="filter.timeframe.value!=='Now'" @click="cleanTime">clear</span><br/>
             <el-select v-model="filter.timeframe.value" class="filteritem">
@@ -66,7 +66,7 @@
               </el-option>
             </el-select>
           </el-col>
-          <el-col span="5">
+          <el-col :span="5">
             <span style="float: left;"><strong>Address</strong></span>
             <span class="cleanbutton" v-if="filter.address.value!=='All'" @click="cleanAddress">clear</span><br/>
             <el-select v-model="filter.address.value" class="filteritem" placeholder="All addresses">
@@ -78,7 +78,7 @@
               </el-option>
             </el-select>
           </el-col>
-          <el-col span="4">
+          <el-col :span="4">
             <span style="float: left;"><strong>Role</strong></span>
             <span class="cleanbutton" v-if="filter.role.value!=='General'" @click="cleanRole">clear</span><br/>
             <el-select v-model="filter.role.value" class="filteritem">
