@@ -1,17 +1,20 @@
 <template>
-  <div class="infinite-list-wrapper">
+  <div class="infinite-list-wrapper" >
     <ul class="infinite-list"  v-infinite-scroll="load" infinite-scroll-distance="100">
       <li v-for="o1 in Math.ceil(goods.good.length/goods.col)" :key="o1">
         <el-row :gutter="30">
           <el-col :span="24/goods.col"
                   v-for="o2 in o1*goods.col>goods.good.length?goods.good.length-(o1-1)*goods.col:goods.col"
                   :key="o2">
-            <singlegood :imgurl="goods.good[(o1-1)*goods.col + o2 - 1].url">
+<!--            <singlegood :imgurl="goods.good[(o1-1)*goods.col + o2 - 1].url">-->
+            <singlegood :imgurl="goods.good[(o1-1)*goods.col + o2 - 1].fileName">
               <template v-slot:title>
-                {{ goods.good[(o1 - 1) * goods.col + o2 - 1].title }}
+<!--                {{ goods.good[(o1 - 1) * goods.col + o2 - 1].title }}-->
+                {{ goods.good[(o1 - 1) * goods.col + o2 - 1].name }}
               </template>
               <template v-slot:intro>
-                {{ goods.good[(o1 - 1) * goods.col + o2 - 1].intro }}
+<!--                {{ goods.good[(o1 - 1) * goods.col + o2 - 1].intro }}-->
+                {{ goods.good[(o1 - 1) * goods.col + o2 - 1].description }}
               </template>
             </singlegood>
           </el-col>
@@ -37,8 +40,12 @@ export default {
     }
   },
   mounted() {
-    axios.get("@/../static/goods.json").then(response => { // 要是是动态路由，需要再加一个../
-      this.goods.good = response.data.goods
+    var testurl = 'http://10.17.102.213:8181/product/list';
+    var myurl = "@/../static/goods.json";
+    axios.get(testurl).then(response => { // 要是是动态路由，需要再加一个../
+      console.log(response);
+      // this.goods.good = response.data.goods;
+      this.goods.good = response.data;
     })
   },
   methods:{

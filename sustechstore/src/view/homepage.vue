@@ -5,10 +5,10 @@
     <el-container>
       <el-aside width="50px">
       </el-aside>
-      <el-main>
+      <el-main >
         <mainfilter></mainfilter>
         <br/>
-        <mainpagegoodlist style="margin: 10px 20px;"></mainpagegoodlist>
+        <mainpagegoodlist style="margin: 10px 20px;" ></mainpagegoodlist>
       </el-main>
       <el-aside width="50px"></el-aside>
       <el-backtop target=".page-component__scroll .el-scrollbar__wrap"></el-backtop>
@@ -24,10 +24,17 @@ import Mainpageshow from "../components/newmainpage/mainpageshow";
 
 export default {
   name: "homepage",
-  components: {Mainpageshow, Mainpagegoodlist, Mainfilter, Searchnavigator}
+  components: {Mainpageshow, Mainpagegoodlist, Mainfilter, Searchnavigator},
+  data(){
+    return {
+      goodlistloading: true
+    }
+  },
+  methods:{
+
+  }
 }
 </script>
-
 <style scoped>
 
 </style>

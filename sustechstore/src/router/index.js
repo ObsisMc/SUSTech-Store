@@ -11,6 +11,8 @@ import login from "../components/welcomepage/login";
 import loginpage from "../view/loginpage";
 import selfpage from "../view/selfpage";
 import otherpage from "../view/otherpage";
+import payresult from "../view/payresult";
+import shoppingcartpage from "../view/shoppingcartpage";
 
 Vue.use(Router)
 
@@ -18,24 +20,14 @@ export default new Router({
   mode: "history",
   routes: [
     {
-      path:'/login',
+      path:'/',
       name: 'login',
       component: loginpage
     },
     {
-      path: '/',
+      path: '/main',
       name: 'main',
       component: homepage
-    },
-    {
-      path: '/main2',
-      name: 'main2',
-      component: mainpage
-    },
-    {
-      path: '/search2',
-      name: 'search',
-      component: searchpage
     },
     {
       path: '/search',
@@ -48,11 +40,6 @@ export default new Router({
       component: test
     },
     {
-      path: '/card',
-      name: 'card',
-      component: card
-    },
-    {
       path: '/selfpage',
       name: 'selfpage',
       component: selfpage
@@ -61,6 +48,26 @@ export default new Router({
       path: '/otherpage',
       name: 'otherpage',
       component: otherpage
+    },
+    {
+      path: '/shoppingcart',
+      name: 'shoppingcart',
+      component: shoppingcartpage
+    },
+    {
+      path: '/payresult',
+      name: 'success',
+      component: payresult
+    },
+    {
+      path: '/main2',
+      name: 'main2',
+      component: mainpage
+    },
+    {
+      path: '/search2',
+      name: 'search',
+      component: searchpage
     },
     {
       path: '/*',

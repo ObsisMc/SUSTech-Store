@@ -8,7 +8,7 @@
     </el-carousel>
 
     <el-image :src="require('@/assets/mainpage/10univ.png')"
-              style="width:30%;" slot="reference"></el-image>
+              style="width:30%;height: 500px;" slot="reference"></el-image>
   </div>
 </template>
 
@@ -17,6 +17,7 @@ export default {
   name: "mainpageshow",
   data() {
     return {
+      bigimg: "require('@/assets/mainpage/10univ.png')",
       showimg: [
         {
           url: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",

@@ -15,7 +15,7 @@
                 content="He/She is so lazy that he/she doesn't write anything.">
                 <i class="el-icon-info detail" slot="reference"></i>
               </el-popover>
-              <i class="el-icon-goods detail "></i>
+              <i class="el-icon-goods detail " @click="toCart"></i>
             </el-row>
             <el-row>
               <span style="margin:10px 1px;float: left;font-size:12px;"><slot name="intro"></slot></span>
@@ -26,7 +26,18 @@
       <div v-if="!haveimage">
         <el-card class="box-card">
           <div slot="header" class="clearfix" style="height: 15px;">
-            <span class="title" style="margin-left:0;"><slot name="title"></slot></span>
+            <span class="title" style="margin-left:0;">
+              <slot name="title"></slot>
+              <el-popover
+                placement="top-start"
+                width="200"
+                trigger="hover"
+                :open-delay="200"
+                content="He/She is so lazy that he/she doesn't write anything.">
+                <i class="el-icon-info detail" slot="reference"></i>
+              </el-popover>
+              <i class="el-icon-goods detail " @click="toCart" ></i>
+            </span>
           </div>
           <div v-for="o in 10" :key="o" class="text item">
             {{ '列表内容 ' + o }}
@@ -46,6 +57,11 @@ export default {
   data() {
     return {
       test: ""
+    }
+  },
+  methods:{
+    toCart(){
+      this.$router.push('/shoppingcart')
     }
   },
   computed: {

@@ -58,7 +58,8 @@
             round
             class="submitBtn"
             @click="submitForm"
-          >Sustech Store Enter</el-button>
+          >Sustech Store Enter
+          </el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -66,9 +67,11 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: 'login',
-  data () {
+  data() {
     return {
       canvas: null,
       context: null,
@@ -86,7 +89,7 @@ export default {
       speed: 50, // 星星运行速度
       last_star_created_time: new Date(), // 上次重绘星星时间
       Ball: class Ball {
-        constructor (radius) {
+        constructor(radius) {
           this.x = 0
           this.y = 0
           this.radius = radius
@@ -95,7 +98,7 @@ export default {
           this.direction = ''
         }
 
-        draw (context) {
+        draw(context) {
           context.save()
           context.translate(this.x, this.y)
           context.lineWidth = this.lineWidth
@@ -126,19 +129,30 @@ export default {
       },
       loginRules: {
         userName: [
-          { required: true, message: '请输入用户名', trigger: 'blur' }
+          {required: true, message: '请输入用户名', trigger: 'blur'}
         ],
-        passWord: [{ required: true, message: '请输入密码', trigger: 'blur' }]
+        passWord: [{required: true, message: '请输入密码', trigger: 'blur'}]
       }
     }
   },
   methods: {
     // 提交登录
-    submitForm () {
-      this.$router.push('/main');
+    submitForm() {
+      axios.post('http://10.17.102.213:8181/user/login', {
+        password: "123",
+        userName: "cgn"
+      }).then(response => {
+        console.log(response);
+        if (response.data === false) {
+          alert("NO");
+        } else {
+          this.$router.push('/main');
+        }
+      });
+
     },
     // 重复动画
-    drawFrame () {
+    drawFrame() {
       // eslint-disable-next-line
       let animation = requestAnimationFrame(this.drawFrame)
       this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
@@ -146,7 +160,7 @@ export default {
       this.stars.forEach(this.moveStar)
     },
     // 展示所有的星星
-    createStar (params) {
+    createStar(params) {
       let now = new Date()
       if (params) {
         // 初始化星星
@@ -159,11 +173,11 @@ export default {
           // eslint-disable-next-line
           star.shadowColor = this.shadowColorList[
             Math.floor(Math.random() * this.shadowColorList.length)
-          ]
+            ]
           // eslint-disable-next-line
           star.direction = this.directionList[
             Math.floor(Math.random() * this.directionList.length)
-          ]
+            ]
           this.stars.push(star)
         }
       } else if (!params && now - this.last_star_created_time > 3000) {
@@ -173,13 +187,13 @@ export default {
           // eslint-disable-next-line
           this.stars[i].shadowColor = this.shadowColorList[
             Math.floor(Math.random() * this.shadowColorList.length)
-          ]
+            ]
         }
         this.last_star_created_time = now
       }
     },
     // 移动
-    moveStar (star, index) {
+    moveStar(star, index) {
       if (star.y - this.canvas.height > 0) {
         // 触底
         if (Math.floor(Math.random() * 2) === 1) {
@@ -225,7 +239,7 @@ export default {
       star.draw(this.context)
     }
   },
-  mounted () {
+  mounted() {
     this.canvas = document.getElementById('myCanvas')
     this.context = this.canvas.getContext('2d')
 
@@ -237,23 +251,25 @@ export default {
 
 <style lang='less' scoped>
 #login {
-  width: 100vw;
-  padding: 0;
-  margin: 0;
-  height: 120vh;
+  //width: 100vw;
+  //padding: 0;
+  //margin: 0;
+  //height: 120vh;
   font-size: 16px;
-  background-repeat: no-repeat;
-  background-position: left top;
+  //background-repeat: no-repeat;
+  //background-position: left top;
   background-color: #242645;
   color: #fff;
-  background-size: 100%;
-  //background-image: url("@/assets/logo.png");
+  //background-size: 100%;
+  //background-image: url("../assets/logo.png");
   position: relative;
+
   #bgd {
-    height: 100vh;
-    width: 100vw;
+    //height: 100vh;
+    //width: 100vw;
     overflow: hidden;
   }
+
   #loginBox {
     width: 240px;
     height: 280px;
@@ -266,22 +282,23 @@ export default {
     padding: 50px 40px 40px 40px;
     box-shadow: -15px 15px 15px rgba(6, 17, 47, 0.7);
     opacity: 1;
-    background: linear-gradient(
-      230deg,
-      rgba(53, 57, 74, 0) 0%,
-      rgb(0, 0, 0) 100%
-    );
+    background: linear-gradient(230deg,
+    rgba(53, 57, 74, 0) 0%,
+    rgb(0, 0, 0) 100%);
+
     /deep/ .inps input {
       border: none;
       color: #fff;
       background-color: transparent;
       font-size: 12px;
     }
+
     .submitBtn {
       background-color: transparent;
       color: #39f;
       width: 200px;
     }
+
     .iconfont {
       color: #fff;
     }

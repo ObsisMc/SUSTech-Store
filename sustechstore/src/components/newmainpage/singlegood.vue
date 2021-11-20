@@ -24,7 +24,7 @@
 
     <span class="info">
         <i class="el-icon-user-solid" style="font-size:25px;"></i>
-        <span class="name">student 1</span>
+      <span class="name"><slot name="title"></slot></span>
       </span>
     <el-popover
       placement="top-start"
@@ -34,7 +34,7 @@
       content="He/She is so lazy that he/she doesn't write anything.">
       <i class="el-icon-info detail" slot="reference"></i>
     </el-popover>
-    <router-link to="/search2">
+    <router-link to="/shoppingcart">
       <i class="el-icon-goods detail "></i>
     </router-link>
 
