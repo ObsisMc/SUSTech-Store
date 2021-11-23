@@ -106,19 +106,8 @@
       <h4 id="xinyu">信誉等级:
       </h4>
       <el-rate v-model="value" :show-text=true :disabled=true  text-color="#F56C6C" v-bind="{texts:texts}" > </el-rate>
-      <el-input id="userinfo"
-        v-bind="{ placeholder: intro, disabled: disableInput }"
-        v-model="textarea"
-        type="text"
-        maxlength="40"
-        :rows="3"
-        show-word-limit
-        label="个人简介"
-      >
-      </el-input >
-       <el-button type="primary" id="changeInfo"
-        >编辑简介<i class="el-icon-upload el-icon--right"></i
-      ></el-button>
+
+
 
     </div>
   <div id='oper'>
@@ -324,15 +313,7 @@ handleRemove(file, fileList) {
   left: 50%;
   transform: translateX(-50%);
 }
-#userinfo {
-  margin: 10px;
-  width: 800px;
-  height: 800px;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 400px;
-}
+
 #self {
   margin: 0px;
   background-color: aliceblue;
@@ -358,12 +339,7 @@ handleRemove(file, fileList) {
   left: 50%;
   transform: translateX(-57%);
 }
-#changeInfo{
-  position: absolute;
-  top: 410px;
-  left: 50%;
-  transform: translateX(250%);
-}
+
 .el-rate{
   position: absolute;
   top: 370px;
