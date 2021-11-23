@@ -77,6 +77,7 @@
         <br/>
         <el-divider></el-divider>
       </el-row>
+    </el-row>
       <el-row>
         <span class="filtertitle">Price range</span><br/><br/>
         <el-input v-model="pricefilter.min" placeholder="Min" style="width:70px;"></el-input>
