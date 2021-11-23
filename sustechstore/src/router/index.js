@@ -16,7 +16,7 @@ import shoppingcartpage from "../view/shoppingcartpage";
 import checkoutpage from "../view/checkoutpage";
 import payment from "../components/orderconfirm/payment";
 import submitorder from "../components/orderconfirm/submitorder";
-
+import selfinfo from "../view/selfinfo.vue"
 Vue.use(Router)
 
 export default new Router({
@@ -81,6 +81,10 @@ export default new Router({
       path: '/search2',
       name: 'search',
       component: searchpage
+    },
+    {
+      path : '/selfinfo',
+      component: selfinfo
     },
     {
       path: '/*',
