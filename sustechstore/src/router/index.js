@@ -13,7 +13,7 @@ import selfpage from "../view/selfpage";
 import otherpage from "../view/otherpage";
 import payresult from "../view/payresult";
 import shoppingcartpage from "../view/shoppingcartpage";
-
+import selfinfo from "../view/selfinfo.vue"
 Vue.use(Router)
 
 export default new Router({
@@ -68,6 +68,11 @@ export default new Router({
       path: '/search2',
       name: 'search',
       component: searchpage
+    },
+       {
+      path: "/selfinfo",
+      name :"selfinfo",
+      component: selfinfo
     },
     {
       path: '/*',
