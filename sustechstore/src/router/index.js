@@ -11,16 +11,19 @@ import login from "../components/welcomepage/login";
 import loginpage from "../view/loginpage";
 import selfpage from "../view/selfpage";
 import otherpage from "../view/otherpage";
-import payresult from "../view/payresult";
+import payresult from "../components/orderconfirm/payresult";
 import shoppingcartpage from "../view/shoppingcartpage";
-import selfinfo from "../view/selfinfo.vue"
+import checkoutpage from "../view/checkoutpage";
+import payment from "../components/orderconfirm/payment";
+import submitorder from "../components/orderconfirm/submitorder";
+
 Vue.use(Router)
 
 export default new Router({
   mode: "history",
   routes: [
     {
-      path:'/',
+      path: '/',
       name: 'login',
       component: loginpage
     },
@@ -55,6 +58,16 @@ export default new Router({
       component: shoppingcartpage
     },
     {
+      path: '/checkout/:id',
+      name: 'checkoutpage',
+      component: checkoutpage,
+      children: [
+        {path: 'submit', component:submitorder},
+        {path: 'payment', component:payment},
+        {path: 'payresult', component: payresult}
+      ]
+    },
+    {
       path: '/payresult',
       name: 'success',
       component: payresult
@@ -68,11 +81,6 @@ export default new Router({
       path: '/search2',
       name: 'search',
       component: searchpage
-    },
-       {
-      path: "/selfinfo",
-      name :"selfinfo",
-      component: selfinfo
     },
     {
       path: '/*',

@@ -1,62 +1,35 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="15">
-        <el-row>
-          <span class="title">Shopping cart</span>
-          <div style="clear:both;"></div>
-          <el-divider></el-divider>
-        </el-row>
-        <el-row>
-          <cartlist style="margin: 40px 30px;"></cartlist>
-        </el-row>
-        <el-row>
-          <el-col :span="16">
-            <router-link to="/">
-              <i class="el-icon-d-arrow-left" style="font-size: 25px; float: left; margin:0 30px;"> </i>
-            </router-link>
-            <span style="float: left;">Continue shopping</span>
-          </el-col>
-          <el-col :span="8">
-            <el-image :src="require('@/assets/rmb32.png')"></el-image>
-            <span style="color: #FCC200; font-size: 30px; text-align: center; ">{{ totalprice }}</span>
-          </el-col>
-
-        </el-row>
+      <el-col :span="12">
+        <el-image style="float: left; height:90px;width:90px;"
+                  :src="require('@/assets/sustechlogo.png')"></el-image>
+        <span style="float: left;line-height: 100px; font-size: 40px;">Checkout counter</span>
       </el-col>
-      <el-col :span="9">
-        <div id="orderdetail">
-          <el-image :src="require('@/assets/sustechlogo.png')"></el-image>
+      <el-col :span="12">
 
-          <el-button @click="payorder"></el-button>
-          <el-dialog
-            :visible.sync="dialogVisible"
-            width="30%"
-            :before-close="handleClose">
-            <span slot="title" style="float: left">Payment</span>
-            <span>Total price: {{ totalprice }}</span>
-
-            <el-tabs v-model="activeName" @tab-click="handleClick">
-              <el-tab-pane label="Virtual coin" name="vc">
-                <span style="float: left;">Balance: {{ balance }}</span>
-                <el-button type="primary" @click="handlePay" size="mini">confirm</el-button>
-              </el-tab-pane>
-              <el-tab-pane label="Wechat" name="wc">
-                <div id="wechatqr" ref="wechatqrref"></div>
-<!--                id cannot contain space and other letters-->
-              </el-tab-pane>
-              <el-tab-pane label="Alipay" name="ap">No support</el-tab-pane>
-            </el-tabs>
-            <span slot="footer" class="dialog-footer">
-    <el-button @click="cancelorder">cancel</el-button>
-
-  </span>
-          </el-dialog>
-        </div>
       </el-col>
     </el-row>
-  </div>
+    <el-divider ></el-divider>
+    <el-row>
+    </el-row>
+    <goodstest></goodstest>
+    <div style="width: 500px;">
+      <el-steps :active="active" finish-status="success">
+        <el-step title="步骤 1"></el-step>
+        <el-step title="步骤 2"></el-step>
+        <el-step title="步骤 3"></el-step>
+      </el-steps>
 
+      <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
+    </div>
+    <el-steps :active="1">
+      <el-step title="步骤 1" description="这是一段很长很长很长的描述性文字"></el-step>
+      <el-step title="步骤 2" description="这是一段很长很长很长的描述性文字"></el-step>
+      <el-step title="步骤 3" description="这段就没那么长了"></el-step>
+    </el-steps>
+
+  </div>
 </template>
 
 <script>
@@ -81,6 +54,7 @@ import Testlist from "./newmainpage/testlist";
 import Cartlist from "./shoppingchart/cartlist";
 import Orderdetail from "./shoppingchart/orderdetail";
 import QRCode from "qrcodejs2";
+import Goodstest from "./goodspage/goodstest";
 
 export default {
   name: "test",
@@ -90,10 +64,12 @@ export default {
       balance: 10000,
       dialogVisible: false,
       activeName: 'vc',
-      qrto: '/success'
+      qrto: '/success',
+      active: 0
     }
   },
   components: {
+    Goodstest,
     Orderdetail,
     Cartlist,
     Testlist,
@@ -144,12 +120,16 @@ export default {
       this.dialogVisible = false;
       this.activeName = 'vc';
       this.$refs.wechatqrref.innerHTML = '';
+    },
+    next() {
+      if (this.active++ > 2) this.active = 0;
     }
   }
 }
 </script>
 
 <style scoped>
+
 #nvgtr {
   position: fixed;
 }

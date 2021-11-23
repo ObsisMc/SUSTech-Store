@@ -11,14 +11,17 @@
                 placement="top-start"
                 width="200"
                 trigger="hover"
-                :open-delay="200"
-                content="He/She is so lazy that he/she doesn't write anything.">
+                :open-delay="200">
                 <i class="el-icon-info detail" slot="reference"></i>
+                <i class="el-icon-user-solid" style="font-size:15px;"></i>
+                <span style="font-weight: bold;font-size: 15px;"><slot name="username">unamed</slot></span>
+                <el-divider style="margin:0;"></el-divider>
+                <slot name="intro">He or she is so lazy and there is nothing.</slot>
               </el-popover>
               <i class="el-icon-goods detail " @click="toCart"></i>
             </el-row>
             <el-row>
-              <span style="margin:10px 1px;float: left;font-size:12px;"><slot name="intro"></slot></span>
+              <span style="margin:10px 1px;font-size:12px;"><slot name="intro">He/She is so lazy and doesn't write anything.</slot></span>
             </el-row>
           </div>
         </el-card>
@@ -32,16 +35,22 @@
                 placement="top-start"
                 width="200"
                 trigger="hover"
-                :open-delay="200"
-                content="He/She is so lazy that he/she doesn't write anything.">
+                :open-delay="200">
                 <i class="el-icon-info detail" slot="reference"></i>
+                <i class="el-icon-user-solid" style="font-size:15px;"></i>
+                <span style="font-weight: bold;font-size: 15px;"><slot name="username">unamed</slot></span>
+                <el-divider style="margin:0;"></el-divider>
+                <slot name="intro">He or she is so lazy and there is nothing.</slot>
               </el-popover>
               <i class="el-icon-goods detail " @click="toCart" ></i>
             </span>
           </div>
-          <div v-for="o in 10" :key="o" class="text item">
-            {{ '列表内容 ' + o }}
+          <div style=" overflow-y: auto;height: 220px;" class="textmsg">
+            <div v-for="o in 10" :key="o" class="text item">
+              {{ '列表内容 ' + o }}
+            </div>
           </div>
+
 
         </el-card>
       </div>
@@ -130,4 +139,15 @@ export default {
 .clearfix:after {
   clear: both
 }
+
+/deep/.el-divider--horizontal{
+  margin:5px 0;
+}
+/deep/.el-card__header{
+  /*padding:0 18px;*/
+}
+
+.textmsg::-webkit-scrollbar { width: 0 !important }
+
+
 </style>

@@ -1,6 +1,7 @@
 <template>
   <div>
-    <searchnavigator></searchnavigator>
+    <searchnavigator style="position: fixed;width: 100%;left: 0;top: 0;z-index: 1000;"></searchnavigator>
+    <div style="height: 50px;"></div>
     <mainpageshow></mainpageshow>
     <el-container>
       <el-aside width="50px">
@@ -11,7 +12,6 @@
         <mainpagegoodlist style="margin: 10px 20px;" ></mainpagegoodlist>
       </el-main>
       <el-aside width="50px"></el-aside>
-      <el-backtop target=".page-component__scroll .el-scrollbar__wrap"></el-backtop>
     </el-container>
   </div>
 </template>

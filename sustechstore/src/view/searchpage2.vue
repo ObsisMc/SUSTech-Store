@@ -1,6 +1,7 @@
 <template>
   <div>
-    <searchnavigator></searchnavigator>
+    <searchnavigator style="position: fixed;width: 100%;left: 0;top: 0;z-index: 1000;"></searchnavigator>
+    <div style="height: 50px;"></div>
     <el-container>
       <el-aside width="300px" >
         <searchfilter></searchfilter>

@@ -25,12 +25,12 @@
         <el-col :span="24/goodexhibition.col"
                 v-for="o2 in o1*goodexhibition.col>goodexhibition.good.length?goodexhibition.good.length-(o1-1)*goodexhibition.col:goodexhibition.col"
                 :key="o2">
-          <exhibition :imgurl="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].url">
+          <exhibition :imgurl="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].fileName">
             <template v-slot:title>
-              {{ goodexhibition.good[(o1 - 1) * goodexhibition.col + o2 - 1].title }}
+              {{ goodexhibition.good[(o1 - 1) * goodexhibition.col + o2 - 1].name }}
             </template>
-            <template v-slot:intro>
-              {{ goodexhibition.good[(o1 - 1) * goodexhibition.col + o2 - 1].intro }}
+            <template v-slot:intro v-if="goodexhibition.good[(o1 - 1) * goodexhibition.col + o2 - 1].description !== ''">
+              {{ goodexhibition.good[(o1 - 1) * goodexhibition.col + o2 - 1].description }}
             </template>
           </exhibition>
         </el-col>
@@ -57,10 +57,16 @@ export default {
       },
       sort: "relevance",
       goodexhibition: {
-        good:[{
-          "title": "default",
-          "url": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-          "intro": "No info"
+        good: [{
+          "categoryleveloneId": 0,
+          "categorylevelthreeId": 0,
+          "categoryleveltwoId": 0,
+          "description": "",
+          "fileName": "",
+          "id": 0,
+          "name": "string",
+          "ownerId": 0,
+          "price": 0
         }],
         col: 4
       }
@@ -70,11 +76,16 @@ export default {
   methods: {
     getSearchTarget() {
       this.search.searchtarget = this.search.searchinput;
+      let goodsurl = 'http://10.21.64.1:8181/product/search/';
     }
   },
   mounted() {
-    axios.get("@/../static/goods.json").then(response => {
-      this.goodexhibition.good = response.data.goods
+    let goodsurl = 'http://10.21.64.1:8181/product/list';
+    let myurl = "@/../static/goods.json";
+    axios.get(goodsurl).then(response => {
+      // this.goodexhibition.good = response.data.goods;
+      console.log(response);
+      this.goodexhibition.good = response.data;
     })
   }
 }
@@ -126,6 +137,8 @@ export default {
   overflow-y: auto;
   overflow-x: hidden;
   height: 530px;
+  /*height: calc(100vh);*/
+
 }
 
 .outerdiv::-webkit-scrollbar {

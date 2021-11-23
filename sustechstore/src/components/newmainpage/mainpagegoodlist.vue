@@ -6,15 +6,15 @@
           <el-col :span="24/goods.col"
                   v-for="o2 in o1*goods.col>goods.good.length?goods.good.length-(o1-1)*goods.col:goods.col"
                   :key="o2">
-<!--            <singlegood :imgurl="goods.good[(o1-1)*goods.col + o2 - 1].url">-->
             <singlegood :imgurl="goods.good[(o1-1)*goods.col + o2 - 1].fileName">
               <template v-slot:title>
-<!--                {{ goods.good[(o1 - 1) * goods.col + o2 - 1].title }}-->
                 {{ goods.good[(o1 - 1) * goods.col + o2 - 1].name }}
               </template>
-              <template v-slot:intro>
-<!--                {{ goods.good[(o1 - 1) * goods.col + o2 - 1].intro }}-->
-                {{ goods.good[(o1 - 1) * goods.col + o2 - 1].description }}
+              <template v-slot:intro v-if="goods.good[(o1 - 1) * goods.col + o2 - 1].description!==''">
+                {{ goods.good[(o1 - 1) * goods.col + o2 - 1].description}}
+              </template>
+              <template v-slot:username>
+                {{goods.user[(o1 - 1) * goods.col + o2 - 1].name}}
               </template>
             </singlegood>
           </el-col>
@@ -34,28 +34,51 @@ export default {
   data() {
     return {
       goods: {
-        good: null,
+        good: [
+          {
+            "categoryleveloneId": 0,
+            "categorylevelthreeId": 0,
+            "categoryleveltwoId": 0,
+            "description": "",
+            "fileName": "",
+            "id": 0,
+            "name": "string",
+            "ownerId": 0,
+            "price": 0
+          }
+        ],
+        user: [
+          {name:'hi'}
+        ],
         col: 4
       }
     }
   },
   mounted() {
-    var testurl = 'http://10.17.102.213:8181/product/list';
-    var myurl = "@/../static/goods.json";
-    axios.get(testurl).then(response => { // 要是是动态路由，需要再加一个../
+    let goodsurl = 'http://10.21.64.1:8181/product/list';
+    let myurl = "@/../static/goods.json";
+    axios.get(goodsurl).then(response => { // 要是是动态路由，需要再加一个../
       console.log(response);
-      // this.goods.good = response.data.goods;
       this.goods.good = response.data;
     })
+    let userurl = 'http://10.21.64.1:8181/user/findById/';
+    axios.get()
   },
   methods:{
     load(){
       let newgood={
-        title: "好吃的汉堡",
-        url: "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-        intro: "I bought  too many hamburgers and I want to sell them"
+        "categoryleveloneId": 0,
+        "categorylevelthreeId": 0,
+        "categoryleveltwoId": 0,
+        "description": "this is my ham",
+        "fileName": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+        "id": 0,
+        "name": "ham",
+        "ownerId": 0,
+        "price": 0
       };
       this.goods.good.push(newgood);
+      this.goods.user.push({'name':'unamed'});
     }
   }
 }
@@ -68,9 +91,9 @@ export default {
   height: 1000px;
 
 }
-.infinite-list-wrapper::-webkit-scrollbar {
-  display: none;
-}
+/*.infinite-list-wrapper::-webkit-scrollbar {*/
+/*  display: none;*/
+/*}*/
 .infinite-list-wrapper::-webkit-scrollbar {
   width: 10px;
   background-color: #fff;

@@ -1,14 +1,16 @@
 <template>
 <div>
+  <searchnavigator style="position: fixed;width: 100%;left: 0;top: 0;z-index: 1000;"></searchnavigator>
+  <div style="height: 50px;"></div>
   <el-row>
-    <el-col :span="15">
+    <el-col :span="24">
       <el-row>
         <span class="title">Shopping cart</span>
         <div style="clear:both;"></div>
         <el-divider></el-divider>
       </el-row>
       <el-row>
-        <cartlist style="margin: 40px 30px;"></cartlist>
+        <cartlist @setTotalPrice="setTotalPrice" style="margin: 40px 30px;"></cartlist>
       </el-row>
       <el-row>
         <el-col :span="16">
@@ -24,36 +26,36 @@
 
       </el-row>
     </el-col>
-    <el-col :span="9">
-      <div id="orderdetail">
-        <el-image :src="require('@/assets/sustechlogo.png')"></el-image>
+<!--    <el-col :span="9">-->
+<!--      <div id="orderdetail">-->
+<!--        <el-image :src="require('@/assets/sustechlogo.png')"></el-image>-->
 
-        <el-button @click="payorder"></el-button>
-        <el-dialog
-          :visible.sync="dialogVisible"
-          width="30%"
-          :before-close="handleClose">
-          <span slot="title" style="float: left">Payment</span>
-          <span>Total price: {{ totalprice }}</span>
+<!--        <el-button @click="payorder"></el-button>-->
+<!--        <el-dialog-->
+<!--          :visible.sync="dialogVisible"-->
+<!--          width="30%"-->
+<!--          :before-close="handleClose">-->
+<!--          <span slot="title" style="float: left">Payment</span>-->
+<!--          <span>Total price: {{ totalprice }}</span>-->
 
-          <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="Virtual coin" name="vc">
-              <span style="float: left;">Balance: {{ balance }}</span>
-              <el-button type="primary" @click="handlePay" size="mini">confirm</el-button>
-            </el-tab-pane>
-            <el-tab-pane label="Wechat" name="wc">
-              <div id="wechatqr" ref="wechatqrref"></div>
-              <!--                id cannot contain space and other letters-->
-            </el-tab-pane>
-            <el-tab-pane label="Alipay" name="ap">No support</el-tab-pane>
-          </el-tabs>
-          <span slot="footer" class="dialog-footer">
-    <el-button @click="cancelorder">cancel</el-button>
+<!--          <el-tabs v-model="activeName" @tab-click="handleClick">-->
+<!--            <el-tab-pane label="Virtual coin" name="vc">-->
+<!--              <span style="float: left;">Balance: {{ balance }}</span>-->
+<!--              <el-button type="primary" @click="handlePay" size="mini">confirm</el-button>-->
+<!--            </el-tab-pane>-->
+<!--            <el-tab-pane label="Wechat" name="wc">-->
+<!--              <div id="wechatqr" ref="wechatqrref"></div>-->
+<!--              &lt;!&ndash;                id cannot contain space and other letters&ndash;&gt;-->
+<!--            </el-tab-pane>-->
+<!--            <el-tab-pane label="Alipay" name="ap">No support</el-tab-pane>-->
+<!--          </el-tabs>-->
+<!--          <span slot="footer" class="dialog-footer">-->
+<!--    <el-button @click="cancelorder">cancel</el-button>-->
 
-  </span>
-        </el-dialog>
-      </div>
-    </el-col>
+<!--  </span>-->
+<!--        </el-dialog>-->
+<!--      </div>-->
+<!--    </el-col>-->
   </el-row>
 </div>
 </template>
@@ -61,11 +63,12 @@
 <script>
 import QRCode from "_qrcodejs2@0.0.2@qrcodejs2";
 import cartlist from "../components/shoppingchart/cartlist";
+import Searchnavigator from "../components/searchpage2/searchnavigator";
 export default {
   name: "shoppingcartpage",
   data() {
     return {
-      totalprice: 1600,
+      totalprice: 0,
       balance: 10000,
       dialogVisible: false,
       activeName: 'vc',
@@ -110,9 +113,12 @@ export default {
       this.dialogVisible = false;
       this.activeName = 'vc';
       this.$refs.wechatqrref.innerHTML = '';
+    },
+    setTotalPrice(p){
+      this.totalprice=p;
     }
   },
-  components:{QRCode,cartlist}
+  components:{Searchnavigator, QRCode,cartlist}
 }
 </script>
 

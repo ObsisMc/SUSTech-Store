@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <el-row :gutter="20" class="outrow">
+  <div class="goodcontainer">
+    <el-row :gutter="20">
       <el-col :span="6">
         <el-image
-          src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+          :src="imgurl"
           fit="cover">
         </el-image>
       </el-col>
@@ -20,7 +20,7 @@
           <i class="el-icon-menu roughdetail"> study</i>
         </el-row>
       </el-col>
-      <el-col :span="5">
+      <el-col :span="3">
         <el-row>
           <el-badge :value="12" class="tip roughdetail">
             <i class="el-icon-chat-dot-round " style="font-size: 30px;"></i>
@@ -28,10 +28,13 @@
         </el-row>
       </el-col>
       <el-col :span="5">
-        <span class="">RMB 200</span>
+        <span class="">RMB <slot name="price"></slot></span>
       </el-col>
-      <el-col :span="2">
-        <i class="el-icon-close" style="cursor: pointer;"></i>
+      <el-col :span="3">
+        <el-button @click="checkout">buy</el-button>
+      </el-col>
+      <el-col :span="1">
+        <i class="el-icon-close" style="cursor: pointer;" @click="removeGoods"></i>
       </el-col>
     </el-row>
   </div>
@@ -39,19 +42,35 @@
 
 <script>
 export default {
-  name: "cartitem"
+  name: "cartitem",
+  props: ['imgurl','index'],
+  methods: {
+    removeGoods() {
+      this.$emit('removeGoods', this.index);
+    },
+    checkout() {
+      this.$router.push({path: '/checkout/' + this.index, query: {status: 0}});
+      // this.$router.push({name: 'checkoutpage', params: {id: 1}, query: {status: 0}});
+    }
+  }
 }
-</script>
 
+</script>
 <style scoped>
+.goodcontainer {
+  padding: 5px;
+  margin: 10px;
+  /*background-color: #2c3e50;*/
+}
+
+.goodcontainer:hover {
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
+}
+
 .el-image {
   border-radius: 30px;
   width: 150px;
   height: 150px;
-}
-
-.outrow {
-  margin-bottom: 30px;
 }
 
 .goodtitle {
@@ -62,7 +81,8 @@ export default {
   float: left;
   margin-top: 15px;
 }
-.tip{
+
+.tip {
 
 }
 </style>

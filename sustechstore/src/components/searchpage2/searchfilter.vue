@@ -13,7 +13,7 @@
         <el-checkbox label="Study"></el-checkbox>
         <el-checkbox label="Food"></el-checkbox>
         <el-checkbox label="Electronic device"></el-checkbox>
-        <el-checkbox label="Furniture"></el-checkbox>
+        <el-checkbox label="Living"></el-checkbox>
       </el-checkbox-group>
       <el-tag
         :key="tag"

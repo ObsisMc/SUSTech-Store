@@ -2,49 +2,102 @@
   "name": "goods",
   "goods": [
     {
-      "title": "好吃的汉堡",
-      "url": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-      "intro": "I bought  too many hamburgers and I want to sell them"
+      "categoryleveloneId": 0,
+      "categorylevelthreeId": 0,
+      "categoryleveltwoId": 0,
+      "description": "this is my description",
+      "fileName": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+      "id": 0,
+      "name": "ham",
+      "ownerId": 0,
+      "price": 0
     },
     {
-      "title": "不好吃的汉堡",
-      "url": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-      "intro": "I bought  too many hamburgers and I think they are spoiled"
+      "categoryleveloneId": 0,
+      "categorylevelthreeId": 0,
+      "categoryleveltwoId": 0,
+      "description": "",
+      "fileName": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+      "id": 0,
+      "name": "string",
+      "ownerId": 0,
+      "price": 0
+    },{
+      "categoryleveloneId": 0,
+      "categorylevelthreeId": 0,
+      "categoryleveltwoId": 0,
+      "description": "",
+      "fileName": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+      "id": 0,
+      "name": "string",
+      "ownerId": 0,
+      "price": 0
     },
     {
-      "title": "不好吃的汉堡",
-      "url": "",
-      "intro": "I bought  too many hamburgers and I think they are spoiled"
+      "categoryleveloneId": 0,
+      "categorylevelthreeId": 0,
+      "categoryleveltwoId": 0,
+      "description": "",
+      "fileName": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+      "id": 0,
+      "name": "string",
+      "ownerId": 0,
+      "price": 0
     },
     {
-      "title": "不好吃的汉堡",
-      "url": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-      "intro": "I bought  too many hamburgers and I think they are spoiled"
+      "categoryleveloneId": 0,
+      "categorylevelthreeId": 0,
+      "categoryleveltwoId": 0,
+      "description": "",
+      "fileName": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+      "id": 0,
+      "name": "string",
+      "ownerId": 0,
+      "price": 0
     },
     {
-      "title": "不好吃的汉堡",
-      "url": "",
-      "intro": "I bought  too many hamburgers and I think they are spoiled"
+      "categoryleveloneId": 0,
+      "categorylevelthreeId": 0,
+      "categoryleveltwoId": 0,
+      "description": "",
+      "fileName": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+      "id": 0,
+      "name": "string",
+      "ownerId": 0,
+      "price": 0
     },
     {
-      "title": "不好吃的汉堡",
-      "url": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-      "intro": "I bought  too many hamburgers and I think they are spoiled"
+      "categoryleveloneId": 0,
+      "categorylevelthreeId": 0,
+      "categoryleveltwoId": 0,
+      "description": "",
+      "fileName": "",
+      "id": 0,
+      "name": "string",
+      "ownerId": 0,
+      "price": 0
     },
     {
-      "title": "不好吃的汉堡",
-      "url": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-      "intro": "I bought  too many hamburgers and I think they are spoiled"
+      "categoryleveloneId": 0,
+      "categorylevelthreeId": 0,
+      "categoryleveltwoId": 0,
+      "description": "",
+      "fileName": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+      "id": 0,
+      "name": "string",
+      "ownerId": 0,
+      "price": 0
     },
     {
-      "title": "好吃的鸟",
-      "url": "",
-      "intro": "I bought  too many hamburgers and I think they are spoiled"
-    },
-    {
-      "title": "好吃的鸟",
-      "url": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-      "intro": "I bought  too many hamburgers and I think they are spoiled"
+      "categoryleveloneId": 0,
+      "categorylevelthreeId": 0,
+      "categoryleveltwoId": 0,
+      "description": "",
+      "fileName": "",
+      "id": 0,
+      "name": "string",
+      "ownerId": 0,
+      "price": 0
     }
   ]
 }

@@ -1,11 +1,5 @@
 <template>
   <div class="main">
-    <!--    <el-card :body-style="{ padding: '0px' }" shadow="hover">-->
-    <!--      <img :src="imgurl" class="image">-->
-    <!--      <div class="bottom clearfix" style="height: 100px;">-->
-    <!--        <span><slot name="intro"></slot></span>-->
-    <!--      </div>-->
-    <!--    </el-card>-->
     <div v-if="haveimage">
       <el-image :src="imgurl" :preview-src-list="[imgurl]" class="image"></el-image>
     </div>
@@ -23,16 +17,18 @@
     </div>
 
     <span class="info">
-        <i class="el-icon-user-solid" style="font-size:25px;"></i>
       <span class="name"><slot name="title"></slot></span>
       </span>
     <el-popover
       placement="top-start"
       width="200"
       trigger="hover"
-      :open-delay="200"
-      content="He/She is so lazy that he/she doesn't write anything.">
+      :open-delay="200">
       <i class="el-icon-info detail" slot="reference"></i>
+      <i class="el-icon-user-solid" style="font-size:15px;"></i>
+      <span style="font-weight: bold;font-size: 15px;"><slot name="username"></slot></span>
+      <el-divider style="margin:0;"></el-divider>
+      <slot name="intro">He or she is so lazy and there is nothing.</slot>
     </el-popover>
     <router-link to="/shoppingcart">
       <i class="el-icon-goods detail "></i>
@@ -69,7 +65,6 @@ export default {
       axios.get("@/../static/color_gradient.json").then(response =>{
         let len = Object.keys(response.data).length;
         this.color = response.data[Math.floor(Math.random()*len)].color;
-
       })
     }
   }
@@ -129,8 +124,8 @@ export default {
   border-radius: 20px;
   overflow: auto;
   word-wrap:break-word;
-
   word-break:normal;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
 }
 
 .info {
@@ -148,6 +143,10 @@ export default {
 
 .textshow::-webkit-scrollbar {
   display: none;
+}
+
+/deep/.el-divider--horizontal{
+  margin:5px 0;
 }
 
 </style>
