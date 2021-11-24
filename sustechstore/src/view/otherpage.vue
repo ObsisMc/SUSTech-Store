@@ -164,7 +164,7 @@ export default {
   components: {
     emotion
   },
-  created() {
+ /* created() {
     setTimeout(() => {
       window.L2Dwidget.init({
         pluginRootPath: 'static/live2d/',
@@ -178,7 +178,7 @@ export default {
         log: false
       })
     }, 1000)
-  },
+  },*/
   name: "otherpage",
   data() {
     return {
