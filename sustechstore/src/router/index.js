@@ -18,7 +18,7 @@ import payment from "../components/orderconfirm/payment";
 import submitorder from "../components/orderconfirm/submitorder";
 import product from "../view/product";
 import register from "../view/register";
-
+import selfinfo from "../view/selfinfo.vue"
 Vue.use(Router)
 
 export default new Router({
@@ -93,6 +93,10 @@ export default new Router({
       path: '/search2',
       name: 'search',
       component: searchpage
+    },
+    {
+      path : '/selfinfo',
+      component: selfinfo
     },
     {
       path: '/*',
