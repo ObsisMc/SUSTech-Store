@@ -136,7 +136,7 @@ export default {
         uid: this.loginForm.userName
       }).then(response => {
         console.log(response)
-        if (response.data === false) {
+        if (response.data === '') {
           alert('Please register the user.')
         } else {
           store.state.token = response.data.tokenValue;

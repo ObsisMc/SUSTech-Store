@@ -81,6 +81,9 @@
 </template>
 
 <script>
+import {store} from "../../store/store";
+import axios from "axios";
+
 export default {
   name: "submitorder",
   data() {
@@ -110,7 +113,7 @@ export default {
         "orderid": 0
       },
 
-      loading:false
+      loading: false
     };
   },
   methods: {
@@ -118,11 +121,21 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.loading = true;
-          let nextstatus = parseInt(this.$route.query.status)+1;
+          let nextstatus = parseInt(this.$route.query.status) + 1;
           setTimeout(() => {
-            this.$router.push({path: '/checkout/' + this.goods.orderid+'/'+nextstatus, query: {status: nextstatus}});
-            this.loading = false;
-          }, 1000)
+            axios.post(store.state.database + 'order/add/' + this.ruleForm.region).then(response => {
+              if (response.status === 200) {
+                this.$router.push({
+                  path: '/checkout/' + this.goods.orderid + '/' + nextstatus, query: {status: nextstatus}
+                });
+                alert("ok");
+                this.loading = false;
+              } else {
+                this.$router.push({name: 'shoppningcart'});
+                alert("Error happens!");
+              }
+            })
+          }, 5000)
 
         } else {
           console.log('error submit!!');
@@ -134,10 +147,8 @@ export default {
       this.$refs[formName].resetFields();
     }
   },
-  mounted(){
-    // axios.get(store.state.database + '').then(response=>{
-    //
-    // })
+  mounted() {
+    axios.defaults.headers.common['satoken'] = store.state.token;
   }
 }
 </script>
