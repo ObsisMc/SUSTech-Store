@@ -2,7 +2,7 @@
   <div class="outerdiv">
     <div v-if="goods.length">
       <el-row v-for="i in goods.length" :key="i">
-        <cartitem :index="i-1" @removeGoods="removeGoods" :imgurl="goods.image" :id="goods.id"
+        <cartitem :index="i-1" @removeGoods="removeGoods" :imgurl="goods.image" :id="goods.productId"
                   :orderstatus="goods[i-1].orderstatus">
           <template v-slot:title>
             {{ goods[i - 1].name }}
@@ -63,7 +63,7 @@ export default {
   },
   methods: {
     removeGoods(index) {
-      axios.delete(store.state.database + 'cart/deleteByCartId/' + this.goods[index].productId).then(response => {
+      axios.delete(store.state.database + 'cart/deleteByCartId/' + this.goods[index].id).then(response => {
         if (response.status === 200) {
           console.log(this.goods[index])
           this.goods.splice(index,1);
@@ -83,9 +83,12 @@ export default {
     },
     calcTotalPrice() {
       var p = 0;
+      console.log(this.goods.length);
       for (let i = 0; i < this.goods.length; i++) {
         p += this.goods[i].price;
       }
+
+
       this.$emit('setTotalPrice', p);
 
     }

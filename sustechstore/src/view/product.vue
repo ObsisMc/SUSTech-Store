@@ -4,22 +4,20 @@
     <searchnavigator style="position: fixed;width: 100%;left: 0;top: 0;z-index: 1000;"></searchnavigator>
     <div style="height: 70px;"></div>
     <el-row>
-      <el-col :span="16">
+      <el-col :span="12" style="float: left;">
         <el-image src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" alt="失败"
                   fit="cover"></el-image>
+      </el-col>
+      <el-col :span="1">
         <el-divider direction="vertical"><i class="el-icon-mobile-phone"></i></el-divider>
       </el-col>
-      <el-col :span="8">
+      <el-col :span="11">
         <el-row :gutter="20">
           <el-col :span="18">
-            <div class="main_first">
-              <a class="bold">{{ good.name }}</a>
-            </div>
+            <span class="bold" style="float: left;">{{ good.name }}</span>
           </el-col>
           <el-col :span="6">
-            <div class="main_first">
               <i class="el-icon-star-off"></i>
-            </div>
           </el-col>
         </el-row>
 
@@ -228,7 +226,7 @@ export default {
 }
 
 /deep/ .el-divider--vertical {
-  height: 500px;
-  margin: 30px 20px;
+  height: calc(70vh);
+  margin: 5px 0;
 }
 </style>

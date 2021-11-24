@@ -2,7 +2,7 @@ export const store = {
   debug: false,
   state: {
     token: '',
-    database: 'http://10.21.64.1:8181/'
+    database: 'http://10.17.109.39:8181/'
   },
   setToken (newValue) {
     if (this.debug) console.log('setMessageAction triggered with', newValue)
