@@ -7,9 +7,9 @@
   active-text-color="#ffd04b">
   <el-submenu index='1'>
     <template slot='title'>交易</template>
-   <el-menu-item index="1-1" @click="BuyOrderVisible=true" >我的购买订单</el-menu-item>
-    <el-menu-item index="1-2" @click="SellOrderVisible=true">我的卖出订单</el-menu-item>
-    <el-menu-item index="1-3"  @click="locationVisible = true">我的交易地址</el-menu-item>
+   <el-menu-item index="1-1" @click="BuyOrderVisible=true, formBuyOrder=getBuyorder()" >我的购买订单</el-menu-item>
+    <el-menu-item index="1-2" @click="SellOrderVisible=true,formSellOrder=getSellorder()" >我的卖出订单</el-menu-item>
+    <el-menu-item index="1-3"  @click="locationVisible = true, locations=getLocation()">我的交易地址</el-menu-item>
   </el-submenu>
   <el-submenu index="2">
     <template slot="title">我的钱包</template>
@@ -30,10 +30,11 @@
 
 <el-dialog title="交易地址" :visible.sync="locationVisible">
   <el-table :data="locations">
+     <el-table-column property="id" label="id"></el-table-column>
     <el-table-column property="address" label="地点"></el-table-column>
     <el-table-column fixed="right" label="操作" width="100px">
     <template slot-scope="scope"  >
-                    <el-button type="text" @click="delLocation(scope.$index, scope.row)"  size="mini" >
+                    <el-button type="text" @click="delLocation(scope.row.id)"  size="mini" >
                         删除地址
                     </el-button>
                 </template>
@@ -89,6 +90,7 @@
       src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
         :size="150"
       ></el-avatar>
+      <h2 id="name"> {{nickname}}</h2>
       <el-upload
       id='changePhoto'
   class="upload-demo"
@@ -101,6 +103,7 @@
   :on-exceed="handleExceed"
   :file-list="uploadfileList"
    :show-file-list="false">
+
   <el-button size="small" type="primary">更换头像</el-button>
 </el-upload>
       <h4 id="xinyu">信誉等级:
@@ -132,6 +135,16 @@
      <el-form-item label="商品价格" :label-width="formSellLabelWidth">
        <el-input v-model="formSell.price" autocomplete="off" type="number"></el-input>
     </el-form-item>
+     <el-form-item label="类型" :label-width="formSellLabelWidth">
+         <el-select v-model="selectedSell" placeholder="请选择">
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
+       </el-form-item>
     <el-form-item label="" >
       <el-upload
   class="upload-demo"
@@ -146,7 +159,7 @@
   </el-form>
   <div slot="footer" class="dialog-footer">
     <el-button @click="dialogFormVisibleSell = false">取 消</el-button>
-    <el-button type="primary" @click="dialogFormVisibleSell = false">确 定</el-button>
+    <el-button type="primary" @click="dialogFormVisibleSell = false, Sell()">确 定</el-button>
   </div>
 </el-dialog>
 <el-dialog title="求购商品" :visible.sync="dialogFormVisibleBuy">
@@ -162,6 +175,16 @@
      <el-form-item label="商品价格" :label-width="formSellLabelWidth">
        <el-input v-model="formBuy.price" autocomplete="off" type="number"></el-input>
     </el-form-item>
+        <el-form-item label="类型" :label-width="formSellLabelWidth">
+         <el-select v-model="selectedBuy" placeholder="请选择">
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
+       </el-form-item>
     <el-form-item label="" >
       <el-upload
   class="upload-demo"
@@ -188,7 +211,11 @@
 
 <script>
 import axios from 'axios';
+import {store} from "../store/store";
 
+
+axios.defaults.withCredentials=true
+axios.defaults.crossDomain=true
 export default {
 /*created () {
   setTimeout(() => {
@@ -215,7 +242,9 @@ export default {
       value: 4,
       texts :['极差','差','一般','良好','优秀'  ],
       money: 100,
-      level :5,
+    nickname:"aaa",
+    img:"",
+    userId:0,
       activeIndex:'1',
       uploadfileList:[],
       //发布商品页面
@@ -223,31 +252,23 @@ export default {
      formSell: {
           name: '',
           descri:'',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: '',
+        img:'',
+        type:0,
           price:null,
+          time:null,
         },
         formSellLabelWidth: '100px',
         //求购商品页面
            formBuy: {
           name: '',
           descri:'',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: '',
+
           price:null,
         },
         dialogFormVisibleBuy:false,
         //常用地址
         locations:[
-          {address: "asd"},{address:"asdasdasd"}
+
         ]
 
         ,
@@ -256,16 +277,33 @@ export default {
       //历史订单
       BuyOrderVisible: false,
       formBuyOrder:[
-        {
 
-        }
       ],
       SellOrderVisible: false,
       formSellOrder:[
-        {
 
-        }
       ],
+      selectedBuy :null,
+      selectedSell: null,
+      options:[
+        {
+          label: "Study",
+          value:1
+        },
+        {
+          label: "Food",
+          value:2
+        },
+        {
+          label: "Electronic",
+          value:3
+        },
+        {
+          label: "Living",
+          value:4
+        }
+
+      ]
     };
   },
    methods: {
@@ -284,18 +322,131 @@ handleRemove(file, fileList) {
       beforeRemove(file, fileList) {
         return this.$confirm(`确定移除 ${ file.name }？`);
       },
-      delLocation(index, row){
+      delLocation(lid){
 
       },
       addLocation(){
 
-      }
-    },
-    mounted(){
-      axios.defaults.withCredentials=true;
-  axios.get('http://10.17.109.39:8181/user/userInfo').then(response=>{
-        console.log(response)
+      },
+      Sell(){
+
+           axios.defaults.headers.common['satoken'] = store.state.token;
+        let  to={
+               categoryleveloneId: this.selectedSell,
+  categorylevelthreeId: 0,
+  categoryleveltwoId: 0,
+  createTime: "",
+  description: this.formSell.descri,
+  id: 0,
+  image: this.formSell.img,
+  name: this.formSell.name,
+  ownerId: this.userId,
+  price: this.formSell.price,
+  updateTime: "",
+           };
+           axios.post(store.state.database+'/product/add',to).then(response=>{
+                console.log(response)
+           })
+      },
+      getLocation(){
+       let ans=[]
+        axios.defaults.headers.common['satoken'] = store.state.token;
+        axios.get(store.state.database+'userAddress/findAll').then(response=>{
+        for(let i =0;i<response.data.length;i++){
+          let temp={
+            id: response.data[i].id,
+            address: response.data[i].address+response.data[i].remark
+          };
+          ans.push(temp);
+        }
       })
+      return ans;
+      },
+       getBuyorder(){
+
+         let ans=[];
+        axios.defaults.headers.common['satoken'] = store.state.token;
+        axios.get(store.state.database+'//order/listBuyVO').then(response=>{
+          console.log(response)
+          for(let i=0;i<response.data.length;i++){
+            let st=null;
+            switch(response.data[i].status){
+              case 0:
+                st="已添加";
+                break;
+                case 1:
+                  st="已支付";
+                  break;
+                  case 2:
+                    st="已确认";
+                    break;
+                    case 3:
+                      st="已收货";
+                      break;                }
+          let  temp={
+              name: response.data[i].productName,
+              owner: response.data[i].sellerNickName,
+              time: response.data[i].createTime,
+              price: response.data[i].cost,
+              status: st
+            }
+            ans.push(temp)
+          }
+        })
+        console.log(ans)
+     return ans; },
+            getSellorder(){
+
+         let ans=[];
+        axios.defaults.headers.common['satoken'] = store.state.token;
+        axios.get(store.state.database+'/order/listSellVO').then(response=>{
+          console.log(response)
+          for(let i=0;i<response.data.length;i++){
+            let st=null;
+            switch(response.data[i].status){
+              case 0:
+                st="已添加";
+                break;
+                case 1:
+                  st="已支付";
+                  break;
+                  case 2:
+                    st="已确认";
+                    break;
+                    case 3:
+                      st="已收货";
+                      break;                }
+          let  temp={
+              name: response.data[i].productName,
+              owner: response.data[i].buyerNickName,
+              time: response.data[i].createTime,
+              price: response.data[i].cost,
+              status: st
+            }
+            ans.push(temp)
+          }
+        })
+        console.log(ans)
+     return ans; },
+      rTime(date) {
+    var json_date = new Date(date).toJSON();
+    return new Date(new Date(json_date) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+}
+
+      },
+
+    mounted(){
+      console.log(store.state.token)
+axios.defaults.headers.common['satoken'] = store.state.token;
+  axios.get(store.state.database+'user/userInfo').then(response=>{
+        console.log(response)
+        this.money=response.data.balance;
+        this.value=response.data.credit+1;
+        this.img =response.data.icon;
+        this.nickname=response.data.nickName;
+        this.userId=response.data.uid;
+      });
+
 }
 
 
@@ -310,7 +461,7 @@ handleRemove(file, fileList) {
   margin: -10px;
   top: 150px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-48%);
 }
 
 #self {
@@ -333,21 +484,21 @@ handleRemove(file, fileList) {
 }
 #changePhoto {
   position: absolute;
-  top: 300px;
+  top: 340px;
   color: gray;
   left: 50%;
-  transform: translateX(-57%);
+  transform: translateX(-60%);
 }
 
 .el-rate{
   position: absolute;
-  top: 370px;
+  top: 390px;
   left: 50%;
   transform: translateX(-50%);
 }
 #xinyu{
   position: absolute;
-  top:343px;
+  top:365px;
   left: 50%;
   transform: translateX(-220%);
   color:navajowhite
@@ -362,6 +513,13 @@ handleRemove(file, fileList) {
  /* height: calc(100% - 100px);*/
   height: 100%;
   position: relative;
+}
+#name{
+  position: absolute;
+  top: 280px;
+  color: gray;
+  left: 50%;
+  transform: translateX(-65%);
 }
 
 </style>
