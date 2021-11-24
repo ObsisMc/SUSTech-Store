@@ -1,6 +1,8 @@
 <template>
   <!--  <div class="note" :style="note">-->
   <div>
+    <searchnavigator style="position: fixed;width: 100%;left: 0;top: 0;z-index: 1000;"></searchnavigator>
+    <div style="height: 70px;"></div>
     <el-container style="height: 100%;" v-on="getProductInformation()">
       <!--      <img src="../../assets/orange.jpg" alt="">-->
       <el-header height="60px">
@@ -59,7 +61,7 @@
           <!--                </el-col>-->
           <!--              </el-row>-->
           <!--            </el-carousel-item>-->
-          <img :src="imgList.idView" alt="失败" width=100% height=100%>
+          <img :src="image" alt="失败" width=100% height=100%>
           <!--          </el-carousel>-->
         </el-aside>
 
@@ -71,7 +73,7 @@
             <el-row :gutter="20">
               <el-col :span="4">
                 <div class="main_first">
-                  <a class="bold">{{ name }}</a>
+                  <a class="bold">{{ good.name }}</a>
                 </div>
               </el-col>
               <el-col :span="2" :offset="20">
@@ -83,19 +85,19 @@
 
             <el-row margin="100px" id="para_margin">
               <p class="small_para">
-                {{ description }}
+                {{ good.description }}
               </p>
             </el-row>
 
             <el-row id="money_margin">
-              <a class="bold">{{ price }}</a>
+              <a class="bold">{{ good.price }}</a>
             </el-row>
 
             <el-row>
               <el-col :span="7">
                 <div class="main_rate" id="rate_margin">
                   <el-rate
-                    v-model="value"
+                    v-model="rating"
                     disabled
                     show-score
                     text-color="#ff9900"
@@ -147,28 +149,32 @@
 <script>
 import axios from 'axios';
 import {store} from "../store/store";
+import Searchnavigator from "../components/searchpage2/searchnavigator";
 
 export default {
   name: 'product',
+  components: {Searchnavigator},
   data() {
     return {
-      value: 3.7,
-      // item: './assets/sofa.png'
-      imgList: [
-        {id: 0, idView: this.image}
-      ],
-      note: {
-        // backgroundImage: 'url(' + require('../../assets/organic.png') + ')'
-
-      },
+      rating: 3.7,
+      note: {},
       reviews: 441,
-      money_delivery: 10,
-      description: '',
-      image: '',
-      name: '',
-      price: '',
       orderid: 0,
-      orderstatus: 0
+      orderstatus: 0,
+
+      good: {
+        "categoryleveloneId": 0,
+        "categorylevelthreeId": 0,
+        "categoryleveltwoId": 0,
+        "createTime": "2021-11-24T13:46:26.467Z",
+        "description": "string",
+        "id": 0,
+        "image": "string",
+        "name": "string",
+        "ownerId": 0,
+        "price": 0,
+        "updateTime": "2021-11-24T13:46:26.467Z"
+      }
     }
   },
   methods: {
@@ -176,14 +182,9 @@ export default {
     getProductInformation() {
       let goodid = this.$route.query.id;
       axios.get(store.state.database + 'product/findById/' + goodid
-      )
-        .then(response => {
-          console.log(response)
-          this.description = response.data.description
-          this.image = response.data.image
-          this.name = response.data.name
-          this.price = response.data.price
-        })
+      ).then(response => {
+        this.good = response.data;
+      })
     },
     toOrder() {
       this.$router.push({
@@ -191,10 +192,15 @@ export default {
       });
     },
     addToCart() {
-
+      axios.get(store.state.database + 'cart/addCart/' + this.good.id).then(response => {
+        alert("hi");
+      });
     },
     mounted() {
     }
+  },
+  mounted() {
+    axios.defaults.headers.common['satoken'] = store.state.token;
   }
 }
 </script>
@@ -249,14 +255,6 @@ export default {
   font-size: x-large;
 }
 
-/*#app {*/
-/*  font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
-/*  -webkit-font-smoothing: antialiased;*/
-/*  -moz-osx-font-smoothing: grayscale;*/
-/*  text-align: center;*/
-/*  color: #2c3e50;*/
-/*  margin-top: 60px;*/
-/*}*/
 .el-carousel__item h3 {
   color: #475669;
   font-size: 14px;

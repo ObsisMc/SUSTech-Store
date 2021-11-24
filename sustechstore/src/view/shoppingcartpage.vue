@@ -64,6 +64,8 @@
 // import QRCode from "_qrcodejs2@0.0.2@qrcodejs2";
 import cartlist from "../components/shoppingchart/cartlist";
 import Searchnavigator from "../components/searchpage2/searchnavigator";
+import axios from "axios";
+import {store} from "../store/store";
 export default {
   name: "shoppingcartpage",
   data() {
@@ -117,6 +119,9 @@ export default {
     setTotalPrice(p){
       this.totalprice=p;
     }
+  },
+  mounted() {
+    axios.defaults.headers.common['satoken'] = store.state.token;
   },
   components:{Searchnavigator,cartlist}
 }

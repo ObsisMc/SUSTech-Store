@@ -29,6 +29,7 @@
 <script>
 import Cartitem from "./cartitem";
 import axios from "axios";
+import {store} from "../../store/store";
 
 export default {
   name: "cartlist",
@@ -51,12 +52,12 @@ export default {
     }
   },
   mounted() {
-    let goodsurl = 'http://10.21.64.1:8181/cart/findAll'
+    let goodsurl = store.state.database+ 'cart/findAll'
     let myurl = "@/../static/cartgoods.json"
     axios.get(goodsurl).then(response => {
-      // this.goods=response.data.goods;
+      console.log(response.data);
       this.goods = response.data;
-      console.log(response);
+
     })
     this.calcTotalPrice(1);
   },

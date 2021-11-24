@@ -20,6 +20,8 @@
 import searchnavigator from "../components/searchpage2/searchnavigator";
 import searchfilter from "../components/searchpage2/searchfilter";
 import searchbody from "../components/searchpage2/searchbody";
+import axios from "axios";
+import {store} from "../store/store";
 
 export default {
   name: "searchpage2",
@@ -28,6 +30,9 @@ export default {
       console.log(cate);
       this.$refs.mybody.getFilterGoods(cate);
     }
+  },
+  mounted(){
+    axios.defaults.headers.common['satoken'] = store.state.token;
   },
   components: {searchnavigator, searchfilter, searchbody}
 }

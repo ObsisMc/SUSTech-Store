@@ -21,6 +21,8 @@ import Searchnavigator from "../components/searchpage2/searchnavigator";
 import Mainfilter from "../components/newmainpage/mainfilter";
 import Mainpagegoodlist from "../components/newmainpage/mainpagegoodlist";
 import Mainpageshow from "../components/newmainpage/mainpageshow";
+import axios from "axios";
+import {store} from "../store/store";
 
 export default {
   name: "homepage",
@@ -34,6 +36,9 @@ export default {
     getSearchTarget(target) {
       this.$refs.mybody.getSearchTarget(target);
     }
+  },
+  mounted(){
+    axios.defaults.headers.common['satoken'] = store.state.token;
   }
 }
 </script>

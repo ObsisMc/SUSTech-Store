@@ -40,6 +40,8 @@ import Searchnavigator from "../components/searchpage2/searchnavigator";
 import Submitorder from "../components/orderconfirm/submitorder";
 import Payment from "../components/orderconfirm/payment";
 import Payresult from "../components/orderconfirm/payresult";
+import axios from "axios";
+import {store} from "../store/store";
 
 export default {
   name: "checkoutpage",
@@ -67,6 +69,7 @@ export default {
   },
   mounted() {
     this.step.active = parseInt(this.$route.query.status) ;
+    // axios.defaults.headers.common['satoken'] = store.state.token;
   },
   beforeRouteUpdate(to, from, next) {
     this.step.active =parseInt(to.query.status) ;

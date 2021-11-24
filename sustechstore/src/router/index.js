@@ -74,9 +74,9 @@ export default new Router({
       name: 'checkoutpage',
       component: checkoutpage,
       children: [
-        {path: 'submit', component:submitorder},
-        {path: 'payment', component:payment},
-        {path: 'payresult', component: payresult}
+        {path: '0', component:submitorder},
+        {path: '1', component:payment},
+        {path: '2', component: payresult}
       ]
     },
     {

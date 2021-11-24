@@ -34,18 +34,9 @@
         </el-form-item>
 
         <el-form-item style="margin-top:55px;">
-          <el-row>
           <el-button type="primary" round class="submitBtn" @click="submitForm">
             Sustech Store Enter
           </el-button>
-            </el-row>
-          <el-row>
-          <router-link to="register">
-          <el-button type="primary" round class="registerBtn">
-            Register
-          </el-button>
-          </router-link>
-          </el-row>
         </el-form-item>
 
       </el-form>
@@ -56,6 +47,7 @@
 
 <script>
 import axios from 'axios'
+import {store} from "../../store/store";
 export default {
   data () {
     return {
@@ -126,15 +118,15 @@ export default {
   },
   methods: {// 提交登录
     submitForm () {
-      axios.post('http://10.21.64.1:8181/user/login', {
+      axios.post(store.state.database + 'user/login', {
         password: this.loginForm.passWord,
         uid: this.loginForm.userName
       }).then(response => {
-        console.log(response)
-        if (response.data === false) {
+        if (response.data === '') {
           alert('Please register the user.')
         } else {
-          this.$router.push('/main')
+          store.state.token=response.data.tokenValue;
+          this.$router.push('/main');
         }
       })
     },
@@ -161,11 +153,11 @@ export default {
           // eslint-disable-next-line
           star.shadowColor = this.shadowColorList[
             Math.floor(Math.random() * this.shadowColorList.length)
-            ]
+          ]
           // eslint-disable-next-line
           star.direction = this.directionList[
             Math.floor(Math.random() * this.directionList.length)
-            ]
+          ]
           this.stars.push(star)
         }
       } else if (!params && now - this.last_star_created_time > 3000) {
@@ -175,7 +167,7 @@ export default {
           // eslint-disable-next-line
           this.stars[i].shadowColor = this.shadowColorList[
             Math.floor(Math.random() * this.shadowColorList.length)
-            ]
+          ]
         }
         this.last_star_created_time = now
       }
@@ -258,7 +250,7 @@ export default {
   }
   #loginBox {
     width: 240px;
-    height: 300px;
+    height: 280px;
     position: absolute;
     top: 0;
     left: 0;
@@ -283,12 +275,6 @@ export default {
       background-color: transparent;
       color: #39f;
       width: 200px;
-    }
-    .registerBtn{
-      background-color: transparent;
-      color: #39f;
-      width: 200px;
-      margin-top: 10px;
     }
     .iconfont {
       color: #fff;
