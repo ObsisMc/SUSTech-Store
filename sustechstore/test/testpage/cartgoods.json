@@ -1,0 +1,32 @@
+{
+  "goods": [
+    {
+      "title": "default",
+      "owner": "someone",
+      "category": "study",
+      "msgnum": 0,
+      "price": 100
+    },
+    {
+      "title": "default",
+      "owner": "someone",
+      "category": "study",
+      "msgnum": 0,
+      "price": 100
+    },
+    {
+      "title": "default",
+      "owner": "someone",
+      "category": "study",
+      "msgnum": 0,
+      "price": 100
+    },
+    {
+      "title": "default",
+      "owner": "someone",
+      "category": "study",
+      "msgnum": 0,
+      "price": 100
+    }
+  ]
+}

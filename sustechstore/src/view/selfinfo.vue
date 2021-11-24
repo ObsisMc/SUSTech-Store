@@ -235,11 +235,12 @@ margin-top: 160px;
 .el-avater{
  position: absolute;
  left: 50%;
- margin-top: 0px;
+ margin-top: 80px;
 }
 #photo{
   position: absolute;
- left: 44%;
+ left: 50%;
+ transform: translateX(-120%);
  margin-top: 150px;
 }
 </style>
