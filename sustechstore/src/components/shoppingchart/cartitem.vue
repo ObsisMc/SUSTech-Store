@@ -14,24 +14,40 @@
           </span>
         </el-row>
         <el-row>
-          <i class="el-icon-user roughdetail"> My name</i>
+          <el-avatar class="roughdetail"
+                     src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+          <span class="roughdetail" style="margin-left: 10px;">
+            <span class="roughdetail">
+              <slot name="owner"></slot>
+            </span>
+          </span>
         </el-row>
         <el-row>
-          <i class="el-icon-menu roughdetail"> study</i>
-        </el-row>
-      </el-col>
-      <el-col :span="3">
-        <el-row>
-          <el-badge :value="12" class="tip roughdetail">
-            <i class="el-icon-chat-dot-round " style="font-size: 30px;"></i>
-          </el-badge>
+          <el-avatar class="roughdetail" :size="40"> Cate</el-avatar>
+          <span class="roughdetail" style="margin-left: 10px;">
+            <span class="roughdetail">
+              <slot name="goodCate"></slot>
+            </span>
+          </span>
         </el-row>
       </el-col>
       <el-col :span="5">
-        <span class="">RMB <slot name="price"></slot></span>
+        <span style="color: #FCC200; font-size: 20px;  line-height: 100px; "> RMB <slot name="price"></slot></span>
       </el-col>
       <el-col :span="3">
-        <el-button @click="toGood">buy</el-button>
+        <el-row style="margin-bottom: 30px;">
+          <el-badge :value="12" class="tip" style="margin-top: 20px;">
+            <i class="el-icon-chat-dot-round " style="font-size: 30px; cursor: pointer;" @click="toChat"></i>
+          </el-badge>
+        </el-row>
+        <el-row>
+          <el-tag :type="getOrderTagStatus(orderstatus)">
+            {{ getStrOrderStatus(orderstatus) }}
+          </el-tag>
+        </el-row>
+      </el-col>
+      <el-col :span="3">
+        <el-button @click="toGood" style="margin-top:50px;">buy</el-button>
       </el-col>
       <el-col :span="1">
         <i class="el-icon-close" style="cursor: pointer;" @click="removeGoods"></i>
@@ -43,13 +59,37 @@
 <script>
 export default {
   name: "cartitem",
-  props: ['imgurl','index','id'],
+  props: ['imgurl', 'index', 'id', 'orderstatus'],
   methods: {
     removeGoods() {
       this.$emit('removeGoods', this.index);
     },
     toGood() {
-      this.$router.push({name:'product',query:{id:this.id}});
+      this.$router.push({name: 'product', query: {id: this.id}});
+    },
+    getOrderTagStatus(s) {
+      if (s === 0) {
+        return "success";
+      } else if (s === 1) {
+        return "warning";
+      } else {
+        return "danger";
+      }
+    },
+    getStrOrderStatus(s) {
+      if (s === 0) {
+        return "Collected";
+      } else if (s === 1) {
+        return "Obligation";
+      } else {
+        return "Stockout";
+      }
+    },
+    toChat() {
+      alert("chat");
+    },
+    testClick() {
+      alert("hi");
     }
   }
 }
@@ -74,6 +114,8 @@ export default {
 
 .goodtitle {
   float: left;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .roughdetail {

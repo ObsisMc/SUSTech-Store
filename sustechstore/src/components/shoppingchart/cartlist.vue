@@ -2,12 +2,19 @@
   <div class="outerdiv">
     <div v-if="goods.length">
       <el-row v-for="i in goods.length" :key="i">
-        <cartitem :index="i" @removeGoods="removeGoods" :imgurl="goods.fileName" :id="goods.id">
+        <cartitem :index="i" @removeGoods="removeGoods" :imgurl="goods.fileName" :id="goods.id"
+        :orderstatus="goods[i-1].orderstatus">
           <template v-slot:title>
             {{ goods[i - 1].name }}
           </template>
           <template v-slot:price>
             {{ goods[i - 1].price }}
+          </template>
+          <template v-slot:goodCate>
+            {{goods[i-1].categoryleveloneId}}
+          </template>
+          <template v-slot:owner>
+            {{goods[i-1].ownerId}}
           </template>
         </cartitem>
       </el-row>
@@ -37,7 +44,8 @@ export default {
           image: "",
           name: "ham",
           ownerId: 0,
-          price: 100
+          price: 100,
+          orderstatus:1
         }
       ]
     }
@@ -72,6 +80,9 @@ export default {
       this.$emit('setTotalPrice', p);
 
     }
+  },
+  computed:{
+
   },
   components: {Cartitem}
 }

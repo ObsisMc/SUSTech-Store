@@ -72,8 +72,8 @@
         <el-input type="textarea" v-model="ruleForm.notes" placeholder="Any other notes"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')">Submit</el-button>
+        <el-button @click="resetForm('ruleForm')">Reset</el-button>
       </el-form-item>
     </el-form>
 
@@ -104,7 +104,7 @@ export default {
         "description": "",
         "fileName": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
         "id": 0,
-        "name": "Hambuger adfsadf sadfsdf",
+        "name": "Hambuger ad",
         "ownerId": 'unamed',
         "price": 1000,
         "orderid": 0
@@ -159,6 +159,7 @@ export default {
 .goodtitle {
   float: left;
   font-size: 20px;
+  font-weight: bold;
 }
 
 .roughdetail {
