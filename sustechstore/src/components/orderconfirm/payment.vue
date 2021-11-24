@@ -40,7 +40,7 @@ export default {
     }
   },
   methods: {
-    handleClick(){
+    handleClick() {
 
     },
     handlePay() {
@@ -48,13 +48,13 @@ export default {
         alert("No enough balance.");
       } else {
         this.loading = true;
+        let nextstatus = parseInt(this.$route.query.status) + 1;
+        let noworderid = this.$route.params.id;
         setTimeout(() => {
           console.log("wait..");
-          // this.$router.push({path: '/checkout/' + 1, query: {status: 2}});
-          this.$router.push('/shoppingcart');
+          this.$router.push({path: '/checkout/' + noworderid + '/' + nextstatus, query: {status: nextstatus}});
           this.loading = false;
-        }, 2000)
-        // this.$router.push('/');
+        }, 1000)
       }
     },
     createQrcode() {
@@ -72,10 +72,6 @@ export default {
     this.$nextTick(() => {
       this.createQrcode()
     })
-  },
-  beforeRouteLeave() {
-    this.activeName = 'vc';
-    this.$refs.wechatqrref.innerHTML = '';
   },
   components: {}
 }

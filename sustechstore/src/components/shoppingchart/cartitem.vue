@@ -31,7 +31,7 @@
         <span class="">RMB <slot name="price"></slot></span>
       </el-col>
       <el-col :span="3">
-        <el-button @click="checkout">buy</el-button>
+        <el-button @click="toGood">buy</el-button>
       </el-col>
       <el-col :span="1">
         <i class="el-icon-close" style="cursor: pointer;" @click="removeGoods"></i>
@@ -43,14 +43,13 @@
 <script>
 export default {
   name: "cartitem",
-  props: ['imgurl','index'],
+  props: ['imgurl','index','id'],
   methods: {
     removeGoods() {
       this.$emit('removeGoods', this.index);
     },
-    checkout() {
-      this.$router.push({path: '/checkout/' + this.index, query: {status: 0}});
-      // this.$router.push({name: 'checkoutpage', params: {id: 1}, query: {status: 0}});
+    toGood() {
+      this.$router.push({name:'product',query:{id:this.id}});
     }
   }
 }

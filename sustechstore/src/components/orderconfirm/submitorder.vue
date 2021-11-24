@@ -106,8 +106,10 @@ export default {
         "id": 0,
         "name": "Hambuger adfsadf sadfsdf",
         "ownerId": 'unamed',
-        "price": 1000
+        "price": 1000,
+        "orderid": 0
       },
+
       loading:false
     };
   },
@@ -115,13 +117,12 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // alert('submit!');
-          // this.$router.push({name: 'checkoutpage', params: {id: 1}});
           this.loading = true;
+          let nextstatus = parseInt(this.$route.query.status)+1;
           setTimeout(() => {
-            this.$router.push({path: '/checkout/' + 1, query: {status: 1}});
+            this.$router.push({path: '/checkout/' + this.goods.orderid+'/'+nextstatus, query: {status: nextstatus}});
             this.loading = false;
-          }, 2000)
+          }, 1000)
 
         } else {
           console.log('error submit!!');
@@ -132,6 +133,11 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     }
+  },
+  mounted(){
+    // axios.get(store.state.database + '').then(response=>{
+    //
+    // })
   }
 }
 </script>
