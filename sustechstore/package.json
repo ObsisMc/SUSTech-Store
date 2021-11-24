@@ -13,8 +13,15 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.23.0",
     "element-ui": "^2.15.6",
+    "less": "^3.9.0",
+    "less-loader": "^5.0.0",
+    "qrcodejs2": "^0.0.2",
+    "qs": "^6.10.1",
     "vue": "^2.5.2",
+    "vue-flip-down": "^3.0.0",
+    "vue-particles": "^1.0.9",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
