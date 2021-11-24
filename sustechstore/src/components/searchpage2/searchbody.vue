@@ -90,15 +90,19 @@ export default {
       var level=filter.level;
       var c = filter.cate;
       console.log(level,c)
-      this.goodexhibition.good=[];
-      for(let i=0;i<c.length;i++){
-        axios.get(store.state.database + 'product/list/'+level+'/'+c[i]).then(response=>{
+      if(c.length===0){
+      }else{
+        this.goodexhibition.good=[];
+        for(let i=0;i<c.length;i++){
+          axios.get(store.state.database + 'product/list/'+level+'/'+c[i]).then(response=>{
 
-          for(let j=0;j<response.data.length;j++){
-            this.goodexhibition.good.push(response.data[j]);
-          }
-        })
+            for(let j=0;j<response.data.length;j++){
+              this.goodexhibition.good.push(response.data[j]);
+            }
+          })
+        }
       }
+
     },
     getAllGoods(){
       let goodsurl = store.state.database+'product/list';

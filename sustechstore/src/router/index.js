@@ -17,7 +17,7 @@ import checkoutpage from "../view/checkoutpage";
 import payment from "../components/orderconfirm/payment";
 import submitorder from "../components/orderconfirm/submitorder";
 import product from "../view/product";
-import register from "../view/register";
+import register from "../view/registerpage";
 import selfinfo from "../view/selfinfo.vue"
 Vue.use(Router)
 

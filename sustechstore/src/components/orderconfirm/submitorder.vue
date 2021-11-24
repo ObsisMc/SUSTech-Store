@@ -106,7 +106,7 @@ export default {
         "categoryleveltwoId": 0,
         "description": "",
         "fileName": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-        "id": 0,
+        "id": 733,
         "name": "Hambuger ad",
         "ownerId": 'unamed',
         "price": 1000,
@@ -122,21 +122,17 @@ export default {
         if (valid) {
           this.loading = true;
           let nextstatus = parseInt(this.$route.query.status) + 1;
-          setTimeout(() => {
-            axios.post(store.state.database + 'order/add/' + this.ruleForm.region).then(response => {
-              if (response.status === 200) {
-                this.$router.push({
-                  path: '/checkout/' + this.goods.orderid + '/' + nextstatus, query: {status: nextstatus}
-                });
-                alert("ok");
-                this.loading = false;
-              } else {
-                this.$router.push({name: 'shoppningcart'});
-                alert("Error happens!");
-              }
-            })
-          }, 5000)
-
+          axios.post(store.state.database + 'order/add/' + this.goods.id + '/' + this.ruleForm.region).then(response => {
+            if (response.status === 200) {
+              this.$router.push({
+                path: '/checkout/' + this.goods.orderid + '/' + nextstatus, query: {status: nextstatus}
+              });
+              this.loading = false;
+            } else {
+              this.$router.push({name: 'shoppningcart'});
+              alert("Error happens!");
+            }
+          })
         } else {
           console.log('error submit!!');
           return false;
@@ -149,6 +145,11 @@ export default {
   },
   mounted() {
     axios.defaults.headers.common['satoken'] = store.state.token;
+    axios.get(store.state.database + 'product/findById/' + this.$route.params.id).then(response => {
+      if (response.status === 200) {
+        this.goods = response.data;
+      }
+    })
   }
 }
 </script>

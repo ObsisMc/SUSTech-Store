@@ -117,7 +117,7 @@ export default {
     },
     toOrder() {
       this.$router.push({
-        path: '/checkout/' + this.orderid + '/' + this.orderstatus, query: {status: this.orderstatus}
+        path: '/checkout/' + this.good.id + '/' + this.orderstatus, query: {status: this.orderstatus}
       });
     },
     addToCart() {

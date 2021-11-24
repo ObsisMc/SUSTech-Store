@@ -135,11 +135,11 @@ export default {
         password: this.loginForm.passWord,
         uid: this.loginForm.userName
       }).then(response => {
-        console.log(response)
-        if (response.data === '') {
+        console.log(response.data.data);
+        if (! response.data.data) {
           alert('Please register the user.')
         } else {
-          store.state.token = response.data.tokenValue;
+          store.state.token = response.data.data.tokenValue;
           this.$router.push('/main');
         }
       })

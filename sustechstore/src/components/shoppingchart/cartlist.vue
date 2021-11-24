@@ -2,7 +2,7 @@
   <div class="outerdiv">
     <div v-if="goods.length">
       <el-row v-for="i in goods.length" :key="i">
-        <cartitem :index="i-1" @removeGoods="removeGoods" :imgurl="goods.image" :id="goods.productId"
+        <cartitem :index="i-1" @removeGoods="removeGoods" :imgurl="goods.image" :id="goods[i-1].productId"
                   :orderstatus="goods[i-1].orderstatus">
           <template v-slot:title>
             {{ goods[i - 1].name }}
@@ -45,7 +45,7 @@ export default {
             name: "ham",
             nickName: "unamed",
             ownerId: 0,
-            price: 100,
+            price: 200,
             orderstatus: 1,
             productId: 734
           }
@@ -53,13 +53,13 @@ export default {
     }
   },
   mounted() {
-    let goodsurl = store.state.database + 'cart/findAllCartVO'
+    let goodsurl = store.state.database + 'cart/findAllCartVO';
     let myurl = "@/../static/cartgoods.json"
     axios.get(goodsurl).then(response => {
       this.goods = response.data;
       this.calcTotalPrice();
     })
-    this.calcTotalPrice(1);
+
   },
   methods: {
     removeGoods(index) {
@@ -71,6 +71,7 @@ export default {
             message:"Remove collection successfully!",
             type:'success'
           })
+          this.calcTotalPrice();
         }else{
           this.$message({
             message:"Error happens",
@@ -79,15 +80,12 @@ export default {
         }
       })
 
-      this.calcTotalPrice();
     },
     calcTotalPrice() {
       var p = 0;
-      console.log(this.goods.length);
       for (let i = 0; i < this.goods.length; i++) {
-        p += this.goods[i].price;
+        p += parseFloat(this.goods[i].price);
       }
-
 
       this.$emit('setTotalPrice', p);
 
