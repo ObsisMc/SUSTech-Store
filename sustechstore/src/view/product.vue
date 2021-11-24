@@ -4,52 +4,6 @@
     <searchnavigator style="position: fixed;width: 100%;left: 0;top: 0;z-index: 1000;"></searchnavigator>
     <div style="height: 70px;"></div>
     <el-container style="height: 100%;" v-on="getProductInformation()">
-      <!--      <img src="../../assets/orange.jpg" alt="">-->
-      <el-header height="60px">
-        <el-row :gutter="20">
-          <el-col :span="1">
-            <el-dropdown>
-                <span class="el-dropdown-link">
-                  <i class="el-icon-arrow-down el-icon--right"></i>
-                </span>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item icon="el-icon-plus">Sofa</el-dropdown-item>
-                <el-dropdown-item icon="el-icon-circle-plus">Chairs</el-dropdown-item>
-                <el-dropdown-item icon="el-icon-circle-plus-outline">Beds</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-          </el-col>
-
-          <el-col :span="2">
-            <div class="header_tags">Sofas</div>
-          </el-col>
-          <el-col :span="2">
-            <div class="header_tags">Chairs</div>
-          </el-col>
-          <el-col :span="1">
-            <div class="header_tags">Beds</div>
-          </el-col>
-          <el-col :span="2" :offset="5">
-            <el-row>
-              <i class="el-icon-present"></i>
-            </el-row>
-            <el-row>
-              <div class="Furniture">Furniture</div>
-            </el-row>
-          </el-col>
-          <el-col :span="1" :offset="7" id="header_icon">
-            <router-link to="./selfpage">
-              <i class="el-icon-s-custom" @click="gotopersonalpage()"></i>
-            </router-link>
-          </el-col>
-          <el-col :span="1" id="header_icon"><i class="el-icon-star-off"></i></el-col>
-          <el-col :span="1">
-            <el-badge :value="12" class="item">
-              <el-button size="small"><i class="el-icon-sell"></i></el-button>
-            </el-badge>
-          </el-col>
-        </el-row>
-      </el-header>
 
       <el-container>
         <el-aside width="650px" :style="defaultHeight">
@@ -61,11 +15,10 @@
           <!--                </el-col>-->
           <!--              </el-row>-->
           <!--            </el-carousel-item>-->
-          <img :src="image" alt="失败" width=100% height=100%>
+          <img :src="good.image" alt="失败" width=100% height=100%>
           <!--          </el-carousel>-->
         </el-aside>
 
-        <!--        ??????????????????????????????????-->
         <el-divider direction="vertical"><i class="el-icon-mobile-phone"></i></el-divider>
 
         <el-container>
@@ -169,7 +122,7 @@ export default {
         "createTime": "2021-11-24T13:46:26.467Z",
         "description": "string",
         "id": 0,
-        "image": "string",
+        "image": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
         "name": "string",
         "ownerId": 0,
         "price": 0,
@@ -192,7 +145,8 @@ export default {
       });
     },
     addToCart() {
-      axios.get(store.state.database + 'cart/addCart/' + this.good.id).then(response => {
+      alert(1);
+      axios.post(store.state.database + 'cart/addCart/' + this.good.id).then(response => {
         alert("hi");
       });
     },
@@ -284,5 +238,9 @@ export default {
 .el-footer {
   margin-top: 150px;
   /*background-color: #3399ff;*/
+}
+/deep/.el-divider--vertical{
+  height: 500px;
+  margin: 30px 20px;
 }
 </style>

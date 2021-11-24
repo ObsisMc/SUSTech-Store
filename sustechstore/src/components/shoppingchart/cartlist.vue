@@ -52,6 +52,7 @@ export default {
     }
   },
   mounted() {
+    // axios.defaults.headers.common['satoken'] = store.state.token;
     let goodsurl = store.state.database+ 'cart/findAll'
     let myurl = "@/../static/cartgoods.json"
     axios.get(goodsurl).then(response => {
