@@ -9,7 +9,7 @@
     <template slot='title'>交易</template>
    <el-menu-item index="1-1" @click="BuyOrderVisible=true" >我的购买订单</el-menu-item>
     <el-menu-item index="1-2" @click="SellOrderVisible=true">我的卖出订单</el-menu-item>
-    <el-menu-item index="1-3"  @click="locationVisible = true, getLocation()">我的交易地址</el-menu-item>
+    <el-menu-item index="1-3"  @click="locationVisible = true">我的交易地址</el-menu-item>
   </el-submenu>
   <el-submenu index="2">
     <template slot="title">我的钱包</template>
@@ -30,11 +30,10 @@
 
 <el-dialog title="交易地址" :visible.sync="locationVisible">
   <el-table :data="locations">
-     <el-table-column property="id" label="id"></el-table-column>
     <el-table-column property="address" label="地点"></el-table-column>
     <el-table-column fixed="right" label="操作" width="100px">
     <template slot-scope="scope"  >
-                    <el-button type="text" @click="delLocation(scope.row.id)"  size="mini" >
+                    <el-button type="text" @click="delLocation(scope.$index, scope.row)"  size="mini" >
                         删除地址
                     </el-button>
                 </template>
@@ -189,8 +188,7 @@
 
 <script>
 import axios from 'axios';
-axios.defaults.withCredentials=true
-axios.defaults.crossDomain=true
+
 export default {
 /*created () {
   setTimeout(() => {
@@ -225,7 +223,12 @@ export default {
      formSell: {
           name: '',
           descri:'',
-
+          date1: '',
+          date2: '',
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: '',
           price:null,
         },
         formSellLabelWidth: '100px',
@@ -233,7 +236,12 @@ export default {
            formBuy: {
           name: '',
           descri:'',
-
+          date1: '',
+          date2: '',
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: '',
           price:null,
         },
         dialogFormVisibleBuy:false,
@@ -248,11 +256,15 @@ export default {
       //历史订单
       BuyOrderVisible: false,
       formBuyOrder:[
+        {
 
+        }
       ],
       SellOrderVisible: false,
       formSellOrder:[
+        {
 
+        }
       ],
     };
   },
@@ -272,21 +284,16 @@ handleRemove(file, fileList) {
       beforeRemove(file, fileList) {
         return this.$confirm(`确定移除 ${ file.name }？`);
       },
-      delLocation(lid){
+      delLocation(index, row){
 
       },
       addLocation(){
 
-      },
-      getLocation(){
-        axios.get('http://10.21.64.1:8181/userAddress/findAll').then(response=>{
-        console.log(response)
-      })
-      }},
+      }
+    },
     mounted(){
-
-
-  axios.get('http://10.21.64.1:8181/user/userInfo').then(response=>{
+      axios.defaults.withCredentials=true;
+  axios.get('http://10.17.109.39:8181/user/userInfo').then(response=>{
         console.log(response)
       })
 }

@@ -41,15 +41,6 @@
 
  >
 </el-input></div>
-<div id="div5">
- uid:
-<el-input
-  :placeholder=uid
-  v-model=uid
-  :disabled="true"
-
- >
-</el-input></div>
 <div id="div2">
   邮箱:
 <el-input
@@ -61,24 +52,20 @@
 </el-input></div>
 <div id="div3">
   性别:
- <el-radio :disabled=changeInfo v-model="radio" label="men">男</el-radio>
-  <el-radio :disabled=changeInfo v-model="radio" label="women">女</el-radio></div>
+<el-input
+  :placeholder=gender
+  v-model=inputGender
+  :disabled=changeInfo
+ >
+</el-input></div>
           </div>
           <div id="div4">
   密码:
 <el-input
   :placeholder=password
-  v-model=inputpassword
+  v-model=Inputpassword
   :disabled=changeInfo
-   show-password
-  ></el-input></div>
-  <div id="div6">
-  手机:
-<el-input
-  :placeholder=mobile
-  v-model=inputMobile
-  :disabled=changeInfo
-
+show-password
   >
 </el-input></div>
             </el-card>
@@ -91,24 +78,21 @@
 </template>
 <script>
 import axios from 'axios'
-axios.defaults.withCredentials=true
-axios.defaults.crossDomain=true
   export default {
     name: 'selfinfo',
     data() {
       return {
           name:"aaa",
           email:"???@???.com",
+          gender:"楠",
           mobile:"",
           password:"密码",
-          uid:null,
           changeInfo:true,
-          radio:"men",
           inputName:"",
           inputEmail:"",
           inputGender:"",
-          inputpassword:"",
-          inputMobile:"",
+          Inputpassword:"",
+
       }
     },
     methods: {
@@ -123,8 +107,6 @@ axios.defaults.crossDomain=true
     mounted(){
       axios.get('http://10.21.64.1:8181/user/userInfo').then(response=>{
         console.log(response)
-        this.email=response.data.email;
-
       })
     }
   }
@@ -189,7 +171,7 @@ axios.defaults.crossDomain=true
 #div1{
   position: absolute;
   left: 10%;
-margin-top: 80px;
+
 
 }
 #div2{
@@ -200,21 +182,11 @@ margin-top: 80px;
 #div3{
   position: absolute;
   left: 10%;
-margin-top: 160px;
+margin-top: 80px;
 }
 #div4{
   position: absolute;
   left: 60%;
 margin-top: 80px;
-}
-#div5{
-  position: absolute;
-  left: 10%;
-
-}
-#div6{
-  position: absolute;
-  left: 60%;
-margin-top: 160px;
 }
 </style>

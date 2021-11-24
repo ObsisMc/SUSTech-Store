@@ -53,7 +53,6 @@ import Mainpageshow from "./newmainpage/mainpageshow";
 import Testlist from "./newmainpage/testlist";
 import Cartlist from "./shoppingchart/cartlist";
 import Orderdetail from "./shoppingchart/orderdetail";
-import QRCode from "qrcodejs2";
 import Goodstest from "./goodspage/goodstest";
 
 export default {
@@ -80,7 +79,7 @@ export default {
     Searchfilter,
     Searchnavigator,
     Goodexhibition,
-    Splitpage, Searchbody, GoodCard, CollapsePanel, Infinitelist, Map, searchhead, navigator, QRCode
+    Splitpage, Searchbody, GoodCard, CollapsePanel, Infinitelist, Map, searchhead, navigator
   },
   methods: {
     payorder() {

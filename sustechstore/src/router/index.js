@@ -16,7 +16,9 @@ import shoppingcartpage from "../view/shoppingcartpage";
 import checkoutpage from "../view/checkoutpage";
 import payment from "../components/orderconfirm/payment";
 import submitorder from "../components/orderconfirm/submitorder";
-import selfinfo from "../view/selfinfo.vue"
+import product from "../view/product";
+import register from "../view/register";
+
 Vue.use(Router)
 
 export default new Router({
@@ -26,6 +28,11 @@ export default new Router({
       path: '/',
       name: 'login',
       component: loginpage
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: register
     },
     {
       path: '/main',
@@ -58,6 +65,11 @@ export default new Router({
       component: shoppingcartpage
     },
     {
+      path: '/product',
+      name: 'product',
+      component: product
+    },
+    {
       path: '/checkout/:id',
       name: 'checkoutpage',
       component: checkoutpage,
@@ -81,10 +93,6 @@ export default new Router({
       path: '/search2',
       name: 'search',
       component: searchpage
-    },
-    {
-      path : '/selfinfo',
-      component: selfinfo
     },
     {
       path: '/*',

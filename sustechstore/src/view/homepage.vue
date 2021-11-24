@@ -6,10 +6,10 @@
     <el-container>
       <el-aside width="50px">
       </el-aside>
-      <el-main >
-        <mainfilter></mainfilter>
+      <el-main>
+        <mainfilter @getSearchTarget="getSearchTarget"></mainfilter>
         <br/>
-        <mainpagegoodlist style="margin: 10px 20px;" ></mainpagegoodlist>
+        <mainpagegoodlist style="margin: 10px 20px;" ref="mybody"></mainpagegoodlist>
       </el-main>
       <el-aside width="50px"></el-aside>
     </el-container>
@@ -25,13 +25,15 @@ import Mainpageshow from "../components/newmainpage/mainpageshow";
 export default {
   name: "homepage",
   components: {Mainpageshow, Mainpagegoodlist, Mainfilter, Searchnavigator},
-  data(){
+  data() {
     return {
       goodlistloading: true
     }
   },
-  methods:{
-
+  methods: {
+    getSearchTarget(target) {
+      this.$refs.mybody.getSearchTarget(target);
+    }
   }
 }
 </script>

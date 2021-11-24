@@ -22,17 +22,6 @@
     <el-row>
       <el-col :span="2" style="border:1px solid transparent;"></el-col>
       <el-col :span="20"><router-view></router-view></el-col>
-<!--      <el-col :span="20">-->
-<!--        <div v-if="step.active===0">-->
-<!--          <submitorder></submitorder>-->
-<!--        </div>-->
-<!--        <div v-if="step.active===1">-->
-<!--          <payment></payment>-->
-<!--        </div>-->
-<!--        <div v-if="step.active===2">-->
-<!--          <payresult></payresult>-->
-<!--        </div>-->
-<!--      </el-col>-->
       <el-col :span="2" style="border:1px solid transparent;">
         <el-badge :value="12" >
           <i class="el-icon-chat-dot-round " style="font-size: 30px; cursor: pointer;" @click="openchat"></i>

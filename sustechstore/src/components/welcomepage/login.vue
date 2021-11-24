@@ -47,6 +47,7 @@
 
 <script>
 import axios from 'axios'
+import {store} from "../../store/store";
 export default {
   data () {
     return {
@@ -117,7 +118,7 @@ export default {
   },
   methods: {// 提交登录
     submitForm () {
-      axios.post('http://10.21.64.1:8181/user/login', {
+      axios.post(store.state.database + 'user/login', {
         password: this.loginForm.passWord,
         uid: this.loginForm.userName
       }).then(response => {

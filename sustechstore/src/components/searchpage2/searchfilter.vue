@@ -78,48 +78,47 @@
         <el-divider></el-divider>
       </el-row>
     </el-row>
-      <el-row>
-        <span class="filtertitle">Price range</span><br/><br/>
-        <el-input v-model="pricefilter.min" placeholder="Min" style="width:70px;"></el-input>
-        <span>~</span>
-        <el-input v-model="pricefilter.max" placeholder="Max" style="width:70px;"></el-input>
-        <br/><br/>
-        <el-tag type="danger" style="width: 80px" v-if="pricefilter.vaildinput!==1">
+    <el-row>
+      <span class="filtertitle">Price range</span><br/><br/>
+      <el-input v-model="pricefilter.min" placeholder="Min" style="width:70px;"></el-input>
+      <span>~</span>
+      <el-input v-model="pricefilter.max" placeholder="Max" style="width:70px;"></el-input>
+      <br/><br/>
+      <el-tag type="danger" style="width: 80px" v-if="pricefilter.vaildinput!==1">
           <span style="position:center;">
             ¥ {{ pricefilter.confirmmin }} ~ {{ pricefilter.confirmmax }}
           </span>
-        </el-tag>
-        <span v-if="pricefilter.vaildinput===1"><el-tag type="danger">Error</el-tag></span>
-        <br/><br/>
-        <el-button type="warning" @click="setpricefilter">Set price</el-button>
-        <el-divider></el-divider>
-      </el-row>
-      <el-row>
-        <span class="filtertitle">Trade Address</span><br/><br/>
+      </el-tag>
+      <span v-if="pricefilter.vaildinput===1"><el-tag type="danger">Error</el-tag></span>
+      <br/><br/>
+      <el-button type="warning" @click="setpricefilter">Set price</el-button>
+      <el-divider></el-divider>
+    </el-row>
+    <el-row>
+      <span class="filtertitle">Trade Address</span><br/><br/>
 
-        <el-popover
-          placement="right"
-          width="300px;"
-          trigger="click"
-        >
-          <el-image :src="addressfilter.dorm2.url"
-                    style="border-radius: 10px;height:150px;width:200px; cursor: pointer;"
-                    slot="reference"></el-image>
-          <el-select
-            v-model="selectedaddress"
-            multiple
-            collapse-tags
-            style="margin-left: 20px; width: 200px;"
-            placeholder="Please select address">
-            <el-option
-              v-for="item in addressfilter"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-        </el-popover>
-      </el-row>
+      <el-popover
+        placement="right"
+        width="300px;"
+        trigger="click"
+      >
+        <el-image :src="addressfilter.dorm2.url"
+                  style="border-radius: 10px;height:150px;width:200px; cursor: pointer;"
+                  slot="reference"></el-image>
+        <el-select
+          v-model="selectedaddress"
+          multiple
+          collapse-tags
+          style="margin-left: 20px; width: 200px;"
+          placeholder="Please select address">
+          <el-option
+            v-for="item in addressfilter"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-popover>
     </el-row>
   </div>
 </template>
@@ -161,26 +160,39 @@ export default {
     };
   },
   methods: {
-    resetfilter(){
+    resetfilter() {
       this.checkList = [];
-      this.usrfilter.value=true;
-      this.usrfilter.changeusrvalid=true;
-      this.usrfilter.hasselect='';
+      this.usrfilter.value = true;
+      this.usrfilter.changeusrvalid = true;
+      this.usrfilter.hasselect = '';
       this.ratingfilter.rating = 0;
-      this.ratingfilter.ratingvalid=false;
-      this.classfilter.dynamicTags=[];
-      this.classfilter.inputVisible=false;
-      this.classfilter.inputValue='';
+      this.ratingfilter.ratingvalid = false;
+      this.classfilter.dynamicTags = [];
+      this.classfilter.inputVisible = false;
+      this.classfilter.inputValue = '';
       this.pricefilter.min = '';
       this.pricefilter.max = '';
       this.pricefilter.confirmin = '0';
       this.pricefilter.confirmax = '∞';
       this.pricefilter.vaildinput = 0;
       this.setpricefilter();
-      this.selectedaddress =[];
+      this.selectedaddress = [];
     },
-    confirmfilter(){
-      alert("confirm filter");
+    confirmfilter() {
+      var cateid = [];
+      for (let i = 0; i < this.checkList.length; i++) {
+        let c = this.checkList[i];
+        if (c === 'Study') {
+          cateid.push(1);
+        } else if (c === 'Food') {
+          cateid.push(2);
+        } else if (c === "Electronic device") {
+          cateid.push(3);
+        } else if (c === "Living") {
+          cateid.push(4);
+        }
+      }
+      this.$emit('getFilterGoods', {level:1, cate:cateid});
     },
     validchanusr() {
       if (this.usrfilter.hasselect === "") {
@@ -243,7 +255,8 @@ export default {
   font-weight: bold;
 
 }
-/deep/.el-divider--horizontal{
+
+/deep/ .el-divider--horizontal {
   margin-top: 10px;
 }
 

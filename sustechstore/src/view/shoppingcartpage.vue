@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import QRCode from "_qrcodejs2@0.0.2@qrcodejs2";
+// import QRCode from "_qrcodejs2@0.0.2@qrcodejs2";
 import cartlist from "../components/shoppingchart/cartlist";
 import Searchnavigator from "../components/searchpage2/searchnavigator";
 export default {
@@ -118,7 +118,7 @@ export default {
       this.totalprice=p;
     }
   },
-  components:{Searchnavigator, QRCode,cartlist}
+  components:{Searchnavigator,cartlist}
 }
 </script>
 

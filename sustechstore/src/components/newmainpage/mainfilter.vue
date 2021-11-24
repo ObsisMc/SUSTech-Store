@@ -165,6 +165,7 @@ export default {
   methods: {
     getSearchTarget() {
       this.filter.search.searchtarget = this.filter.search.searchinput;
+      this.$emit('getSearchTarget',this.filter.search.searchtarget);
     }
     ,
     cleanRole() {

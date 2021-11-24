@@ -26,7 +26,6 @@
 <script>
 // import FlipDown from 'vue-flip-down';
 
-import QRCode from "_qrcodejs2@0.0.2@qrcodejs2";
 
 export default {
   name: "payment",

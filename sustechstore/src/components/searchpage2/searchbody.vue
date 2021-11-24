@@ -25,7 +25,8 @@
         <el-col :span="24/goodexhibition.col"
                 v-for="o2 in o1*goodexhibition.col>goodexhibition.good.length?goodexhibition.good.length-(o1-1)*goodexhibition.col:goodexhibition.col"
                 :key="o2">
-          <exhibition :imgurl="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].fileName">
+          <exhibition :imgurl="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].fileName"
+          :id="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].id">
             <template v-slot:title>
               {{ goodexhibition.good[(o1 - 1) * goodexhibition.col + o2 - 1].name }}
             </template>
@@ -45,6 +46,7 @@
 <script>
 import axios from "axios";
 import Exhibition from "./exhibition";
+import {store} from "../../store/store";
 
 export default {
   name: "searchbody",
@@ -76,17 +78,40 @@ export default {
   methods: {
     getSearchTarget() {
       this.search.searchtarget = this.search.searchinput;
-      let goodsurl = 'http://10.21.64.1:8181/product/search/';
+      if(this.search.searchtarget===''){
+          this.getAllGoods();
+      }else{
+        axios.get(store.state.database+'product/search/'+this.search.searchtarget).then(response=>{
+          this.goodexhibition.good = response.data;
+        })
+      }
+    },
+    getFilterGoods(filter){
+      var level=filter.level;
+      var c = filter.cate;
+      console.log(level,c)
+      this.goodexhibition.good=[];
+      for(let i=0;i<c.length;i++){
+        axios.get(store.state.database + 'product/list/'+level+'/'+c[i]).then(response=>{
+
+          for(let j=0;j<response.data.length;j++){
+            this.goodexhibition.good.push(response.data[j]);
+          }
+        })
+      }
+    },
+    getAllGoods(){
+      let goodsurl = store.state.database+'product/list';
+      let myurl = "@/../static/goods.json";
+      axios.get(goodsurl).then(response => {
+        // this.goodexhibition.good = response.data.goods;
+        console.log(response);
+        this.goodexhibition.good = response.data;
+      })
     }
   },
   mounted() {
-    let goodsurl = 'http://10.21.64.1:8181/product/list';
-    let myurl = "@/../static/goods.json";
-    axios.get(goodsurl).then(response => {
-      // this.goodexhibition.good = response.data.goods;
-      console.log(response);
-      this.goodexhibition.good = response.data;
-    })
+    this.getAllGoods();
   }
 }
 </script>

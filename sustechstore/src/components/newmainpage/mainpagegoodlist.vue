@@ -1,20 +1,21 @@
 <template>
-  <div class="infinite-list-wrapper" >
-    <ul class="infinite-list"  v-infinite-scroll="load" infinite-scroll-distance="100">
+  <div class="infinite-list-wrapper">
+    <ul class="infinite-list" v-infinite-scroll="load" infinite-scroll-distance="100">
       <li v-for="o1 in Math.ceil(goods.good.length/goods.col)" :key="o1">
         <el-row :gutter="30">
           <el-col :span="24/goods.col"
                   v-for="o2 in o1*goods.col>goods.good.length?goods.good.length-(o1-1)*goods.col:goods.col"
                   :key="o2">
-            <singlegood :imgurl="goods.good[(o1-1)*goods.col + o2 - 1].fileName">
+            <singlegood :imgurl="goods.good[(o1-1)*goods.col + o2 - 1].fileName"
+                        :id="goods.good[(o1-1)*goods.col + o2 - 1].id">
               <template v-slot:title>
                 {{ goods.good[(o1 - 1) * goods.col + o2 - 1].name }}
               </template>
               <template v-slot:intro v-if="goods.good[(o1 - 1) * goods.col + o2 - 1].description!==''">
-                {{ goods.good[(o1 - 1) * goods.col + o2 - 1].description}}
+                {{ goods.good[(o1 - 1) * goods.col + o2 - 1].description }}
               </template>
               <template v-slot:username>
-                {{goods.user[(o1 - 1) * goods.col + o2 - 1].name}}
+                {{ goods.user[(o1 - 1) * goods.col + o2 - 1].name }}
               </template>
             </singlegood>
           </el-col>
@@ -27,6 +28,7 @@
 <script>
 import axios from "axios";
 import Singlegood from "./singlegood";
+import {store} from "../../store/store";
 
 export default {
   name: "mainpagegoodlist",
@@ -48,25 +50,36 @@ export default {
           }
         ],
         user: [
-          {name:'hi'}
+          {name: 'hi'}
         ],
         col: 4
       }
     }
   },
   mounted() {
-    let goodsurl = 'http://10.21.64.1:8181/product/list';
-    let myurl = "@/../static/goods.json";
-    axios.get(goodsurl).then(response => { // 要是是动态路由，需要再加一个../
-      console.log(response);
-      this.goods.good = response.data;
-    })
-    let userurl = 'http://10.21.64.1:8181/user/findById/';
-    axios.get()
+    this.getAllGoods();
   },
-  methods:{
-    load(){
-      let newgood={
+  methods: {
+    getAllGoods() {
+      let goodsurl = store.state.database + 'product/list';
+      let myurl = "@/../static/goods.json";
+      axios.get(goodsurl).then(response => { // 要是是动态路由，需要再加一个../
+        console.log(response);
+        this.goods.good = response.data;
+      })
+    },
+    getSearchTarget(target) {
+      if (target === '') {
+        this.getAllGoods();
+      } else {
+        axios.get(store.state.database + "product/search/" + target).then(response => {
+          this.goods.good = response.data;
+        })
+      }
+
+    },
+    load() {
+      let newgood = {
         "categoryleveloneId": 0,
         "categorylevelthreeId": 0,
         "categoryleveltwoId": 0,
@@ -78,7 +91,7 @@ export default {
         "price": 0
       };
       this.goods.good.push(newgood);
-      this.goods.user.push({'name':'unamed'});
+      this.goods.user.push({'name': 'unamed'});
     }
   }
 }
@@ -91,6 +104,7 @@ export default {
   height: 1000px;
 
 }
+
 /*.infinite-list-wrapper::-webkit-scrollbar {*/
 /*  display: none;*/
 /*}*/
@@ -106,9 +120,11 @@ export default {
   border-radius: 6px;
   /* 滚动条的圆角宽度 */
 }
+
 .infinite-list-wrapper:hover::-webkit-scrollbar-thumb:hover {
   background-color: #c0cecc;
 }
+
 .infinite-list-wrapper:hover::-webkit-scrollbar-thumb:vertical {
   background-color: rgba(193, 193, 193, 0.79);
   border-radius: 6px;
@@ -120,7 +136,8 @@ export default {
 ul {
   padding: 0 0;
 }
-.el-row{
+
+.el-row {
   margin: 0 0;
 }
 </style>

@@ -18,7 +18,7 @@
                 <el-divider style="margin:0;"></el-divider>
                 <slot name="intro">He or she is so lazy and there is nothing.</slot>
               </el-popover>
-              <i class="el-icon-goods detail " @click="toCart"></i>
+              <i class="el-icon-goods detail " @click="toGood"></i>
             </el-row>
             <el-row>
               <span style="margin:10px 1px;font-size:12px;"><slot name="intro">He/She is so lazy and doesn't write anything.</slot></span>
@@ -42,7 +42,7 @@
                 <el-divider style="margin:0;"></el-divider>
                 <slot name="intro">He or she is so lazy and there is nothing.</slot>
               </el-popover>
-              <i class="el-icon-goods detail " @click="toCart" ></i>
+              <i class="el-icon-goods detail " @click="toGood" ></i>
             </span>
           </div>
           <div style=" overflow-y: auto;height: 220px;" class="textmsg">
@@ -61,7 +61,7 @@
 <script>
 export default {
   name: 'exhibition',
-  props: ['imgurl', 'msg']
+  props: ['imgurl', 'msg','id']
   ,
   data() {
     return {
@@ -69,8 +69,8 @@ export default {
     }
   },
   methods:{
-    toCart(){
-      this.$router.push('/shoppingcart')
+    toGood(){
+      this.$router.push({name:'product',query:{id:this.id}});
     }
   },
   computed: {

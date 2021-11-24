@@ -7,7 +7,7 @@
       <div :style="{backgroundImage: color, backgroundSize:'contain'}"
            class="textshow">
         <span>
-          {{msg}}
+          {{ msg }}
           22222222222222222222222222222222222222222222222222222222222222222222222222222
           22222222222222222222222222222222222222222222222222222222222222222222222222222
           22222222222222222222222222222222222222222222222222222222222222222222222222222
@@ -30,9 +30,7 @@
       <el-divider style="margin:0;"></el-divider>
       <slot name="intro">He or she is so lazy and there is nothing.</slot>
     </el-popover>
-    <router-link to="/shoppingcart">
-      <i class="el-icon-goods detail "></i>
-    </router-link>
+    <i class="el-icon-goods detail " @click="toGood"></i>
 
   </div>
 </template>
@@ -42,29 +40,32 @@ import axios from "axios";
 
 export default {
   name: "singlegood",
-  props: ['imgurl','msg'],
+  props: ['imgurl', 'msg', 'id'],
   data() {
     return {
       test: "",
-      color:null
+      color: null
     }
   },
-  methods:{
+  methods: {
+    toGood() {
+      this.$router.push({name: 'product', query: {id:this.id}});
+    }
   },
   computed: {
     haveimage() {
       return this.imgurl !== "";
     }
   },
-  mounted(){
+  mounted() {
     console.log(this.imgurl)
 
-    if(this.imgurl===''){
+    if (this.imgurl === '') {
       console.log("into")
       console.log(this.imgurl)
-      axios.get("@/../static/color_gradient.json").then(response =>{
+      axios.get("@/../static/color_gradient.json").then(response => {
         let len = Object.keys(response.data).length;
-        this.color = response.data[Math.floor(Math.random()*len)].color;
+        this.color = response.data[Math.floor(Math.random() * len)].color;
       })
     }
   }
@@ -117,14 +118,15 @@ export default {
   border-radius: 20px;
   object-fit: fill;
 }
-.textshow{
+
+.textshow {
   width: 250px;
   height: 180px;
-  padding:15px;
+  padding: 15px;
   border-radius: 20px;
   overflow: auto;
-  word-wrap:break-word;
-  word-break:normal;
+  word-wrap: break-word;
+  word-break: normal;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
 }
 
@@ -145,8 +147,8 @@ export default {
   display: none;
 }
 
-/deep/.el-divider--horizontal{
-  margin:5px 0;
+/deep/ .el-divider--horizontal {
+  margin: 5px 0;
 }
 
 </style>
