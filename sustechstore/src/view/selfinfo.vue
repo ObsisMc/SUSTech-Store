@@ -32,12 +32,28 @@
                 </el-button-group>
               </div>
           <div>
+
+              <el-avatar
+      src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+        :size="150"
+      ></el-avatar>
+      <el-button size="small" type="primary" id="photo">更换头像</el-button>
+
 <div id="div1">
   用户昵称:
 <el-input
   :placeholder=name
   v-model=inputName
   :disabled=changeInfo
+
+ >
+</el-input></div>
+<div id="div5">
+ uid:
+<el-input
+  :placeholder=uid
+  v-model=uid
+  :disabled="true"
 
  >
 </el-input></div>
@@ -52,20 +68,24 @@
 </el-input></div>
 <div id="div3">
   性别:
-<el-input
-  :placeholder=gender
-  v-model=inputGender
-  :disabled=changeInfo
- >
-</el-input></div>
+ <el-radio :disabled=changeInfo v-model="radio" label="men">男</el-radio>
+  <el-radio :disabled=changeInfo v-model="radio" label="women">女</el-radio></div>
           </div>
           <div id="div4">
   密码:
 <el-input
   :placeholder=password
-  v-model=Inputpassword
+  v-model=inputpassword
   :disabled=changeInfo
-show-password
+   show-password
+  ></el-input></div>
+  <div id="div6">
+  手机:
+<el-input
+  :placeholder=mobile
+  v-model=inputMobile
+  :disabled=changeInfo
+
   >
 </el-input></div>
             </el-card>
@@ -78,21 +98,25 @@ show-password
 </template>
 <script>
 import axios from 'axios'
+import { store } from '../store/store'
+axios.defaults.withCredentials=true
+axios.defaults.crossDomain=true
   export default {
     name: 'selfinfo',
     data() {
       return {
-          name:"aaa",
-          email:"???@???.com",
-          gender:"楠",
+          name:"mihoyo",
+          email:"11111111@mhy.com",
           mobile:"",
           password:"密码",
+          uid:11111111,
           changeInfo:true,
+          radio:"women",
           inputName:"",
           inputEmail:"",
           inputGender:"",
-          Inputpassword:"",
-
+          inputpassword:"",
+          inputMobile:"",
       }
     },
     methods: {
@@ -105,8 +129,17 @@ import axios from 'axios'
 
     },
     mounted(){
-      axios.get('http://10.21.64.1:8181/user/userInfo').then(response=>{
+
+        axios.defaults.headers.common['satoken'] = store.state.token;
+      axios.get(store.state.database+'user/userInfo').then(response=>{
         console.log(response)
+        this.email=response.data.email;
+        this.name =response.data.nickName
+        this.mobile=response.data.mobile
+        this.uid=response.data.uid
+        if(response.data.uid){
+            this.radio="men"
+        }
       })
     }
   }
@@ -171,7 +204,7 @@ import axios from 'axios'
 #div1{
   position: absolute;
   left: 10%;
-
+margin-top: 80px;
 
 }
 #div2{
@@ -182,11 +215,32 @@ import axios from 'axios'
 #div3{
   position: absolute;
   left: 10%;
-margin-top: 80px;
+margin-top: 160px;
 }
 #div4{
   position: absolute;
   left: 60%;
 margin-top: 80px;
+}
+#div5{
+  position: absolute;
+  left: 10%;
+
+}
+#div6{
+  position: absolute;
+  left: 60%;
+margin-top: 160px;
+}
+.el-avater{
+ position: absolute;
+ left: 50%;
+ margin-top: 80px;
+}
+#photo{
+  position: absolute;
+ left: 50%;
+ transform: translateX(-120%);
+ margin-top: 150px;
 }
 </style>
