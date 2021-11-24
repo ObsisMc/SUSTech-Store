@@ -10,12 +10,12 @@
 
       </el-col>
     </el-row>
-    <el-divider ></el-divider>
+    <el-divider></el-divider>
     <el-row>
     </el-row>
     <goodstest></goodstest>
     <div style="width: 500px;">
-      <el-steps :active="active" finish-status="success">
+      <el-steps :active="active" finish-status="success" align-center>
         <el-step title="步骤 1"></el-step>
         <el-step title="步骤 2"></el-step>
         <el-step title="步骤 3"></el-step>
@@ -23,7 +23,7 @@
 
       <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
     </div>
-    <el-steps :active="1">
+    <el-steps :active="1" align-center>
       <el-step title="步骤 1" description="这是一段很长很长很长的描述性文字"></el-step>
       <el-step title="步骤 2" description="这是一段很长很长很长的描述性文字"></el-step>
       <el-step title="步骤 3" description="这段就没那么长了"></el-step>

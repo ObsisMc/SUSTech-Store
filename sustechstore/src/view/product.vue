@@ -1,8 +1,8 @@
 <template>
-<!--  <div class="note" :style="note">-->
+  <!--  <div class="note" :style="note">-->
   <div>
     <el-container style="height: 100%;" v-on="getProductInformation()">
-<!--      <img src="../../assets/orange.jpg" alt="">-->
+      <!--      <img src="../../assets/orange.jpg" alt="">-->
       <el-header height="60px">
         <el-row :gutter="20">
           <el-col :span="1">
@@ -12,15 +12,21 @@
                 </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item icon="el-icon-plus">Sofa</el-dropdown-item>
-                <el-dropdown-item icon="el-icon-circle-plus" >Chairs</el-dropdown-item>
+                <el-dropdown-item icon="el-icon-circle-plus">Chairs</el-dropdown-item>
                 <el-dropdown-item icon="el-icon-circle-plus-outline">Beds</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </el-col>
 
-          <el-col :span="2"><div class="header_tags">Sofas</div></el-col>
-          <el-col :span="2"><div class="header_tags">Chairs</div></el-col>
-          <el-col :span="1"><div class="header_tags">Beds</div></el-col>
+          <el-col :span="2">
+            <div class="header_tags">Sofas</div>
+          </el-col>
+          <el-col :span="2">
+            <div class="header_tags">Chairs</div>
+          </el-col>
+          <el-col :span="1">
+            <div class="header_tags">Beds</div>
+          </el-col>
           <el-col :span="2" :offset="5">
             <el-row>
               <i class="el-icon-present"></i>
@@ -45,16 +51,16 @@
 
       <el-container>
         <el-aside width="650px" :style="defaultHeight">
-<!--          <el-carousel :interval="2000" type="card"  height="imgHeight" width="imgWidth">-->
-<!--            <el-carousel-item v-for="item in imgList" :key="item.id">-->
-<!--              <el-row>-->
-<!--                <el-col :span="25">-->
-<!--                  <img ref="imgHeight" :src="item.idView" class="banner_img" alt="加载失败"/>-->
-<!--                </el-col>-->
-<!--              </el-row>-->
-<!--            </el-carousel-item>-->
-            <img :src="imgList.idView" alt="失败" width=100% height=100%>
-<!--          </el-carousel>-->
+          <!--          <el-carousel :interval="2000" type="card"  height="imgHeight" width="imgWidth">-->
+          <!--            <el-carousel-item v-for="item in imgList" :key="item.id">-->
+          <!--              <el-row>-->
+          <!--                <el-col :span="25">-->
+          <!--                  <img ref="imgHeight" :src="item.idView" class="banner_img" alt="加载失败"/>-->
+          <!--                </el-col>-->
+          <!--              </el-row>-->
+          <!--            </el-carousel-item>-->
+          <img :src="imgList.idView" alt="失败" width=100% height=100%>
+          <!--          </el-carousel>-->
         </el-aside>
 
         <!--        ??????????????????????????????????-->
@@ -65,7 +71,7 @@
             <el-row :gutter="20">
               <el-col :span="4">
                 <div class="main_first">
-                  <a class="bold">{{name}}</a>
+                  <a class="bold">{{ name }}</a>
                 </div>
               </el-col>
               <el-col :span="2" :offset="20">
@@ -77,12 +83,12 @@
 
             <el-row margin="100px" id="para_margin">
               <p class="small_para">
-                {{description}}
+                {{ description }}
               </p>
             </el-row>
 
             <el-row id="money_margin">
-              <a class="bold">{{price}}</a>
+              <a class="bold">{{ price }}</a>
             </el-row>
 
             <el-row>
@@ -98,33 +104,31 @@
                 </div>
               </el-col>
               <el-col :span="7">
-<!--                <div>-->
-<!--                  <p id="reviews">-->
-<!--                    {{reviews}} reviews-->
-<!--                  </p>-->
-<!--                </div>-->
+                <!--                <div>-->
+                <!--                  <p id="reviews">-->
+                <!--                    {{reviews}} reviews-->
+                <!--                  </p>-->
+                <!--                </div>-->
               </el-col>
             </el-row>
 
             <el-row :gutter="20">
               <el-col :span="6">
                 <button class="button_margin">
-                  <router-link to="shoppingcart">
-                  <el-button type="primary" plain>Buy Now</el-button>
-                  </router-link>
+                  <el-button type="primary" plain @click="toOrder">Buy Now</el-button>
                 </button>
               </el-col>
               <el-col :span="6" offset="8">
                 <button class="button_margin">
-                  <el-button type="success" plain>Add to basket</el-button>
+                  <el-button type="success" plain @click="addToCart">Add to basket</el-button>
                 </button>
               </el-col>
             </el-row>
 
             <el-row id="home_deliver_margin">
-<!--              <el-col>-->
-<!--                <p class="small_para">Home Delivery - ${{money_delivery}}</p>-->
-<!--              </el-col>-->
+              <!--              <el-col>-->
+              <!--                <p class="small_para">Home Delivery - ${{money_delivery}}</p>-->
+              <!--              </el-col>-->
             </el-row>
 
           </el-main>
@@ -143,9 +147,10 @@
 <script>
 import axios from 'axios';
 import {store} from "../store/store";
+
 export default {
   name: 'product',
-  data () {
+  data() {
     return {
       value: 3.7,
       // item: './assets/sofa.png'
@@ -161,14 +166,16 @@ export default {
       description: '',
       image: '',
       name: '',
-      price: ''
+      price: '',
+      orderid: 0,
+      orderstatus: 0
     }
   },
   methods: {
     // this.$router.push('/main'),
-    getProductInformation () {
+    getProductInformation() {
       let goodid = this.$route.query.id;
-      axios.get( store.state.database + 'product/findById/' + goodid
+      axios.get(store.state.database + 'product/findById/' + goodid
       )
         .then(response => {
           console.log(response)
@@ -178,55 +185,70 @@ export default {
           this.price = response.data.price
         })
     },
-    mounted () {
+    toOrder() {
+      this.$router.push({
+        path: '/checkout/' + this.orderid + '/' + this.orderstatus, query: {status: this.orderstatus}
+      });
+    },
+    addToCart() {
+
+    },
+    mounted() {
     }
   }
 }
 </script>
 
 <style scoped>
-#foot{
+#foot {
   text-align: center;
 }
-#para_margin{
+
+#para_margin {
   margin-top: 20px;
   margin-bottom: 20px;
   display: flex;
   flex-wrap: wrap
 }
-#money_margin{
+
+#money_margin {
   margin-bottom: 10px;
   text-align: left;
 }
-#rate_margin{
+
+#rate_margin {
   margin-top: 15px;
 }
-#home_deliver_margin{
+
+#home_deliver_margin {
   margin-top: 50px;
 }
-#reviews{
+
+#reviews {
   font-size: small;
 }
-#header_icon{
+
+#header_icon {
   margin-top: 8px;
 }
 
-.button_margin{
+.button_margin {
   margin-top: 20px;
   border: none
 }
 
-.small_para{
+.small_para {
   font-family: "Lucida Console", Monaco, monospace;
   font-size: small;
   text-align: left;
 }
 
-.bold{
+.bold {
   text-align: left;
   font-weight: bold;
   font-size: x-large;
 }
+
 /*#app {*/
 /*  font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
 /*  -webkit-font-smoothing: antialiased;*/
@@ -250,13 +272,18 @@ export default {
 .el-carousel__item:nth-child(2n+1) {
   background-color: #d3dce6;
 }
-.el-main{
+
+.el-main {
 }
-.el-aside{}
-.el-header{
+
+.el-aside {
+}
+
+.el-header {
   /*background-color: darkgray;*/
 }
-.el-footer{
+
+.el-footer {
   margin-top: 150px;
   /*background-color: #3399ff;*/
 }

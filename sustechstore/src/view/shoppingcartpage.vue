@@ -21,7 +21,7 @@
         </el-col>
         <el-col :span="8">
           <el-image :src="require('@/assets/rmb32.png')"></el-image>
-          <span style="color: #FCC200; font-size: 30px; text-align: center; ">{{ totalprice }}</span>
+          <span style="color: #FCC200; font-size: 35px; text-align: center; ">{{ totalprice }}</span>
         </el-col>
 
       </el-row>
