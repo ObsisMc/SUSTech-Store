@@ -3,25 +3,23 @@
     <searchnavigator style="position: fixed;width: 100%;left: 0;top: 0;z-index: 1000;"></searchnavigator>
     <div style="height: 70px;"></div>
     <el-row>
-      <el-col :span="12" >
-        <picexhibition :imgurl="good.image"></picexhibition>
+      <el-col :span="12">
+        <picexhibition :imgurllist="good.image"></picexhibition>
       </el-col>
       <el-col :span="1">
         <el-divider direction="vertical"><i class="el-icon-mobile-phone"></i></el-divider>
       </el-col>
-      <discription @toOrder="toOrder" @addToChart="addToCart">
+      <discription :rating="rating" @toOrder="toOrder" @addToChart="addToCart">
         <template v-slot:name>
-          {{good.name}}
+          {{ good.name }}
+        </template>
+        <template v-slot:discription>
+          {{ good.description }}
+        </template>
+        <template v-slot:price>
+          {{ good.price }}
         </template>
       </discription>
-
-    </el-row>
-    <el-row>
-      <el-col>
-        <p id="foot">
-          Welcome to Sustech Store
-        </p>
-      </el-col>
 
     </el-row>
   </div>
@@ -52,10 +50,10 @@ export default {
         createTime: "2021-11-24T13:46:26.467Z",
         description: "A sectional sofa or an L shaped sofa can make a great addition to your living room based on your needs",
         id: 0,
-        image: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-        name: "string",
+        image: ["https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg", "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"],
+        name: "Product name",
         ownerId: 0,
-        price: 0,
+        price: 125,
         updateTime: "2021-11-24T13:46:26.467Z"
       }
     }
@@ -97,25 +95,7 @@ export default {
   text-align: center;
 }
 
-#para_margin {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  display: flex;
-  flex-wrap: wrap
-}
 
-#money_margin {
-  margin-bottom: 10px;
-  text-align: left;
-}
-
-#rate_margin {
-  margin-top: 15px;
-}
-
-#home_deliver_margin {
-  margin-top: 50px;
-}
 
 #reviews {
   font-size: small;
@@ -123,23 +103,6 @@ export default {
 
 #header_icon {
   margin-top: 8px;
-}
-
-
-
-.small_para {
-  font-family: "Lucida Console", Monaco, monospace;
-  font-size: small;
-  text-align: left;
-}
-
-
-
-
-
-.el-footer {
-  margin-top: 150px;
-  /*background-color: #3399ff;*/
 }
 
 
