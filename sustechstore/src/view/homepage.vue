@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import Searchnavigator from "../components/searchpage2/searchnavigator";
+import Searchnavigator from "../components/wholenavigator";
 import Mainfilter from "../components/newmainpage/mainfilter";
 import Mainpagegoodlist from "../components/newmainpage/mainpagegoodlist";
 import Mainpageshow from "../components/newmainpage/mainpageshow";

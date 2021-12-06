@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import searchnavigator from "../components/searchpage2/searchnavigator";
+import searchnavigator from "../components/wholenavigator";
 import searchfilter from "../components/searchpage2/searchfilter";
 import searchbody from "../components/searchpage2/searchbody";
 import axios from "axios";

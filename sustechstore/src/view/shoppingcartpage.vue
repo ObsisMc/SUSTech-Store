@@ -63,7 +63,7 @@
 <script>
 // import QRCode from "_qrcodejs2@0.0.2@qrcodejs2";
 import cartlist from "../components/shoppingchart/cartlist";
-import Searchnavigator from "../components/searchpage2/searchnavigator";
+import Searchnavigator from "../components/wholenavigator";
 import axios from "axios";
 import {store} from "../store/store";
 export default {

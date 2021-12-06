@@ -34,7 +34,7 @@
 
 <script>
 import Searchbody from "./searchpage2/searchbody";
-import Searchnavigator from "./searchpage2/searchnavigator";
+import Searchnavigator from "./wholenavigator";
 import Searchfilter from "./searchpage2/searchfilter";
 import Mainfilter from "./newmainpage/mainfilter";
 import Singlegood from "./newmainpage/singlegood";

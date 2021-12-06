@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import Searchnavigator from "../components/searchpage2/searchnavigator";
+import Searchnavigator from "../components/wholenavigator";
 import Submitorder from "../components/orderconfirm/submitorder";
 import Payment from "../components/orderconfirm/payment";
 import Payresult from "../components/orderconfirm/payresult";

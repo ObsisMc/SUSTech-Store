@@ -78,7 +78,7 @@
 <script>
 import axios from 'axios';
 import {store} from "../store/store";
-import Searchnavigator from "../components/searchpage2/searchnavigator";
+import Searchnavigator from "../components/wholenavigator";
 
 export default {
   name: 'product',

@@ -1,28 +1,44 @@
 <template>
-<div>
-  <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-    <el-menu-item index="1">处理中心</el-menu-item>
-    <el-submenu index="2">
-      <template slot="title">我的工作台</template>
-      <el-menu-item index="2-1">选项1</el-menu-item>
-      <el-menu-item index="2-2">选项2</el-menu-item>
-      <el-menu-item index="2-3">选项3</el-menu-item>
-      <el-submenu index="2-4">
-        <template slot="title">选项4</template>
-        <el-menu-item index="2-4-1">选项1</el-menu-item>
-        <el-menu-item index="2-4-2">选项2</el-menu-item>
-        <el-menu-item index="2-4-3">选项3</el-menu-item>
-      </el-submenu>
-    </el-submenu>
-    <el-menu-item index="3" disabled>消息中心</el-menu-item>
-    <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
-  </el-menu>
-</div>
+  <div>
+    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
+             active-text-color="orange" style="font-weight: bold;">
+      <el-col :span="4" class="menuitemleft" >
+        <div style="cursor: pointer;" @click="toMain">
+          <el-image style="float: left; height:50px;width:50px;line-height: 10px;"
+                    :src="require('@/assets/sustechlogo.png')"></el-image>
+          <span style="float: left;">Sustech Flea Store</span>
+        </div>
+
+      </el-col>
+
+      <el-menu-item index="1" style="font-size: 15px;">Flea trade</el-menu-item>
+      <el-menu-item index="2" style="font-size: 15px;">Errand proxy</el-menu-item>
+      <el-menu-item index="3" style="font-size: 15px;" disabled>API excahnge</el-menu-item>
+      <el-menu-item index="4" style="font-size: 15px;" disabled>More function</el-menu-item>
+
+      <el-col :span="1" class="menuitemright" >
+          <el-button icon="el-icon-s-custom"  type="warning" size="small" style="cursor: pointer;" circle @click="toSelfPage"></el-button>
+      </el-col>
+      <el-col :span="1" class="menuitemright" >
+          <i class="el-icon-goods menuitem" style="font-size: 25px;" ></i>
+      </el-col>
+      <el-col :span="1" class="menuitemright" >
+          <i class="el-icon-star-off menuitem" style="font-size: 25px; cursor: pointer; " @click="toCart"></i>
+      </el-col>
+      <el-col :span="1" class="menuitemright" >
+          <i class="el-icon-search" style="font-size: 25px; cursor: pointer;" @click="toSearch"></i>
+      </el-col>
+
+
+    </el-menu>
+  </div>
+
 </template>
+
 
 <script>
 export default {
-  name: "wholenavigator",
+  name: "searchnavigator",
   data() {
     return {
       activeIndex: '1',
@@ -32,13 +48,32 @@ export default {
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
+    },
+    toMain(){
+      this.$router.push({name:'main'});
+    },
+    toSearch(){
+      this.$router.push({name:'search2'});
+    },
+    toCart(){
+      this.$router.push({name:'shoppingcart'});
+    },
+    toSelfPage(){
+      this.$router.push({name:'selfpage'});
     }
   }
 }
 </script>
 
 <style scoped>
-.el-menu {
-  /*height: 30px;*/
+.menuitemleft{
+  outline: none;
+  line-height: 60px;
+  float: left;
+}
+.menuitemright{
+  outline: none;
+  line-height: 60px;
+  float: right;
 }
 </style>
