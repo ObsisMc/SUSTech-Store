@@ -13,7 +13,6 @@
     <el-divider></el-divider>
     <el-row>
     </el-row>
-    <goodstest></goodstest>
     <div style="width: 500px;">
       <el-steps :active="active" finish-status="success" align-center>
         <el-step title="步骤 1"></el-step>
@@ -43,7 +42,6 @@ import Mainpageshow from "./newmainpage/mainpageshow";
 import Testlist from "./newmainpage/testlist";
 import Cartlist from "./shoppingchart/cartlist";
 import Orderdetail from "./shoppingchart/orderdetail";
-import Goodstest from "./goodspage/goodstest";
 
 export default {
   name: "test",
@@ -58,7 +56,6 @@ export default {
     }
   },
   components: {
-    Goodstest,
     Orderdetail,
     Cartlist,
     Testlist,

@@ -1,68 +1,20 @@
 <template>
-  <!--  <div class="note" :style="note">-->
   <div>
     <searchnavigator style="position: fixed;width: 100%;left: 0;top: 0;z-index: 1000;"></searchnavigator>
     <div style="height: 70px;"></div>
     <el-row>
-      <el-col :span="12" style="float: left;">
-        <el-image src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" alt="失败"
-                  fit="cover"></el-image>
+      <el-col :span="12" >
+        <picexhibition :imgurl="good.image"></picexhibition>
       </el-col>
       <el-col :span="1">
         <el-divider direction="vertical"><i class="el-icon-mobile-phone"></i></el-divider>
       </el-col>
-      <el-col :span="11">
-        <el-row :gutter="20">
-          <el-col :span="18">
-            <span class="bold" style="float: left;">{{ good.name }}</span>
-          </el-col>
-          <el-col :span="6">
-              <i class="el-icon-star-off"></i>
-          </el-col>
-        </el-row>
+      <discription @toOrder="toOrder" @addToChart="addToCart">
+        <template v-slot:name>
+          {{good.name}}
+        </template>
+      </discription>
 
-        <el-row margin="100px" id="para_margin">
-          <p class="small_para">
-            {{ good.description }}
-          </p>
-        </el-row>
-
-        <el-row id="money_margin">
-          <a class="bold">{{ good.price }}</a>
-        </el-row>
-
-        <el-row>
-          <el-col :span="7">
-            <div class="main_rate" id="rate_margin">
-              <el-rate
-                v-model="rating"
-                disabled
-                show-score
-                text-color="#ff9900"
-                score-template="{value}">
-              </el-rate>
-            </div>
-          </el-col>
-          <el-col :span="7">
-          </el-col>
-        </el-row>
-
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <button class="button_margin">
-              <el-button type="primary" plain @click="toOrder">Buy Now</el-button>
-            </button>
-          </el-col>
-          <el-col :span="6" offset="8">
-            <button class="button_margin">
-              <el-button type="success" plain @click="addToCart">Add to basket</el-button>
-            </button>
-          </el-col>
-        </el-row>
-
-        <el-row id="home_deliver_margin">
-        </el-row>
-      </el-col>
     </el-row>
     <el-row>
       <el-col>
@@ -79,10 +31,12 @@
 import axios from 'axios';
 import {store} from "../store/store";
 import Searchnavigator from "../components/wholenavigator";
+import Picexhibition from "../components/goodspage/picexhibition";
+import Discription from "../components/goodspage/discription";
 
 export default {
   name: 'product',
-  components: {Searchnavigator},
+  components: {Discription, Picexhibition, Searchnavigator},
   data() {
     return {
       rating: 3.7,
@@ -96,7 +50,7 @@ export default {
         categorylevelthreeId: 0,
         categoryleveltwoId: 0,
         createTime: "2021-11-24T13:46:26.467Z",
-        description: "string",
+        description: "A sectional sofa or an L shaped sofa can make a great addition to your living room based on your needs",
         id: 0,
         image: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
         name: "string",
@@ -171,10 +125,7 @@ export default {
   margin-top: 8px;
 }
 
-.button_margin {
-  margin-top: 20px;
-  border: none
-}
+
 
 .small_para {
   font-family: "Lucida Console", Monaco, monospace;
@@ -182,48 +133,16 @@ export default {
   text-align: left;
 }
 
-.bold {
-  text-align: left;
-  font-weight: bold;
-  font-size: x-large;
-}
 
-.el-carousel__item h3 {
-  color: #475669;
-  font-size: 14px;
-  opacity: 0.75;
-  line-height: 200px;
-  margin: 0;
-}
 
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
 
-.el-carousel__item:nth-child(2n+1) {
-  background-color: #d3dce6;
-}
-
-.el-main {
-}
-
-.el-aside {
-}
-
-.el-header {
-  /*background-color: darkgray;*/
-}
 
 .el-footer {
   margin-top: 150px;
   /*background-color: #3399ff;*/
 }
 
-.el-image {
-  /*border-radius: 30px;*/
-  width: 300px;
-  height: 300px;
-}
+
 
 /deep/ .el-divider--vertical {
   height: calc(70vh);
