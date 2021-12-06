@@ -16,21 +16,30 @@
       </div>
     </div>
 
-    <span class="info">
-      <span class="name"><slot name="title"></slot></span>
+    <el-col :span="16">
+      <span class="info">
+        <slot name="title"></slot>
+        <span style=" font-size: 18px; margin-left: 20px; ">
+            ¥ <slot name="price"></slot>
+        </span>
+
       </span>
-    <el-popover
-      placement="top-start"
-      width="200"
-      trigger="hover"
-      :open-delay="200">
-      <i class="el-icon-info detail" slot="reference"></i>
-      <i class="el-icon-user-solid" style="font-size:15px;"></i>
-      <span style="font-weight: bold;font-size: 15px;"><slot name="username"></slot></span>
-      <el-divider style="margin:0;"></el-divider>
-      <slot name="intro">He or she is so lazy and there is nothing.</slot>
-    </el-popover>
-    <i class="el-icon-goods detail " @click="toGood"></i>
+    </el-col>
+    <el-col :span="8">
+      <el-popover
+        placement="top-start"
+        width="200"
+        trigger="hover"
+        :open-delay="200">
+        <i class="el-icon-info detail" slot="reference"></i>
+        <i class="el-icon-user-solid" style="font-size:15px;"></i>
+        <span style="font-weight: bold;font-size: 15px;"><slot name="username"></slot></span>
+        <el-divider style="margin:0;"></el-divider>
+        <slot name="intro">He or she is so lazy and there is nothing.</slot>
+      </el-popover>
+      <i class="el-icon-goods detail " @click="toGood"></i>
+    </el-col>
+
 
   </div>
 </template>
@@ -49,7 +58,7 @@ export default {
   },
   methods: {
     toGood() {
-      this.$router.push({name: 'product', query: {id:this.id}});
+      this.$router.push({name: 'product', query: {id: this.id}});
     }
   },
   computed: {
@@ -132,7 +141,7 @@ export default {
 
 .info {
   float: left;
-  margin: 10px 10px;
+  margin: 10px 0;
 }
 
 .detail {
@@ -140,7 +149,7 @@ export default {
   font-size: 20px;
   cursor: pointer;
   color: grey;
-  margin: 5px 10px;
+  margin: 10px 5px;
 }
 
 .textshow::-webkit-scrollbar {

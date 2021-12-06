@@ -33,6 +33,9 @@
             <template v-slot:intro v-if="goodexhibition.good[(o1 - 1) * goodexhibition.col + o2 - 1].description !== ''">
               {{ goodexhibition.good[(o1 - 1) * goodexhibition.col + o2 - 1].description }}
             </template>
+            <template v-slot:price>
+              {{goodexhibition.good[(o1 - 1) * goodexhibition.col + o2 - 1].price}}
+            </template>
           </exhibition>
         </el-col>
       </el-row>
@@ -64,7 +67,7 @@ export default {
           "categorylevelthreeId": 0,
           "categoryleveltwoId": 0,
           "description": "",
-          "fileName": "",
+          "fileName": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
           "id": 0,
           "name": "string",
           "ownerId": 0,

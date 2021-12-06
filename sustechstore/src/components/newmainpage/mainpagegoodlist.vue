@@ -17,6 +17,9 @@
               <template v-slot:username>
                 {{ goods.user[(o1 - 1) * goods.col + o2 - 1].name }}
               </template>
+          <template v-slot:price>
+            {{goods.good[(o1 - 1) * goods.col + o2 - 1].price}}
+          </template>
             </singlegood>
           </el-col>
         </el-row>
@@ -38,15 +41,15 @@ export default {
       goods: {
         good: [
           {
-            "categoryleveloneId": 0,
-            "categorylevelthreeId": 0,
-            "categoryleveltwoId": 0,
-            "description": "",
-            "fileName": "",
-            "id": 0,
-            "name": "string",
-            "ownerId": 0,
-            "price": 0
+            categoryleveloneId: 0,
+            categorylevelthreeId: 0,
+            categoryleveltwoId: 0,
+            description: "",
+            fileName: "",
+            id: 0,
+            name: "string",
+            ownerId: 0,
+            price: 100
           }
         ],
         user: [

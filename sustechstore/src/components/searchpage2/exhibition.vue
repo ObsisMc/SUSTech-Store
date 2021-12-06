@@ -6,19 +6,30 @@
           <el-image :src="imgurl" class="image" :preview-src-list="[imgurl]"></el-image>
           <div class="bottom clearfix" style="height: 100px;">
             <el-row>
-              <span class="title"><slot name="title"></slot></span>
-              <el-popover
-                placement="top-start"
-                width="200"
-                trigger="hover"
-                :open-delay="200">
-                <i class="el-icon-info detail" slot="reference"></i>
-                <i class="el-icon-user-solid" style="font-size:15px;"></i>
-                <span style="font-weight: bold;font-size: 15px;"><slot name="username">unamed</slot></span>
-                <el-divider style="margin:0;"></el-divider>
-                <slot name="intro">He or she is so lazy and there is nothing.</slot>
-              </el-popover>
-              <i class="el-icon-goods detail " @click="toGood"></i>
+              <el-col :span="16">
+                <el-col :span="12">
+                  <span class="title"><slot name="title"></slot></span>
+                </el-col>
+                <el-col :span="12">
+               <span style=" font-size: 18px;  float: left;">
+                  ¥ <slot name="price"></slot>
+              </span>
+                </el-col>
+              </el-col>
+              <el-col :span="8">
+                <el-popover
+                  placement="top-start"
+                  width="200"
+                  trigger="hover"
+                  :open-delay="200">
+                  <i class="el-icon-info detail" slot="reference"></i>
+                  <i class="el-icon-user-solid" style="font-size:15px;"></i>
+                  <span style="font-weight: bold;font-size: 15px;"><slot name="username">unamed</slot></span>
+                  <el-divider style="margin:0;"></el-divider>
+                  <slot name="intro">He or she is so lazy and there is nothing.</slot>
+                </el-popover>
+                <i class="el-icon-goods detail " @click="toGood"></i>
+              </el-col>
             </el-row>
             <el-row>
               <span style="margin:10px 1px;font-size:12px;"><slot name="intro">He/She is so lazy and doesn't write anything.</slot></span>
@@ -42,7 +53,7 @@
                 <el-divider style="margin:0;"></el-divider>
                 <slot name="intro">He or she is so lazy and there is nothing.</slot>
               </el-popover>
-              <i class="el-icon-goods detail " @click="toGood" ></i>
+              <i class="el-icon-goods detail " @click="toGood"></i>
             </span>
           </div>
           <div style=" overflow-y: auto;height: 220px;" class="textmsg">
@@ -61,16 +72,16 @@
 <script>
 export default {
   name: 'exhibition',
-  props: ['imgurl', 'msg','id']
+  props: ['imgurl', 'msg', 'id']
   ,
   data() {
     return {
       test: ""
     }
   },
-  methods:{
-    toGood(){
-      this.$router.push({name:'product',query:{id:this.id}});
+  methods: {
+    toGood() {
+      this.$router.push({name: 'product', query: {id: this.id}});
     }
   },
   computed: {
@@ -119,7 +130,7 @@ export default {
   font-size: 20px;
   cursor: pointer;
   color: grey;
-  margin: 5px 10px;
+  margin: 5px 5px;
 }
 
 .text {
@@ -140,14 +151,17 @@ export default {
   clear: both
 }
 
-/deep/.el-divider--horizontal{
-  margin:5px 0;
+/deep/ .el-divider--horizontal {
+  margin: 5px 0;
 }
-/deep/.el-card__header{
+
+/deep/ .el-card__header {
   /*padding:0 18px;*/
 }
 
-.textmsg::-webkit-scrollbar { width: 0 !important }
+.textmsg::-webkit-scrollbar {
+  width: 0 !important
+}
 
 
 </style>
