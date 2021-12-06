@@ -33,22 +33,12 @@
 </template>
 
 <script>
-import CollapsePanel from "./searchpage/CollapsePanel";
-import GoodCard from "./mainage/GoodCard";
-import Infinitelist from "./mainage/Infinitelist";
-import searchhead from "./searchpage/searchhead";
-import Map from "./mainage/Map";
-import searchbody from "./searchpage/searchbody";
 import Searchbody from "./searchpage2/searchbody";
-import Splitpage from "./searchpage/splitpage";
-import Goodexhibition from "./searchpage/goodexhibition";
 import Searchnavigator from "./searchpage2/searchnavigator";
 import Searchfilter from "./searchpage2/searchfilter";
 import Mainfilter from "./newmainpage/mainfilter";
 import Singlegood from "./newmainpage/singlegood";
 import Mainpagegoodlist from "./newmainpage/mainpagegoodlist";
-import navigator from "./mainage/navigator";
-import mainpageshow from "./newmainpage/mainpageshow";
 import Mainpageshow from "./newmainpage/mainpageshow";
 import Testlist from "./newmainpage/testlist";
 import Cartlist from "./shoppingchart/cartlist";
@@ -78,8 +68,7 @@ export default {
     Mainfilter,
     Searchfilter,
     Searchnavigator,
-    Goodexhibition,
-    Splitpage, Searchbody, GoodCard, CollapsePanel, Infinitelist, Map, searchhead, navigator
+    Searchbody,   Map, navigator
   },
   methods: {
     payorder() {
@@ -129,17 +118,10 @@ export default {
 
 <style scoped>
 
-#nvgtr {
-  position: fixed;
-}
-
-.el-breadcrumb {
-  line-height: 30px;
-}
 
 #wna {
-  /*height: 10px;*/
-}
+    /*height: 10px;*/
+  }
 
 /deep/ .el-divider--vertical {
   height: 720px;
