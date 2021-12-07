@@ -2,9 +2,40 @@
   "name": "goods",
   "goods": [
     {
-      "title": "汉堡",
-      "url": "",
-      "intro": "I bought  too many hamburgers and I think they are spoiled"
+      "categoryleveloneId": 0,
+      "categorylevelthreeId": 0,
+      "categoryleveltwoId": 0,
+      "description": "",
+      "fileName": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
+      "id": 0,
+      "name": "string",
+      "ownerId": 0,
+      "username": "username",
+      "price": 100
+    },
+    {
+      "categoryleveloneId": 0,
+      "categorylevelthreeId": 0,
+      "categoryleveltwoId": 0,
+      "description": "",
+      "fileName": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
+      "id": 0,
+      "name": "string",
+      "ownerId": 0,
+      "username": "username",
+      "price": 100
+    },
+    {
+      "categoryleveloneId": 0,
+      "categorylevelthreeId": 0,
+      "categoryleveltwoId": 0,
+      "description": "",
+      "fileName": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
+      "id": 0,
+      "name": "string",
+      "ownerId": 0,
+      "username": "username",
+      "price": 100
     }
   ]
 }

@@ -22,27 +22,13 @@
         <el-col :span="16">
       <span class="info">
         <slot name="title"></slot>
-        <span style=" font-size: 18px; margin-left: 20px; ">
-            ¥ <slot name="price"></slot>
-        </span>
-
       </span>
         </el-col>
         <el-col :span="8">
-          <el-popover
-            placement="top-start"
-            width="200"
-            trigger="hover"
-            :open-delay="200">
-            <i class="el-icon-info detail" slot="reference"></i>
-            <i class="el-icon-user-solid" style="font-size:15px;"></i>
-            <span style="font-weight: bold;font-size: 15px;"><slot name="username"></slot></span>
-            <el-divider style="margin:0;"></el-divider>
-            <slot name="intro">He or she is so lazy and there is nothing.</slot>
-          </el-popover>
-          <i class="el-icon-goods detail " @click="toGood"></i>
+          <span class="priceshow">
+            ¥ <slot name="price"></slot>
+        </span>
         </el-col>
-
       </el-row>
     </el-row>
 
@@ -56,7 +42,7 @@
 import axios from "axios";
 
 export default {
-  name: "singlegood",
+  name: "relatedgoods",
   props: ['imgurl', 'msg', 'id'],
   data() {
     return {
@@ -130,8 +116,8 @@ export default {
 }
 
 .image {
-  width: 280px;
-  height: 210px;
+  width: 150px;
+  height: 120px;
   border-radius: 20px;
   object-fit: fill;
 }
@@ -151,6 +137,11 @@ export default {
   float: left;
   margin: 10px 0;
 }
+.priceshow{
+  float: right;
+  margin: 10px 0;
+  font-size: 18px;
+}
 
 .detail {
   float: right;
@@ -169,3 +160,4 @@ export default {
 }
 
 </style>
+
