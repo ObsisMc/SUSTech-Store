@@ -85,7 +85,6 @@ export default {
     getRelatedProducts(){
       var url = "@/../static/goods2.json";
       axios.get(url).then(response => {
-        console.log(response.data);
         this.goods.good = response.data.goods;
       })
 

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <el-col :span="11">
       <el-row :gutter="20">
         <el-col :span="18">
         <span class="title">
@@ -64,9 +63,6 @@
           <el-button type="success" plain @click="addToCart" class="productbutton">Add to basket</el-button>
         </el-col>
       </el-row>
-
-
-    </el-col>
   </div>
 </template>
 
@@ -141,7 +137,6 @@ export default {
   font-weight: 580;
   font-size: 25px;
 }
-
 .el-button {
   padding: 25px 80px;
   float: left;
