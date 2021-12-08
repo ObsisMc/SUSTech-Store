@@ -2,7 +2,7 @@
   <div>
     <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
              active-text-color="orange" style="font-weight: bold;">
-      <el-col :span="4" class="menuitemleft" >
+      <el-col :span="4" class="menuitemleft">
         <div style="cursor: pointer;" @click="toMain">
           <el-image style="float: left; height:50px;width:50px;line-height: 10px;"
                     :src="require('@/assets/sustechlogo.png')"></el-image>
@@ -16,17 +16,15 @@
       <el-menu-item index="3" style="font-size: 15px;" disabled>API excahnge</el-menu-item>
       <el-menu-item index="4" style="font-size: 15px;" disabled>More function</el-menu-item>
 
-      <el-col :span="1" class="menuitemright" >
-          <el-button icon="el-icon-s-custom"  type="warning" size="small" style="cursor: pointer;" circle @click="toSelfPage"></el-button>
+      <el-col :span="1" class="menuitemright">
+        <el-button icon="el-icon-s-custom" type="warning" size="small" style="cursor: pointer;" circle
+                   @click="toSelfPage"></el-button>
       </el-col>
-      <el-col :span="1" class="menuitemright" >
-          <i class="el-icon-goods menuitem" style="font-size: 25px;" ></i>
+      <el-col :span="1" class="menuitemright">
+        <i class="el-icon-star-off menuitem" style="font-size: 25px; cursor: pointer; " @click="toCart"></i>
       </el-col>
-      <el-col :span="1" class="menuitemright" >
-          <i class="el-icon-star-off menuitem" style="font-size: 25px; cursor: pointer; " @click="toCart"></i>
-      </el-col>
-      <el-col :span="1" class="menuitemright" >
-          <i class="el-icon-search" style="font-size: 25px; cursor: pointer;" @click="toSearch"></i>
+      <el-col :span="1" class="menuitemright">
+        <i class="el-icon-search" style="font-size: 25px; cursor: pointer;" @click="toSearch"></i>
       </el-col>
 
 
@@ -37,41 +35,55 @@
 
 
 <script>
+import {store} from "../store/store";
+
 export default {
   name: "searchnavigator",
   data() {
     return {
-      activeIndex: '1',
-      activeIndex2: '1'
+      activeIndex: '1'
     };
   },
   methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
+    handleSelect(key) {
+      if (key === "1") {
+        this.$router.push({name: "main"});
+        store.state.storetype="1";
+      } else if (key === "2") {
+        this.$router.push({name: "errandmain"});
+        store.state.storetype="2";
+      }
+
     },
-    toMain(){
-      this.$router.push({name:'main'});
+    toMain() {
+      this.$router.push({name: 'main'});
+      store.state.storetype="1";
     },
-    toSearch(){
-      this.$router.push({name:'search2'});
+    toSearch() {
+      this.$router.push({name: 'search2'});
     },
-    toCart(){
-      this.$router.push({name:'shoppingcart'});
+    toCart() {
+      this.$router.push({name: 'shoppingcart'});
     },
-    toSelfPage(){
-      this.$router.push({name:'selfpage'});
+    toSelfPage() {
+      this.$router.push({name: 'selfpage'});
     }
+  },
+  mounted() {
+    this.activeIndex = store.state.storetype;
+
   }
 }
 </script>
 
 <style scoped>
-.menuitemleft{
+.menuitemleft {
   outline: none;
   line-height: 60px;
   float: left;
 }
-.menuitemright{
+
+.menuitemright {
   outline: none;
   line-height: 60px;
   float: right;

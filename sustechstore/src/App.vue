@@ -5,8 +5,21 @@
 </template>
 
 <script>
+import {store} from "./store/store";
 export default {
-  name: 'App'
+  name: 'App',
+  created(){
+    if (sessionStorage.getItem('storetype')) {
+      store.state.storetype = JSON.parse(sessionStorage.getItem('storetype'));
+    }
+    if (sessionStorage.getItem('token')) {
+      store.state.token = JSON.parse(sessionStorage.getItem('token'));
+    }
+    window.addEventListener('beforeunload', () => {
+      sessionStorage.setItem('storetype', JSON.stringify(store.state.storetype));
+      sessionStorage.setItem('token', JSON.stringify(store.state.token));
+    })
+  }
 }
 </script>
 

@@ -15,7 +15,9 @@ import payment from "../components/orderconfirm/payment";
 import submitorder from "../components/orderconfirm/submitorder";
 import product from "../view/product";
 import register from "../view/registerpage";
-import selfinfo from "../view/selfinfo.vue"
+import selfinfo from "../view/selfinfo.vue";
+import errandmainpage from "../view/errandmainpage";
+
 Vue.use(Router)
 
 export default new Router({
@@ -35,6 +37,11 @@ export default new Router({
       path: '/main',
       name: 'main',
       component: homepage
+    },
+    {
+      path: "/errand",
+      name: "errandmain",
+      component: errandmainpage
     },
     {
       path: '/search',
@@ -71,8 +78,8 @@ export default new Router({
       name: 'checkoutpage',
       component: checkoutpage,
       children: [
-        {path: '0', component:submitorder},
-        {path: '1', component:payment},
+        {path: '0', component: submitorder},
+        {path: '1', component: payment},
         {path: '2', component: payresult}
       ]
     },
@@ -82,7 +89,7 @@ export default new Router({
       component: payresult
     },
     {
-      path : '/selfinfo',
+      path: '/selfinfo',
       component: selfinfo
     },
     {

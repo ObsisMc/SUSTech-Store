@@ -47,8 +47,6 @@
     </el-row>
 
 
-
-
   </div>
 </template>
 
@@ -66,7 +64,12 @@ export default {
   },
   methods: {
     toGood() {
-      this.$router.push({name: 'product', query: {id: this.id}});
+      let goodpage = this.$router.resolve({
+        name: 'product',
+        query: {id: this.id}
+      });
+      window.open(goodpage.href, '_blank');
+      // this.$router.push({name: 'product', query: {id: this.id}});
     }
   },
   computed: {
