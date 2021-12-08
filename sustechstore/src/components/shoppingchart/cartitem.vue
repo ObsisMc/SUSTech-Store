@@ -65,7 +65,11 @@ export default {
       this.$emit('removeGoods', this.index);
     },
     toGood() {
-      this.$router.push({name: 'product', query: {id: this.id}});
+      let goodpage = this.$router.resolve({
+        name: 'product',
+        query: {id: this.id}
+      });
+      window.open(goodpage.href, '_blank');
     },
     getOrderTagStatus(s) {
       if (s === 0) {
