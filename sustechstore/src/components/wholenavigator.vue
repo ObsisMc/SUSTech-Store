@@ -41,7 +41,7 @@ export default {
   name: "searchnavigator",
   data() {
     return {
-      activeIndex: '1'
+      activeIndex: store.state.storetype
     };
   },
   methods: {
@@ -68,10 +68,6 @@ export default {
     toSelfPage() {
       this.$router.push({name: 'selfpage'});
     }
-  },
-  mounted() {
-    this.activeIndex = store.state.storetype;
-
   }
 }
 </script>
