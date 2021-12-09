@@ -1,5 +1,5 @@
 .name_right {
-   margin-left: 365px;
+   margin-left: 600px;
 
 }
 .name_left {
@@ -10,7 +10,7 @@
 
     word-wrap: break-word;
     width: 50%;
-   margin-left: 150px;
+   margin-left: 250px;
 
     font-size: 10px;
     text-align: right;
@@ -101,7 +101,7 @@
 
 .talk {
     border: 1px solid #DCE1E6;
-    width: 400px;
+    width: 650px;
     height: 450px;
     margin: 0 auto;
 }
@@ -126,6 +126,7 @@
     border-top: 1px solid #DCE1E6;
     height: 35px;
     display: flex;
+    margin-top: 0px;
 }
 
 .talk-message-face {
