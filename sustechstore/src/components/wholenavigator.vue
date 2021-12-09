@@ -26,11 +26,8 @@
       <el-col :span="1" class="menuitemright" v-if="activeIndex==='1'">
         <i class="el-icon-search" style="font-size: 25px; cursor: pointer;" @click="toSearch"></i>
       </el-col>
-
-
     </el-menu>
   </div>
-
 </template>
 
 

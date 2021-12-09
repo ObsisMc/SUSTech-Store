@@ -26,36 +26,6 @@
 
       </el-row>
     </el-col>
-<!--    <el-col :span="9">-->
-<!--      <div id="orderdetail">-->
-<!--        <el-image :src="require('@/assets/sustechlogo.png')"></el-image>-->
-
-<!--        <el-button @click="payorder"></el-button>-->
-<!--        <el-dialog-->
-<!--          :visible.sync="dialogVisible"-->
-<!--          width="30%"-->
-<!--          :before-close="handleClose">-->
-<!--          <span slot="title" style="float: left">Payment</span>-->
-<!--          <span>Total price: {{ totalprice }}</span>-->
-
-<!--          <el-tabs v-model="activeName" @tab-click="handleClick">-->
-<!--            <el-tab-pane label="Virtual coin" name="vc">-->
-<!--              <span style="float: left;">Balance: {{ balance }}</span>-->
-<!--              <el-button type="primary" @click="handlePay" size="mini">confirm</el-button>-->
-<!--            </el-tab-pane>-->
-<!--            <el-tab-pane label="Wechat" name="wc">-->
-<!--              <div id="wechatqr" ref="wechatqrref"></div>-->
-<!--              &lt;!&ndash;                id cannot contain space and other letters&ndash;&gt;-->
-<!--            </el-tab-pane>-->
-<!--            <el-tab-pane label="Alipay" name="ap">No support</el-tab-pane>-->
-<!--          </el-tabs>-->
-<!--          <span slot="footer" class="dialog-footer">-->
-<!--    <el-button @click="cancelorder">cancel</el-button>-->
-
-<!--  </span>-->
-<!--        </el-dialog>-->
-<!--      </div>-->
-<!--    </el-col>-->
   </el-row>
 </div>
 </template>

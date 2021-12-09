@@ -1,8 +1,14 @@
 <template>
-<div>
-  <el-button @click="drawer = true" type="primary" style="margin-left: 16px;">
-    点我打开
-  </el-button>
+<div @click="drawer = true">
+  <el-card class="box-card" shadow="hover" >
+    <div slot="header" class="clearfix">
+      <span>卡片名称</span>
+      <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
+    </div>
+    <div v-for="o in 4" :key="o" class="text item">
+      {{'列表内容 ' + o }}
+    </div>
+  </el-card>
 
   <el-drawer
     title="我是标题"
@@ -36,5 +42,25 @@ export default {
 </script>
 
 <style scoped>
+.text {
+  font-size: 14px;
 
+}
+
+.item {
+  margin-bottom: 18px;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both
+}
+
+.box-card {
+  width: 480px;
+}
 </style>

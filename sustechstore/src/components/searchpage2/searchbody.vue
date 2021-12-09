@@ -26,15 +26,16 @@
                 v-for="o2 in o1*goodexhibition.col>goodexhibition.good.length?goodexhibition.good.length-(o1-1)*goodexhibition.col:goodexhibition.col"
                 :key="o2">
           <exhibition :imgurl="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].fileName"
-          :id="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].id">
+                      :id="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].id">
             <template v-slot:title>
               {{ goodexhibition.good[(o1 - 1) * goodexhibition.col + o2 - 1].name }}
             </template>
-            <template v-slot:intro v-if="goodexhibition.good[(o1 - 1) * goodexhibition.col + o2 - 1].description !== ''">
+            <template v-slot:intro
+                      v-if="goodexhibition.good[(o1 - 1) * goodexhibition.col + o2 - 1].description !== ''">
               {{ goodexhibition.good[(o1 - 1) * goodexhibition.col + o2 - 1].description }}
             </template>
             <template v-slot:price>
-              {{goodexhibition.good[(o1 - 1) * goodexhibition.col + o2 - 1].price}}
+              {{ goodexhibition.good[(o1 - 1) * goodexhibition.col + o2 - 1].price }}
             </template>
           </exhibition>
         </el-col>
@@ -81,25 +82,25 @@ export default {
   methods: {
     getSearchTarget() {
       this.search.searchtarget = this.search.searchinput;
-      if(this.search.searchtarget===''){
-          this.getAllGoods();
-      }else{
-        axios.get(store.state.database+'product/search/'+this.search.searchtarget).then(response=>{
+      if (this.search.searchtarget === '') {
+        this.getAllGoods();
+      } else {
+        axios.get(store.state.database + 'product/search/' + this.search.searchtarget).then(response => {
           this.goodexhibition.good = response.data;
         })
       }
     },
-    getFilterGoods(filter){
-      var level=filter.level;
+    getFilterGoods(filter) {
+      var level = filter.level;
       var c = filter.cate;
-      console.log(level,c)
-      if(c.length===0){
-      }else{
-        this.goodexhibition.good=[];
-        for(let i=0;i<c.length;i++){
-          axios.get(store.state.database + 'product/list/'+level+'/'+c[i]).then(response=>{
+      console.log(level, c)
+      if (c.length === 0) {
+      } else {
+        this.goodexhibition.good = [];
+        for (let i = 0; i < c.length; i++) {
+          axios.get(store.state.database + 'product/list/' + level + '/' + c[i]).then(response => {
 
-            for(let j=0;j<response.data.length;j++){
+            for (let j = 0; j < response.data.length; j++) {
               this.goodexhibition.good.push(response.data[j]);
             }
           })
@@ -107,8 +108,8 @@ export default {
       }
 
     },
-    getAllGoods(){
-      let goodsurl = store.state.database+'product/list';
+    getAllGoods() {
+      let goodsurl = store.state.database + 'product/list';
       let myurl = "@/../static/goods.json";
       axios.get(goodsurl).then(response => {
         // this.goodexhibition.good = response.data.goods;
