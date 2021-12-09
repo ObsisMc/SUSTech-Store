@@ -22,7 +22,7 @@
       <el-dialog title="聊天" :visible.sync="dialog">
 
         <div class="talk" v-show="flag">
-          <div class="talk-header">
+          <!--div class="talk-header">
             <div class="talk-header-icon">
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-gengduocaozuo"></use>
@@ -31,7 +31,7 @@
                 <use xlink:href="#icon-guanbi"></use>
               </svg>
             </div>
-          </div>
+          </div-->
 
           <div class="talk-content ">
 
