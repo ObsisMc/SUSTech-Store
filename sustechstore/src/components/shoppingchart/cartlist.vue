@@ -59,7 +59,6 @@ export default {
       this.goods = response.data;
       this.calcTotalPrice();
     })
-
   },
   methods: {
     removeGoods(index) {
