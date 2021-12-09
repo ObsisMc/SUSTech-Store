@@ -21,7 +21,11 @@
    <router-link to="/selfinfo">
     详细信息
    </router-link></el-menu-item>
-    <el-menu-item index="4">
+      <el-menu-item index="4">
+    <router-link to='/main'>
+    返回主页
+    </router-link></el-menu-item>
+    <el-menu-item index="5">
     <router-link to='/'>
     登出
     </router-link></el-menu-item>
@@ -331,6 +335,7 @@ handleRemove(file, fileList) {
       Sell(){
 
            axios.defaults.headers.common['satoken'] = store.state.token;
+
         let  to={
                categoryleveloneId: this.selectedSell,
   categorylevelthreeId: 0,
@@ -346,6 +351,15 @@ handleRemove(file, fileList) {
            };
            axios.post(store.state.database+'/product/add',to).then(response=>{
                 console.log(response)
+                if(response.data){
+                   this.$message({
+          message: 'sucessful!',
+          type: 'success'
+        });
+                }
+                else{
+                   this.$message.error('ERROR !');
+                }
            })
       },
       getLocation(){
@@ -366,6 +380,7 @@ handleRemove(file, fileList) {
 
          let ans=[];
         axios.defaults.headers.common['satoken'] = store.state.token;
+        console.log(store.state.token);
         axios.get(store.state.database+'//order/listBuyVO').then(response=>{
           console.log(response)
           for(let i=0;i<response.data.length;i++){
@@ -519,7 +534,7 @@ axios.defaults.headers.common['satoken'] = store.state.token;
   top: 280px;
   color: gray;
   left: 50%;
-  transform: translateX(-65%);
+  transform: translateX(-60%);
 }
 
 </style>
