@@ -3,10 +3,7 @@
     <el-row>
       <span style="font-size: 30px;">Account payable: ¥ {{ price }}</span>
     </el-row>
-    <!--    <FlipDown-->
-    <!--      :endDate="1540212399971"-->
-    <!--      @timeUp="func"-->
-    <!--    />-->
+    <countdown deadline="2021-12-11 10:00:00" :showDays="false"></countdown>
     <el-tabs v-model="activeName" @tab-click="handleClick" v-loading="loading"
              element-loading-text="payment processing...">
       <el-tab-pane label="Virtual coin" name="vc">
@@ -24,8 +21,7 @@
 </template>
 
 <script>
-// import FlipDown from 'vue-flip-down';
-
+import Countdown from "./countdown";
 
 export default {
   name: "payment",
@@ -68,15 +64,17 @@ export default {
     }
   },
   mounted() {
-    this.qrto = 'https://www.baidu.com/'
-    this.$nextTick(() => {
-      this.createQrcode()
-    })
+    this.qrto = 'https://www.baidu.com/';
+    // this.$nextTick(() => {
+    //   this.createQrcode()
+    // })
   },
-  components: {}
+  components: {Countdown}
 }
 </script>
 
 <style scoped>
-
+flip-countdown.flip-card[data-v-cff81de8]{
+  font-size:1.8rem;
+}
 </style>

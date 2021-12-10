@@ -60,7 +60,12 @@ export default {
       this.$router.push({name: 'search2'});
     },
     toCart() {
-      this.$router.push({name: 'shoppingcart'});
+      if(store.state.storetype==="1"){
+        this.$router.push({name: 'shoppingcart'});
+      }else if(store.state.storetype==="2"){
+        this.$router.push({name: 'errandtask'});
+      }
+
     },
     toSelfPage() {
       this.$router.push({name: 'selfpage'});

@@ -17,6 +17,7 @@ import product from "../view/product";
 import register from "../view/registerpage";
 import selfinfo from "../view/selfinfo.vue";
 import errandmainpage from "../view/errandmainpage";
+import errandtaskpage from "../view/errandtaskpage";
 
 Vue.use(Router)
 
@@ -67,6 +68,11 @@ export default new Router({
       path: '/shoppingcart',
       name: 'shoppingcart',
       component: shoppingcartpage
+    },
+    {
+      path: '/errandtask',
+      name: 'errandtask',
+      component: errandtaskpage
     },
     {
       path: '/product',

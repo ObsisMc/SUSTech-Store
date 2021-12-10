@@ -27,7 +27,7 @@
       <el-step title="步骤 2" description="这是一段很长很长很长的描述性文字"></el-step>
       <el-step title="步骤 3" description="这段就没那么长了"></el-step>
     </el-steps>
-
+    <flip-countdown deadline="2021-12-10 10:00:00"></flip-countdown>
   </div>
 </template>
 
@@ -42,6 +42,7 @@ import Mainpageshow from "./newmainpage/mainpageshow";
 import Testlist from "./newmainpage/testlist";
 import Cartlist from "./shoppingchart/cartlist";
 import Orderdetail from "./shoppingchart/orderdetail";
+import FlipCountdown from 'vue2-flip-countdown';
 
 export default {
   name: "test",
@@ -65,7 +66,7 @@ export default {
     Mainfilter,
     Searchfilter,
     Searchnavigator,
-    Searchbody,   Map, navigator
+    Searchbody,   Map, navigator,FlipCountdown
   },
   methods: {
     payorder() {

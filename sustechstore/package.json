@@ -22,7 +22,8 @@
     "vue": "^2.5.2",
     "vue-flip-down": "^3.0.0",
     "vue-particles": "^1.0.9",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue2-flip-countdown": "^0.12.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
