@@ -10,7 +10,8 @@
                            :id="goods[(o1-1)*col + o2 - 1].productId"
                            :icon="goods[(o1 - 1) * col + o2 - 1].icon"
                            :rating="4"
-                           :saved="goods[(o1 - 1) * col + o2 - 1].saved">
+                           :saved="goods[(o1 - 1) * col + o2 - 1].saved"
+                           @changeFlag="changeFlag">
               <template v-slot:description>
                 {{ goods[(o1 - 1) * col + o2 - 1].description }}
               </template>
@@ -91,6 +92,15 @@ export default {
       axios.get(url).then(response => {
         this.goods = response.data;
       })
+    },
+    changeFlag(id) {
+      for (let i = 0; i < this.goods.length; i++) {
+        if (this.goods[i].productId === id) {
+          this.goods[i].saved = !this.goods[i].saved;
+        }
+      }
+
+
     }
   },
   mounted() {

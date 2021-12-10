@@ -2,7 +2,7 @@
   <div @click="drawer = true">
     <el-card class="box-card" shadow="hover">
       <el-row>
-        <i class="el-icon-s-flag flag" style="float: right;"></i>
+        <i class="el-icon-s-flag" :class="computedId" style="float: right;"></i>
       </el-row>
       <el-row style="text-align: left;">
         <slot name="description"></slot>
@@ -26,10 +26,10 @@
       <el-row>
         <el-col :span="4" class="support"></el-col>
         <el-col :span="16">
-          <el-row >
+          <el-row>
             <el-col :span="3">
               <div @click="toUser">
-                <el-avatar :size="60" :src="icon"  style="cursor: pointer;"></el-avatar>
+                <el-avatar :size="60" :src="icon" style="cursor: pointer;"></el-avatar>
               </div>
             </el-col>
             <el-col :span="18">
@@ -55,7 +55,7 @@
               </div>
             </el-col>
             <el-col :span="3">
-              <el-button plain @click="takeErrand"><i class="el-icon-s-flag flag"></i></el-button>
+              <el-button plain @click="takeErrand"><i class="el-icon-s-flag" :class="computedId"></i></el-button>
             </el-col>
           </el-row>
           <el-row style="margin-top: 30px;">
@@ -81,7 +81,7 @@ import axios from "axios";
 
 export default {
   name: "errandproduct",
-  props: ["imgurl", "id", "icon", "rating","saved"],
+  props: ["imgurl", "id", "icon", "rating", "saved"],
   data() {
     return {
       drawer: false,
@@ -100,7 +100,7 @@ export default {
         .catch(_ => {
         });
     },
-    toUser(){
+    toUser() {
       this.$message({
         message: "to user",
         type: "success"
@@ -108,19 +108,39 @@ export default {
       // this.$router.push();
     },
     takeErrand() {
-      let flags = document.getElementsByClassName("flag");
-      for(let i=0;i<flags.length;i++){
-        flags[i].style.color = "red";
-      }
-      // document.getElementById("flag").style.color="red";
-      this.$message({
-        message: "Add to errand tasks successfully",
-        type: "success"
-      })
-      let url="";
-      axios.post(url).then(response=>{
+      let flags = document.getElementsByClassName(this.computedId);
+      if (this.saved === false) {
+        console.log(flags)
+        for (let i = 0; i < flags.length; i++) {
+          flags[i].style.color = "red";
+        }
+        // document.getElementById("flag").style.color="red";
+        this.$message({
+          message: "Add to errand tasks successfully",
+          type: "success"
+        })
+        let url = "";
+        axios.post(url).then(response => {
 
-      })
+        })
+      } else {
+        for (let i = 0; i < flags.length; i++) {
+          flags[i].style.color = "black";
+        }
+
+        let url = "";
+        axios.post(url).then(response => {
+
+        })
+      }
+      this.$emit("changeFlag", this.id);
+
+
+    }
+  },
+  computed:{
+    computedId(){
+      return "flag" + (this.id).toString();
     }
   }
 }
