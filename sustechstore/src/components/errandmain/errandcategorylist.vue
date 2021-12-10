@@ -1,19 +1,24 @@
 <template>
   <div>
     <ul>
-      <li v-for="o1 in Math.ceil(goods.length/col)" :key="o1" >
+      <li v-for="o1 in Math.ceil(goods.length/col)" :key="o1">
         <el-row :gutter="30">
           <el-col :span="24/col"
                   v-for="o2 in o1*col>goods.length?goods.length-(o1-1)*col:col"
                   :key="o2">
             <errandproduct :imgurl="goods[(o1-1)*col + o2 - 1].image"
-                        :id="goods[(o1-1)*col + o2 - 1].productId"
-              :icon="goods[(o1 - 1) * col + o2 - 1].icon">
+                           :id="goods[(o1-1)*col + o2 - 1].productId"
+                           :icon="goods[(o1 - 1) * col + o2 - 1].icon"
+                           :rating="4"
+                           :saved="goods[(o1 - 1) * col + o2 - 1].saved">
               <template v-slot:description>
                 {{ goods[(o1 - 1) * col + o2 - 1].description }}
               </template>
               <template v-slot:nickName>
-                {{goods[(o1 - 1) * col + o2 - 1].nickName}}
+                {{ goods[(o1 - 1) * col + o2 - 1].nickName }}
+              </template>
+              <template v-slot:price>
+                {{ goods[(o1 - 1) * col + o2 - 1].price }}
               </template>
             </errandproduct>
           </el-col>
@@ -44,7 +49,8 @@ export default {
             nickName: "unamed",
             ownerId: 0,
             price: 200,
-            productId: 734
+            productId: 734,
+            saved: false
           },
           {
             description: "nothing is here",
@@ -55,10 +61,36 @@ export default {
             nickName: "unamed",
             ownerId: 0,
             price: 200,
-            productId: 734
+            productId: 734,
+            saved: false
           }
         ],
-      col:4
+      col: 4
+    }
+  },
+  methods: {
+    getAllGoods() {
+      // pass test
+
+      let url = "";
+      axios.get(url).then(response => {
+        this.goods = response.data;
+      })
+    },
+    getSearchTarget([target, cate]) {
+      // pass test
+      let url = "";
+      axios.get(url).then(response => {
+        this.goods = response.data;
+      })
+    },
+    getProductsByCate(idx) {
+      //pass
+
+      let url = "";
+      axios.get(url).then(response => {
+        this.goods = response.data;
+      })
     }
   },
   mounted() {
@@ -79,11 +111,11 @@ export default {
   border-radius: 20px;
 }
 
-ul{
+ul {
   list-style-type: none;
 }
 
-li{
+li {
   margin-bottom: 20px;
 }
 </style>

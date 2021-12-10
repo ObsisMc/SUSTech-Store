@@ -55,8 +55,9 @@ export default {
     getSearchTarget() {
       this.search.searchtarget = this.search.searchinput;
       if (this.search.searchtarget === '') {
-        this.getAllGoods();
+        this.$emit("getAllGoods");
       } else {
+        this.$emit("getSearchTarget",[this.search.searchtarget,this.category.selected]);
         axios.get(store.state.database + 'product/search/' + this.search.searchtarget).then(response => {
           this.goodexhibition.good = response.data;
         })
@@ -67,6 +68,9 @@ export default {
       option[this.category.selected - 1].removeAttribute("id", "selectedoption");
       option[idx - 1].setAttribute("id", "selectedoption");
       this.category.selected = idx;
+
+      this.$emit("getProductsByCate",idx);
+      this.search.searchtarget = '';
     }
   },
   mounted() {

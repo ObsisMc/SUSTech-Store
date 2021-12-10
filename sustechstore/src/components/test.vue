@@ -1,33 +1,6 @@
 <template>
   <div>
-    <el-row>
-      <el-col :span="12">
-        <el-image style="float: left; height:90px;width:90px;"
-                  :src="require('@/assets/sustechlogo.png')"></el-image>
-        <span style="float: left;line-height: 100px; font-size: 40px;">Checkout counter</span>
-      </el-col>
-      <el-col :span="12">
 
-      </el-col>
-    </el-row>
-    <el-divider></el-divider>
-    <el-row>
-    </el-row>
-    <div style="width: 500px;">
-      <el-steps :active="active" finish-status="success" align-center>
-        <el-step title="步骤 1"></el-step>
-        <el-step title="步骤 2"></el-step>
-        <el-step title="步骤 3"></el-step>
-      </el-steps>
-
-      <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
-    </div>
-    <el-steps :active="1" align-center>
-      <el-step title="步骤 1" description="这是一段很长很长很长的描述性文字"></el-step>
-      <el-step title="步骤 2" description="这是一段很长很长很长的描述性文字"></el-step>
-      <el-step title="步骤 3" description="这段就没那么长了"></el-step>
-    </el-steps>
-    <flip-countdown deadline="2021-12-10 10:00:00"></flip-countdown>
   </div>
 </template>
 

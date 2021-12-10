@@ -4,12 +4,13 @@
     <div style="height: 60px;"></div>
 
     <el-row>
-      <errandsearchheader></errandsearchheader>
+      <errandsearchheader @getAllGoods="getAllGoods" @getSearchTarget="getSearchTarget"
+                          @getProductsByCate="getProductsByCate"></errandsearchheader>
     </el-row>
     <el-row>
       <el-col :span="2" style="border:1px solid transparent;"></el-col>
       <el-col :span="18">
-        <errandcategorylist></errandcategorylist>
+        <errandcategorylist ref="tasksList"></errandcategorylist>
       </el-col>
       <el-col :span="2" style="border:1px solid transparent;"></el-col>
     </el-row>
@@ -32,7 +33,17 @@ export default {
     return {}
 
   },
-  methods: {},
+  methods: {
+    getAllGoods() {
+      this.$refs.tasksList.getAllGoods();
+    },
+    getSearchTarget([target,cate]) {
+      this.$refs.tasksList.getSearchTarget([target,cate]);
+    },
+    getProductsByCate(idx){
+      this.$refs.tasksList.getProductsByCate(idx);
+    }
+  },
   components: {Errandcategorylist, Errandsearchheader, Errandproduct, wholenavigator}
 }
 </script>
