@@ -5,11 +5,15 @@
   </el-card>
 
   <el-drawer
-    title="我是标题"
     :visible.sync="drawer"
     :direction="direction"
+    size="60%"
+    :show-close="false"
     :before-close="handleClose">
-    <span>我来啦!</span>
+    <template v-slot:title>
+      title
+    </template>
+    <slot name="description"></slot>
   </el-drawer>
 </div>
 </template>
@@ -56,6 +60,6 @@ export default {
 }
 
 .box-card {
-  width: 350px;
+
 }
 </style>

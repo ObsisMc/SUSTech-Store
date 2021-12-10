@@ -8,21 +8,9 @@
     </el-row>
     <el-row>
       <el-col :span="2" style="border:1px solid transparent;"></el-col>
-      <div v-for="o1 in 3" :key="o1">
-        <el-col :span="6">
-          <errandcategorylist>
-            <template v-slot:category>
-              {{ category[o1 - 1] }}
-            </template>
-          </errandcategorylist>
-        </el-col>
-        <el-col :span="1">
-          <el-divider v-if="o1!==3" direction="vertical"></el-divider>
-        </el-col>
-
-      </div>
-
-
+      <el-col :span="18">
+        <errandcategorylist></errandcategorylist>
+      </el-col>
       <el-col :span="2" style="border:1px solid transparent;"></el-col>
     </el-row>
 
@@ -41,13 +29,7 @@ import Errandcategorylist from "../components/errandmain/errandcategorylist";
 export default {
   name: "errandmainpage",
   data() {
-    return {
-      category: [
-        "Help me buy",
-        "Help me fetch/send",
-        "Help me do"
-      ]
-    }
+    return {}
 
   },
   methods: {},

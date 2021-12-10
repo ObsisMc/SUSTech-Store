@@ -41,7 +41,7 @@ import Mainpagegoodlist from "./newmainpage/mainpagegoodlist";
 import Mainpageshow from "./newmainpage/mainpageshow";
 import Testlist from "./newmainpage/testlist";
 import Cartlist from "./shoppingchart/cartlist";
-import Orderdetail from "./shoppingchart/orderdetail";
+// import Orderdetail from "./shoppingchart/orderdetail";
 import FlipCountdown from 'vue2-flip-countdown';
 
 export default {
@@ -57,7 +57,6 @@ export default {
     }
   },
   components: {
-    Orderdetail,
     Cartlist,
     Testlist,
     Mainpageshow,
