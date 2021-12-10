@@ -4,25 +4,58 @@
     {
       "categoryleveloneId": 0,
       "categorylevelthreeId": 0,
+      "icon": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
       "categoryleveltwoId": 0,
       "description": "this is my description",
       "fileName": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
       "id": 0,
       "name": "ham",
+      "nickName": "zrh",
       "ownerId": 0,
       "price": 0
     },
     {
       "categoryleveloneId": 0,
+      "icon": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
       "categorylevelthreeId": 0,
       "categoryleveltwoId": 0,
-      "description": "",
+      "description": "123123131",
       "fileName": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
       "id": 0,
       "name": "string",
       "ownerId": 0,
+      "nickName": "zrh",
       "price": 0
-    },{
+    },
+    {
+      "categoryleveloneId": 0,
+      "icon": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+      "categorylevelthreeId": 0,
+      "categoryleveltwoId": 0,
+      "description": "sdfsfsafdsf",
+      "fileName": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+      "id": 0,
+      "name": "string",
+      "ownerId": 0,
+      "nickName": "zrh",
+      "price": 0
+    },
+    {
+      "categoryleveloneId": 0,
+      "icon": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+      "categorylevelthreeId": 0,
+      "categoryleveltwoId": 0,
+      "description": "",
+      "fileName": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+      "id": 0,
+      "name": "string",
+      "nickName": "zrh",
+      "ownerId": 0,
+      "price": 0
+    },
+    {
+      "nickName": "zrh",
+      "icon": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
       "categoryleveloneId": 0,
       "categorylevelthreeId": 0,
       "categoryleveltwoId": 0,
@@ -34,6 +67,8 @@
       "price": 0
     },
     {
+      "nickName": "zrh",
+      "icon": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
       "categoryleveloneId": 0,
       "categorylevelthreeId": 0,
       "categoryleveltwoId": 0,
@@ -45,28 +80,8 @@
       "price": 0
     },
     {
-      "categoryleveloneId": 0,
-      "categorylevelthreeId": 0,
-      "categoryleveltwoId": 0,
-      "description": "",
-      "fileName": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-      "id": 0,
-      "name": "string",
-      "ownerId": 0,
-      "price": 0
-    },
-    {
-      "categoryleveloneId": 0,
-      "categorylevelthreeId": 0,
-      "categoryleveltwoId": 0,
-      "description": "",
-      "fileName": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-      "id": 0,
-      "name": "string",
-      "ownerId": 0,
-      "price": 0
-    },
-    {
+      "nickName": "zrh",
+      "icon": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
       "categoryleveloneId": 0,
       "categorylevelthreeId": 0,
       "categoryleveltwoId": 0,
@@ -78,6 +93,8 @@
       "price": 0
     },
     {
+      "nickName": "zrh",
+      "icon": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
       "categoryleveloneId": 0,
       "categorylevelthreeId": 0,
       "categoryleveltwoId": 0,
@@ -89,6 +106,8 @@
       "price": 0
     },
     {
+      "nickName": "zrh",
+      "icon": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
       "categoryleveloneId": 0,
       "categorylevelthreeId": 0,
       "categoryleveltwoId": 0,

@@ -1,27 +1,37 @@
 <template>
-<div @click="drawer = true">
-  <el-card class="box-card" shadow="hover" >
-    <slot name="description"></slot>
-  </el-card>
+  <div @click="drawer = true">
+    <el-card class="box-card" shadow="hover">
+      <el-row style="text-align: left;">
+        <slot name="description"></slot>
+      </el-row>
+      <el-row style="text-align: right; margin-top: 10px;">
+        <el-avatar :size="20"
+                   :src="icon"></el-avatar>
+        <span>
+          <slot name="nickName" >nickname</slot>
+        </span>
+      </el-row>
 
-  <el-drawer
-    :visible.sync="drawer"
-    :direction="direction"
-    size="60%"
-    :show-close="false"
-    :before-close="handleClose">
-    <template v-slot:title>
-      title
-    </template>
-    <slot name="description"></slot>
-  </el-drawer>
-</div>
+    </el-card>
+
+    <el-drawer
+      :visible.sync="drawer"
+      :direction="direction"
+      size="70%"
+      :show-close="false"
+      :before-close="handleClose">
+      <template v-slot:title>
+        title
+      </template>
+      <slot name="description"></slot>
+    </el-drawer>
+  </div>
 </template>
 
 <script>
 export default {
   name: "errandproduct",
-  props:["imgurl","id"],
+  props: ["imgurl", "id", "icon"],
   data() {
     return {
       drawer: false,
@@ -30,11 +40,12 @@ export default {
   },
   methods: {
     handleClose(done) {
-      this.$confirm('确认关闭？')
+      this.$confirm('Confirm close？')
         .then(_ => {
           done();
         })
-        .catch(_ => {});
+        .catch(_ => {
+        });
     }
   }
 }
@@ -55,11 +66,11 @@ export default {
   display: table;
   content: "";
 }
+
 .clearfix:after {
   clear: both
 }
 
-.box-card {
-
+.roughdetail {
 }
 </style>

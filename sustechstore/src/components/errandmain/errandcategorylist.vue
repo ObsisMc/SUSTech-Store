@@ -7,9 +7,13 @@
                   v-for="o2 in o1*col>goods.length?goods.length-(o1-1)*col:col"
                   :key="o2">
             <errandproduct :imgurl="goods[(o1-1)*col + o2 - 1].image"
-                        :id="goods[(o1-1)*col + o2 - 1].productId">
+                        :id="goods[(o1-1)*col + o2 - 1].productId"
+              :icon="goods[(o1 - 1) * col + o2 - 1].icon">
               <template v-slot:description>
                 {{ goods[(o1 - 1) * col + o2 - 1].description }}
+              </template>
+              <template v-slot:nickName>
+                {{goods[(o1 - 1) * col + o2 - 1].nickName}}
               </template>
             </errandproduct>
           </el-col>
