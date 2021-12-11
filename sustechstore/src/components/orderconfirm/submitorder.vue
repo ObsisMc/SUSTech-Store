@@ -5,7 +5,7 @@
              element-loading-text="submiting order...">
       <el-form-item label="Good's type">
         <el-radio-group v-model="ruleForm.goodtype" disabled>
-          <el-radio :label="0"> For slae</el-radio>
+          <el-radio :label="0"> For sale</el-radio>
           <el-radio :label="1">Wanted</el-radio>
           {{ ruleForm.goodtype }}
         </el-radio-group>

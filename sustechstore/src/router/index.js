@@ -18,6 +18,8 @@ import register from "../view/registerpage";
 import selfinfo from "../view/selfinfo.vue";
 import errandmainpage from "../view/errandmainpage";
 import errandtaskpage from "../view/errandtaskpage";
+import errandsubmit from "../components/orderconfirm/errandsubmit";
+import errandpayment from "../components/orderconfirm/errandpayment";
 
 Vue.use(Router)
 
@@ -86,7 +88,9 @@ export default new Router({
       children: [
         {path: '0', component: submitorder},
         {path: '1', component: payment},
-        {path: '2', component: payresult}
+        {path: '2', component: payresult},
+        {path: '3', component: errandsubmit},
+        {path: '4', component: errandpayment}
       ]
     },
     {

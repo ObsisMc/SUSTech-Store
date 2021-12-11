@@ -150,13 +150,7 @@ export default {
         .catch(_ => {
         });
     },
-    toUser() {
-      this.$message({
-        message: "to user",
-        type: "success"
-      })
-      // this.$router.push();
-    },
+
     takeErrand() {
       let flags = document.getElementsByClassName(this.computedId);
       if (this.saved === false) {
@@ -189,7 +183,9 @@ export default {
 
     },
     toOrder(){
-
+      this.$router.push({
+        path: '/checkout/' + this.id + '/' + "3", query: {status: 0}
+      });
     }
   },
   computed: {
