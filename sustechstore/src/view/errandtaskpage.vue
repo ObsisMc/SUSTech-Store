@@ -1,39 +1,40 @@
 <template>
-<div>
-  <wholenavigator style="position: fixed;width: 100%;left: 0;top: 0;z-index: 1000;"></wholenavigator>
-  <div style="height: 50px;"></div>
-  <el-row>
-    <el-col :span="24">
-      <el-row>
-        <span class="title">Errand tasks</span>
-        <div style="clear:both;"></div>
-        <el-divider></el-divider>
-      </el-row>
-      <el-row>
-        <taskitem @setTotalPrice="setTotalPrice" style="margin: 40px 30px;"></taskitem>
-      </el-row>
-      <el-row>
-        <el-col :span="16">
-          <router-link to="/main">
-            <i class="el-icon-d-arrow-left" style="font-size: 25px; float: left; margin:0 30px;"> </i>
-          </router-link>
-          <span style="float: left;">Continue shopping</span>
-        </el-col>
-        <el-col :span="8">
-          <el-image :src="require('@/assets/rmb32.png')"></el-image>
-          <span style="color: #FCC200; font-size: 35px; text-align: center; ">{{ totalprice }}</span>
-        </el-col>
+  <div>
+<!--    <wholenavigator style="position: fixed;width: 100%;left: 0;top: 0;z-index: 1000;"></wholenavigator>-->
+    <Searchnavigator style="position: fixed;width: 100%;left: 0;top: 0;z-index: 1000;"></Searchnavigator>
+    <div style="height: 50px;"></div>
+    <el-row>
+      <el-col :span="24">
+        <el-row>
+          <span class="title">Errand tasks</span>
+          <div style="clear:both;"></div>
+          <el-divider></el-divider>
+        </el-row>
+        <el-row>
+          <tasklist @setTotalPrice="setTotalPrice" style="margin: 40px 30px;"></tasklist>
+        </el-row>
+        <el-row>
+          <el-col :span="16">
+            <router-link to="/main">
+              <i class="el-icon-d-arrow-left" style="font-size: 25px; float: left; margin:0 30px;"> </i>
+            </router-link>
+            <span style="float: left;">Continue shopping</span>
+          </el-col>
+          <el-col :span="8">
+            <el-image :src="require('@/assets/rmb32.png')"></el-image>
+            <span style="color: #FCC200; font-size: 35px; text-align: center; ">{{ totalprice }}</span>
+          </el-col>
 
-      </el-row>
-    </el-col>
-  </el-row>
-</div>
-
+        </el-row>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
-import wholenavigator from "../components/wholenavigator";
-import taskitem from "../components/errandtask/taskitem";
+// import wholenavigator from "../components/wholenavigator";
+import Searchnavigator from "../components/searchpage2/searchnavigator";
+import tasklist from "../components/errandtask/tasklist";
 import axios from "axios";
 import {store} from "../store/store";
 export default {
@@ -71,7 +72,6 @@ export default {
           this.cancelorder();
         })
         .catch(_ => {
-
         });
     },
     handleClick(tab, event) {
@@ -93,7 +93,7 @@ export default {
   mounted() {
     axios.defaults.headers.common['satoken'] = store.state.token;
   },
-  components:{wholenavigator,taskitem}
+  components:{Searchnavigator, tasklist}
 }
 </script>
 
@@ -107,12 +107,10 @@ export default {
   font-size: 25px;
   font-weight: bold;
 }
-
 .el-divider {
   margin: 0;
   margin-left: 20px;
 }
-
 /deep/ .el-divider--horizontal {
   width: 90%;
 }
