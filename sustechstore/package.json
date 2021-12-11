@@ -20,6 +20,7 @@
     "qrcodejs2": "^0.0.2",
     "qs": "^6.10.1",
     "vue": "^2.5.2",
+    "vue-baidu-map": "^0.21.22",
     "vue-flip-down": "^3.0.0",
     "vue-particles": "^1.0.9",
     "vue-router": "^3.0.1",

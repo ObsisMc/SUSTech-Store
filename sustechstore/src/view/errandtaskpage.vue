@@ -1,7 +1,7 @@
 <template>
   <div>
 <!--    <wholenavigator style="position: fixed;width: 100%;left: 0;top: 0;z-index: 1000;"></wholenavigator>-->
-    <Searchnavigator style="position: fixed;width: 100%;left: 0;top: 0;z-index: 1000;"></Searchnavigator>
+    <wholenavigator style="position: fixed;width: 100%;left: 0;top: 0;z-index: 1000;"></wholenavigator>
     <div style="height: 50px;"></div>
     <el-row>
       <el-col :span="24">
@@ -32,8 +32,7 @@
 </template>
 
 <script>
-// import wholenavigator from "../components/wholenavigator";
-import Searchnavigator from "../components/searchpage2/searchnavigator";
+import wholenavigator from "../components/wholenavigator";
 import tasklist from "../components/errandtask/tasklist";
 import axios from "axios";
 import {store} from "../store/store";
@@ -93,7 +92,7 @@ export default {
   mounted() {
     axios.defaults.headers.common['satoken'] = store.state.token;
   },
-  components:{Searchnavigator, tasklist}
+  components:{tasklist, wholenavigator}
 }
 </script>
 
