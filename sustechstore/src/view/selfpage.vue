@@ -123,6 +123,8 @@
     </el-button>
     <el-button icon='el-icon-sell' type="primary" id='searchBuy' @click="dialogFormVisibleSell = true">发布商品
     </el-button>
+   <el-button icon='el-icon-sell' type="primary" id='searchPao' @click="dialogFormVisiblePao = true">发布跑腿
+    </el-button>
     </el-button-group>
     </el-row>
   </div>
@@ -206,6 +208,10 @@
     <el-button type="primary" @click="dialogFormVisibleBuy = false">确 定</el-button>
   </div>
 </el-dialog>
+<el-dialog title="发布跑腿" :visible.sync="dialogFormVisiblePao">
+<mymap>
+</mymap>
+</el-dialog>
   </div>
 
 
@@ -216,7 +222,7 @@
 <script>
 import axios from 'axios';
 import {store} from "../store/store";
-
+import mymap from '../components/baiduMap/baiduMap.vue'
 
 axios.defaults.withCredentials=true
 axios.defaults.crossDomain=true
@@ -238,6 +244,10 @@ export default {
 
 },*/
   name: "selfpage",
+  components:{
+ mymap,
+  },
+
   data() {
     return {
       intro: "这是一坨简介，啦啦啦啦啦啦",
@@ -307,7 +317,8 @@ export default {
           value:4
         }
 
-      ]
+      ],
+      dialogFormVisiblePao: false,
     };
   },
    methods: {
@@ -469,7 +480,7 @@ axios.defaults.headers.common['satoken'] = store.state.token;
 };
 </script>
 
-<style>
+<style scoped>
 .el-avatar {
   position: absolute;
 
