@@ -144,7 +144,7 @@ axios.defaults.crossDomain=true
     }
   }
 </script>
-<style>
+<style scoped>
   .el-header {
     line-height: 40px;
     text-align: center;
@@ -235,12 +235,11 @@ margin-top: 160px;
 .el-avater{
  position: absolute;
  left: 50%;
- margin-top: 80px;
+ margin-top: 0px;
 }
 #photo{
   position: absolute;
- left: 50%;
- transform: translateX(-120%);
+ left: 44%;
  margin-top: 150px;
 }
 </style>
