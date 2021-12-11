@@ -7,10 +7,11 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import axios from "axios";
 import VueParticles from "vue-particles";
-
+import BaiduMap from 'vue-baidu-map'
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.use(VueParticles);
+Vue.use(BaiduMap,{ak:'lDGs0QuxF27mFi34VnIKaKgj7Th LhOs5'})
 
 /* eslint-disable no-new */
 new Vue({
