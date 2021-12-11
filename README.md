@@ -45,5 +45,7 @@ npm install less-loader@5.0.0 -s
 	# in main.js
 	import less from 'less';
 	Vue.use(less);
+# baiduMap
+npm install vue-baidu-map --save
 ```
 
