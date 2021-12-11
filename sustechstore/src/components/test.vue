@@ -1,6 +1,6 @@
 <template>
   <div>
-
+    <mymap></mymap>
   </div>
 </template>
 
@@ -14,7 +14,7 @@ import Mainpagegoodlist from "./newmainpage/mainpagegoodlist";
 import Mainpageshow from "./newmainpage/mainpageshow";
 import Testlist from "./newmainpage/testlist";
 import Cartlist from "./shoppingchart/cartlist";
-// import Orderdetail from "./shoppingchart/orderdetail";
+import mymap from "./baiduMap/baiduMap";
 import FlipCountdown from 'vue2-flip-countdown';
 
 export default {
@@ -38,7 +38,10 @@ export default {
     Mainfilter,
     Searchfilter,
     Searchnavigator,
-    Searchbody,   Map, navigator,FlipCountdown
+    Searchbody,
+    navigator,
+    FlipCountdown,
+    mymap
   },
   methods: {
     payorder() {
@@ -90,8 +93,8 @@ export default {
 
 
 #wna {
-    /*height: 10px;*/
-  }
+  /*height: 10px;*/
+}
 
 /deep/ .el-divider--vertical {
   height: 720px;

@@ -1,8 +1,21 @@
 <template>
   <div>
     <el-row>
+      <el-input
+        placeholder="Please enter"
+        prefix-icon="el-icon-search"
+        v-model="search.searchinput"
+        @keyup.enter.native="getSearchTarget"
+        style="width: 500px;"
+        clearable>
+      </el-input>
+      <br/>
+      <span style="color:silver;">Search result for</span>
+      <span>&nbsp"{{ search.searchtarget }}"</span>
+    </el-row>
+    <el-row>
       <el-col :span="6">
-          <span class="headerstyle" style="float: right; cursor: pointer;">
+          <span class="headerstyle" style="float: right; cursor: pointer;" @click="dialog.dialogTableVisible=true">
             Location <i class="el-icon-location"></i>
           </span>
       </el-col>
@@ -13,17 +26,14 @@
       </el-col>
       <el-col :span="5" style="border: 1px solid transparent"></el-col>
     </el-row>
-    <el-input
-      placeholder="Please enter"
-      prefix-icon="el-icon-search"
-      v-model="search.searchinput"
-      @keyup.enter.native="getSearchTarget"
-      style="width: 500px;"
-      clearable>
-    </el-input>
-    <br/>
-    <span style="color:silver;">Search result for</span>
-    <span>&nbsp"{{ search.searchtarget }}"</span>
+
+    <el-dialog
+      title="Location"
+      :visible.sync="dialog.dialogTableVisible"
+      width="50%">
+      <mymap></mymap>
+
+    </el-dialog>
 
   </div>
 </template>
@@ -31,9 +41,11 @@
 <script>
 import axios from "axios";
 import {store} from "../../store/store";
+import Mymap from "../baiduMap/baiduMap";
 
 export default {
   name: "errandsearchheader",
+  components: {Mymap},
   data() {
     return {
       category: {
@@ -48,6 +60,9 @@ export default {
       search: {
         searchinput: "",
         searchtarget: ""
+      },
+      dialog:{
+        dialogTableVisible:false
       }
     }
   },
@@ -84,8 +99,9 @@ export default {
 .headerstyle {
   padding: 35px 20px;
   margin: 10px 10px;
-  background-color: rgba(43, 183, 179,0.4);
+  /*background-color: rgba(43, 183, 179,0.4);*/
   border-radius: 5px;
+  border: 1px solid silver;
 }
 
 .options {

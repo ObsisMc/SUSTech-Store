@@ -19,10 +19,11 @@
 </template>
 <script>
 export default{
+  name:"mymap",
   data(){
   return{
     point: "",
-    address:null,
+    address:"南方科技大学",
   }
 },
 

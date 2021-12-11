@@ -21,7 +21,6 @@
 
 <script>
 import wholenavigator from "../components/wholenavigator";
-import Errandproduct from "../components/errandmain/errandproduct";
 import Errandsearchheader from "../components/errandmain/errandsearchheader";
 import axios from "axios";
 import {store} from "../store/store";
@@ -31,20 +30,25 @@ export default {
   name: "errandmainpage",
   data() {
     return {}
-
   },
   methods: {
     getAllGoods() {
       this.$refs.tasksList.getAllGoods();
     },
-    getSearchTarget([target,cate]) {
-      this.$refs.tasksList.getSearchTarget([target,cate]);
+    getSearchTarget([target, cate]) {
+      this.$refs.tasksList.getSearchTarget([target, cate]);
     },
-    getProductsByCate(idx){
+    getProductsByCate(idx) {
       this.$refs.tasksList.getProductsByCate(idx);
     }
   },
-  components: {Errandcategorylist, Errandsearchheader, Errandproduct, wholenavigator}
+  components: {
+    Errandcategorylist: resolve => {
+      require(['../components/errandmain/errandcategorylist'], resolve)
+    },
+    Errandsearchheader,
+    wholenavigator
+  }
 }
 </script>
 
