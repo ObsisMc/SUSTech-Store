@@ -65,11 +65,12 @@ export default {
       this.$emit('removeGoods', this.index);
     },
     toGood() {
-      let goodpage = this.$router.resolve({
-        name: 'product',
-        query: {id: this.id}
-      });
-      window.open(goodpage.href, '_blank');
+      // let goodpage = this.$router.resolve({
+      //   name: 'product',
+      //   query: {id: this.id}
+      // });
+      // window.open(goodpage.href, '_blank');
+      this.$router.push({name:'product',query:{id:this.id}});
     },
     getOrderTagStatus(s) {
       if (s === 0) {
@@ -97,37 +98,31 @@ export default {
     }
   }
 }
-
 </script>
+
 <style scoped>
 .goodcontainer {
   padding: 5px;
   margin: 10px;
   /*background-color: #2c3e50;*/
 }
-
 .goodcontainer:hover {
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
 }
-
 .el-image {
   border-radius: 30px;
   width: 150px;
   height: 150px;
 }
-
 .goodtitle {
   float: left;
   font-size: 20px;
   font-weight: bold;
 }
-
 .roughdetail {
   float: left;
   margin-top: 15px;
 }
-
 .tip {
-
 }
 </style>
