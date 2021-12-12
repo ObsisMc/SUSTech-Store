@@ -186,6 +186,8 @@ export default {
       this.$router.push({
         path: '/checkout/' + this.id + '/' + "3", query: {status: 0}
       });
+    },
+    toUser() {
     }
   },
   computed: {

@@ -72,7 +72,6 @@ export default {
   methods: {
     getAllGoods() {
       // pass test
-
       let url = "";
       axios.get(url).then(response => {
         this.goods = response.data;

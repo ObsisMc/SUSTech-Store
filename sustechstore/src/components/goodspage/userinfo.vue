@@ -39,6 +39,11 @@ export default {
         colors: ['#99A9BF', '#F7BA2A', '#FF9900']
       }
     }
+  },
+  methods:{
+    openchat(){
+
+    }
   }
 }
 </script>

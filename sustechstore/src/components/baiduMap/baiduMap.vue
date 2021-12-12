@@ -34,7 +34,6 @@ map.centerAndZoom=new BMap.Point(114.005913,22.603944);
 },*/
 methods:{
     mapReady({ BMap, map }) {
-
       this.point = new BMap.Point(114.005913,22.603944);
       map.centerAndZoom(this.point, 12);
     },

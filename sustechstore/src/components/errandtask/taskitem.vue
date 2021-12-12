@@ -28,12 +28,30 @@
         <i class="el-icon-close" style="cursor: pointer; float: right;" @click="removeGoods"></i>
       </el-col>
     </el-row>
+    <el-drawer
+      :visible.sync="drawer"
+      :direction="direction"
+      size="75%"
+      :show-close="false"
+      :before-close="handleClose">
+      hi
+      <erranddetail></erranddetail>
+    </el-drawer>
   </div>
 </template>
 
 <script>
+import Erranddetail from "./erranddetail";
+
 export default {
   name: "taskitem",
+  data() {
+    return {
+      drawer: false,
+      direction: 'btt'
+    }
+  },
+  components: {Erranddetail},
   props: ['imgurl', 'index', 'id', 'orderstatus'],
   methods: {
     removeGoods() {
@@ -60,8 +78,16 @@ export default {
     toChat() {
       alert("chat");
     },
-    toDetail(){
-      alert("hi");
+    toDetail() {
+      this.drawer = true;
+    },
+    handleClose(done) {
+      this.$confirm('Confirm close？')
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {
+        });
     },
     testClick() {
       alert("hi");
@@ -76,23 +102,28 @@ export default {
   margin: 10px;
   /*background-color: #2c3e50;*/
 }
+
 .goodcontainer:hover {
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
 }
+
 .el-image {
   border-radius: 30px;
   width: 150px;
   height: 150px;
 }
+
 .goodtitle {
   float: left;
   font-size: 20px;
   font-weight: bold;
 }
+
 .roughdetail {
   float: left;
   margin-top: 15px;
 }
+
 .tip {
 }
 </style>

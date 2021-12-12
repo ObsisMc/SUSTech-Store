@@ -11,7 +11,7 @@
       </el-col>
       <el-col :span="11">
         <el-row>
-          <discription :rating="rating" @toOrder="toOrder" @addToChart="addToCart">
+          <discription :rating="rating" @toOrder="toOrder" @addToCart="addToCart">
             <template v-slot:name>
               {{ good.name }}
             </template>
@@ -31,12 +31,7 @@
             </template>
           </userinfo>
         </el-row>
-
       </el-col>
-
-
-
-
     </el-row>
   </div>
 </template>
