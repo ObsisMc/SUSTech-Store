@@ -208,10 +208,6 @@ router.beforeEach((to,form,next)=>{
     }
   }
   if (to.name === 'login'){
-    if (isLogin){
-      next('/main')
-      return
-    }
   }
   next()
 })
