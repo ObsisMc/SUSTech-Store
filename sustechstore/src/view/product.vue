@@ -77,6 +77,7 @@ export default {
       axios.get(store.state.database + 'product/findById/' + goodid
       ).then(response => {
         this.good = response.data;
+        document.title = this.good.name;
       })
     },
     toOrder() {
@@ -98,7 +99,6 @@ export default {
   mounted() {
     axios.defaults.headers.common['satoken'] = store.state.token;
     this.getProductInformation();
-    document.title = this.good.name;
   }
 }
 </script>
