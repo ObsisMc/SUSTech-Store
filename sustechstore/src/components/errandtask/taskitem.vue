@@ -34,7 +34,6 @@
       size="75%"
       :show-close="false"
       :before-close="handleClose">
-      hi
       <erranddetail></erranddetail>
     </el-drawer>
   </div>

@@ -188,6 +188,9 @@ export default {
       });
     },
     toUser() {
+      this.$router.push({
+        path:"/otherpage"
+      })
     }
   },
   computed: {

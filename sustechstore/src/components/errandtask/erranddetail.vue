@@ -125,10 +125,17 @@ export default {
   },
   methods:{
     toUser(){
-
+      this.$router.push({
+        path:"/otherpage"
+      })
     },
     openchat(){
-
+      console.log("openchat")
+    },
+    toOrder() {
+      this.$router.push({
+        path: '/checkout/' + this.id + '/' + "3", query: {status: 0}
+      });
     }
   },
   components:{
@@ -142,5 +149,29 @@ export default {
 <style scoped>
 .support {
   border: 1px solid transparent;
+}
+.pricespan {
+  color: #FCC200;
+  font-weight: 580;
+  font-size: 25px;
+  float: left;
+}
+
+.tipsspan {
+  margin-left: 10px;
+  color: #FCC200;
+  font-weight: 300;
+  font-size: 15px;
+  float: left;
+}
+.baidumap {
+  height: 100%;
+  width: calc(100vh);
+  border: 1px solid silver;
+  margin: 20px 10px;
+}
+.takebutton{
+  margin:30px 0;
+  padding: 25px 80px;
 }
 </style>
