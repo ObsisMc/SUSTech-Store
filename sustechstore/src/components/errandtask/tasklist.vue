@@ -16,6 +16,9 @@
           <template v-slot:owner>
             {{ goods[i - 1].nickName }}
           </template>
+          <template v-slot:description>
+            {{goods[i-1].description}}
+          </template>
         </taskitem>
       </el-row>
     </div>

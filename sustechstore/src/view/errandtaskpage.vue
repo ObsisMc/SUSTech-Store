@@ -1,6 +1,6 @@
 <template>
   <div>
-<!--    <wholenavigator style="position: fixed;width: 100%;left: 0;top: 0;z-index: 1000;"></wholenavigator>-->
+    <!--    <wholenavigator style="position: fixed;width: 100%;left: 0;top: 0;z-index: 1000;"></wholenavigator>-->
     <wholenavigator style="position: fixed;width: 100%;left: 0;top: 0;z-index: 1000;"></wholenavigator>
     <div style="height: 50px;"></div>
     <el-row>
@@ -15,9 +15,7 @@
         </el-row>
         <el-row>
           <el-col :span="16">
-            <router-link to="/main">
-              <i class="el-icon-d-arrow-left" style="font-size: 25px; float: left; margin:0 30px;"> </i>
-            </router-link>
+            <i class="el-icon-d-arrow-left" @click="toMain" style="font-size: 25px; float: left; margin:0 30px;"> </i>
             <span style="float: left;">Continue shopping</span>
           </el-col>
           <el-col :span="8">
@@ -36,6 +34,7 @@ import wholenavigator from "../components/wholenavigator";
 import tasklist from "../components/errandtask/tasklist";
 import axios from "axios";
 import {store} from "../store/store";
+
 export default {
   name: "errandtaskpage",
   data() {
@@ -85,14 +84,18 @@ export default {
       this.activeName = 'vc';
       this.$refs.wechatqrref.innerHTML = '';
     },
-    setTotalPrice(p){
-      this.totalprice=p;
+    setTotalPrice(p) {
+      this.totalprice = p;
+    },
+    toMain(){
+      store.state.storetype="2";
+      this.$router.push({name:"errandmain"});
     }
   },
   mounted() {
     axios.defaults.headers.common['satoken'] = store.state.token;
   },
-  components:{tasklist, wholenavigator}
+  components: {tasklist, wholenavigator}
 }
 </script>
 
@@ -106,13 +109,16 @@ export default {
   font-size: 25px;
   font-weight: bold;
 }
+
 .el-divider {
   margin: 0;
   margin-left: 20px;
 }
+
 /deep/ .el-divider--horizontal {
   width: 90%;
 }
+
 #orderdetail {
   height: 750px;
   /*box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);*/

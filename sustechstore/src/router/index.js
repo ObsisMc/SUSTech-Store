@@ -21,6 +21,7 @@ import errandtaskpage from "../view/errandtaskpage";
 import errandsubmit from "../components/orderconfirm/errandsubmit";
 import errandpayment from "../components/orderconfirm/errandpayment";
 import axios from "axios";
+import {store} from "../store/store";
 
 Vue.use(Router)
 
@@ -112,8 +113,8 @@ Vue.use(Router)
 // })
 
 const router = new Router({
-  mode:'history',
-  routes:[{
+  mode: 'history',
+  routes: [{
     path: '/',
     name: 'login',
     component: loginpage
@@ -196,18 +197,13 @@ const router = new Router({
     }]
 })
 
-router.beforeEach((to,form,next)=>{
-  const nextRoute = ['errandtask']
-  let isLogin = sessionStorage.getItem("token");
-  if (nextRoute.indexOf(to.name) >= 0) {
-    if (!isLogin) {
-      if (from.name === 'login') {
-        next('/')
-        return
-      }
-    }
-  }
-  if (to.name === 'login'){
+router.beforeEach((to, form, next) => {
+  const toflea = ['main', 'search2', "shoppingcart"]
+  const toerrand = ['errandmain', "errandtask"]
+  if (toflea.indexOf(to.name) > -1) {
+    store.state.storetype = "1";
+  }else if(toerrand.indexOf(to.name) > -1){
+    store.state.storetype = "2";
   }
   next()
 })

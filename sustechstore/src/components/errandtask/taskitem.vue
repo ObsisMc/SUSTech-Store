@@ -2,9 +2,18 @@
   <div class="goodcontainer">
     <el-row :gutter="20">
       <div @click="toDetail">
-        <el-col :span="15">
+        <el-col :span="5">
+          <el-avatar class="roughdetail"
+                     src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+          <span class="roughdetail" style="margin-left: 10px;">
+            <span class="roughdetail">
+              <slot name="owner"></slot>
+            </span>
+          </span>
+        </el-col>
+        <el-col :span="10">
         <span style="text-align: left; float: left; margin:10px 30px;">
-          hi
+          <slot name="description"></slot>
         </span>
         </el-col>
         <el-col :span="5">
