@@ -150,7 +150,7 @@ const router = new Router({
       component: selfpage
     },
     {
-      path: '/otherpage',
+     path: '/otherpage/:id',
       name: 'otherpage',
       component: otherpage
     },
