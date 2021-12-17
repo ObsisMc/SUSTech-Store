@@ -1,35 +1,32 @@
 <template>
   <div class="goodcontainer">
     <el-row :gutter="20">
-      <div @click="toDetail">
-        <el-col :span="5">
+      <div >
+        <el-col :span="3">
           <el-avatar class="roughdetail"
-                     src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+                     src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" size="large"></el-avatar>
           <span class="roughdetail" style="margin-left: 10px;">
-            <span class="roughdetail">
               <slot name="owner"></slot>
-            </span>
           </span>
         </el-col>
-        <el-col :span="10">
-        <span style="text-align: left; float: left; margin:10px 30px;">
-          <slot name="description"></slot>
-        </span>
-        </el-col>
-        <el-col :span="5">
-          <span style="color: #FCC200; font-size: 20px;  line-height: 100px; "> RMB <slot name="price"></slot></span>
+        <el-col :span="11" style="padding:10px;">
+            <span style="margin:15px 10px;">
+              <slot name="description"></slot>
+            </span>
         </el-col>
         <el-col :span="3">
-          <el-row style="margin-bottom: 30px;">
-            <el-badge :value="12" class="tip" style="margin-top: 20px;">
-              <i class="el-icon-chat-dot-round " style="font-size: 30px; cursor: pointer;" @click="toChat"></i>
-            </el-badge>
-          </el-row>
+          <span style="color: #FCC200; font-size: 20px;  line-height: 100px; "> RMB <slot name="price"></slot></span>
+        </el-col>
+
+        <el-col :span="3">
           <el-row>
-            <el-tag :type="getOrderTagStatus(orderstatus)">
+            <el-tag :type="getOrderTagStatus(orderstatus)" style="margin-top: 30px;">
               {{ getStrOrderStatus(orderstatus) }}
             </el-tag>
           </el-row>
+        </el-col>
+        <el-col :span="3">
+          <el-button @click="toDetail" class="todetailbutton">Detail</el-button>
         </el-col>
       </div>
 
@@ -108,7 +105,7 @@ export default {
 .goodcontainer {
   padding: 5px;
   margin: 10px;
-  /*background-color: #2c3e50;*/
+  border: 1px solid #eeeaea;;
 }
 
 .goodcontainer:hover {
@@ -128,10 +125,11 @@ export default {
 }
 
 .roughdetail {
-  float: left;
   margin-top: 15px;
 }
 
-.tip {
+.todetailbutton {
+  margin-top: 25px;
+
 }
 </style>

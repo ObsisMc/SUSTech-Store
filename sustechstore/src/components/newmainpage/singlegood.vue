@@ -2,10 +2,10 @@
   <div class="main">
     <el-row>
       <el-row>
-        <div v-if="haveimage">
-          <el-image :src="imgurl" :preview-src-list="[imgurl]" class="image"></el-image>
+        <div v-if="haveimage" @click="toGood" style="cursor: pointer;">
+          <el-image :src="imgurl" class="image"></el-image>
         </div>
-        <div v-if=!haveimage>
+        <div v-if=!haveimage @click="toGood" style="cursor: pointer;">
           <div :style="{backgroundImage: color, backgroundSize:'contain'}"
                class="textshow">
         <span>
@@ -161,6 +161,9 @@ export default {
   cursor: pointer;
   color: grey;
   margin: 10px 5px;
+}
+.detail:hover{
+  color: #99a9bf;
 }
 
 .textshow::-webkit-scrollbar {

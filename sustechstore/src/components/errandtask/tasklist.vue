@@ -41,7 +41,7 @@ export default {
       goods:
         [
           {
-            description: "nothing is here",
+            description: "At every turn we come across its mystery. At each new level we become more of the person we were meant to become. In lonely times, when we pass through a storm of disappointment, we find our faith is unshaken, our strength still strong.",
             icon: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
             id: 733,
             image: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",

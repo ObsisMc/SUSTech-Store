@@ -86,4 +86,10 @@ export default {
   line-height: 60px;
   float: right;
 }
+.el-icon-search:hover{
+  color: #3399ff;
+}
+.el-icon-star-off:hover{
+color: orangered;
+}
 </style>
