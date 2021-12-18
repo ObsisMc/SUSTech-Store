@@ -153,8 +153,6 @@ const router = new Router({
 //   }
 // })
 router.beforeEach((to, from, next) => {
-  let isLogin = sessionStorage.getItem('token')
-  const nextRoute = ['main', 'errandmain', 'search2', 'test', 'selfpage', 'otherpage', 'shoppingcart', 'errandtask', 'product', 'checkoutpage', 'success', 'selfinfo']
   const toflea = ['main', 'search2', "shoppingcart"]
   const toerrand = ['errandmain', "errandtask"]
   if (toflea.indexOf(to.name) > -1) {
@@ -163,10 +161,10 @@ router.beforeEach((to, from, next) => {
     store.state.storetype = "2";
   }
   let goodsurl = store.state.database + 'user/isLogin';
-  axios.get(goodsurl).then(
-    response => {
-      const nextRoute = ['main', 'errandmain', 'search2', 'test', 'selfpage', 'otherpage', 'shoppingcart', 'errandtask', 'product', 'checkoutpage', 'success', 'selfinfo']
-      if (nextRoute.indexOf(to.name) >= 0) {
+  const nextRoute = ['main', 'errandmain', 'search2', 'selfpage', 'otherpage', 'shoppingcart', 'errandtask', 'product', 'checkoutpage', 'success', 'selfinfo']
+  if (nextRoute.indexOf(to.name) >= 0) {
+    axios.get(goodsurl).then(
+      response => {
         if (response.status !== 200 && response.status !== "200" ) {
           if (from.name === ('login' || 'register')) {
             next('/');
@@ -174,10 +172,13 @@ router.beforeEach((to, from, next) => {
           }
           next({name: 'login', params: {redirect: to.fullPath}});
         }
-      }
-      next();
-    })
-  // next();
+        next();
+      })
+  }
+  else{
+    next();
+  }
+
 })
 
 
