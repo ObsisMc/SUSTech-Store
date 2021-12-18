@@ -9,6 +9,8 @@ import loginpage from "../view/loginpage";
 import selfpage from "../view/selfpage";
 import otherpage from "../view/otherpage";
 import payresult from "../components/orderconfirm/payresult";
+import buyer_confirm from "../components/orderconfirm/buyer_confirm";
+import merchant_confirm from "../components/orderconfirm/merchant_confirm";
 import shoppingcartpage from "../view/shoppingcartpage";
 import checkoutpage from "../view/checkoutpage";
 import payment from "../components/orderconfirm/payment";
@@ -20,193 +22,149 @@ import errandmainpage from "../view/errandmainpage";
 import errandtaskpage from "../view/errandtaskpage";
 import errandsubmit from "../components/orderconfirm/errandsubmit";
 import errandpayment from "../components/orderconfirm/errandpayment";
-import axios from "axios";
-import {store} from "../store/store";
 
 Vue.use(Router)
 
-// export default new Router({
-//   mode: "history",
-//   routes: [
-//     {
-//       path: '/',
-//       name: 'login',
-//       component: loginpage
-//     },
-//     {
-//       path: '/register',
-//       name: 'register',
-//       component: register
-//     },
-//     {
-//       path: '/main',
-//       name: 'main',
-//       component: homepage
-//     },
-//     {
-//       path: "/errand",
-//       name: "errandmain",
-//       component: errandmainpage
-//     },
-//     {
-//       path: '/search',
-//       name: 'search2',
-//       component: searchpage2
-//     },
-//     {
-//       path: '/test',
-//       name: 'test',
-//       component: test
-//     },
-//     {
-//       path: '/selfpage',
-//       name: 'selfpage',
-//       component: selfpage
-//     },
-//     {
-//       path: '/otherpage',
-//       name: 'otherpage',
-//       component: otherpage
-//     },
-//     {
-//       path: '/shoppingcart',
-//       name: 'shoppingcart',
-//       component: shoppingcartpage
-//     },
-//     {
-//       path: '/errandtask',
-//       name: 'errandtask',
-//       component: errandtaskpage
-//     },
-//     {
-//       path: '/product',
-//       name: 'product',
-//       component: product
-//     },
-//     {
-//       path: '/checkout/:id',
-//       name: 'checkoutpage',
-//       component: checkoutpage,
-//       children: [
-//         {path: '0', component: submitorder},
-//         {path: '1', component: payment},
-//         {path: '2', component: payresult},
-//         {path: '3', component: errandsubmit},
-//         {path: '4', component: errandpayment}
-//       ]
-//     },
-//     {
-//       path: '/payresult',
-//       name: 'success',
-//       component: payresult
-//     },
-//     {
-//       path: '/selfinfo',
-//       component: selfinfo
-//     },
-//     {
-//       path: '/*',
-//       name: 'notfound',
-//       component: notfound
-//     }
-//   ]
-// })
-
 const router = new Router({
-  mode: 'history',
-  routes: [{
+  mode: "history",
+  routes:[{
     path: '/',
     name: 'login',
-    component: loginpage
+    component: loginpage,
+    meta: { requiresAuth: false}
   },
     {
       path: '/register',
       name: 'register',
-      component: register
+      component: register,
+      meta: { requiresAuth: false}
     },
     {
       path: '/main',
       name: 'main',
-      component: homepage
+      component: homepage,
+      meta:{
+        requiresAuth: true
+      }
     },
     {
       path: "/errand",
       name: "errandmain",
-      component: errandmainpage
+      component: errandmainpage,
+      meta: { requiresAuth: true}
     },
     {
       path: '/search',
       name: 'search2',
-      component: searchpage2
+      component: searchpage2,
+      meta: { requiresAuth: true}
     },
     {
       path: '/test',
       name: 'test',
-      component: test
+      component: test,
+      meta: { requiresAuth: true}
     },
     {
       path: '/selfpage',
       name: 'selfpage',
-      component: selfpage
+      component: selfpage,
+      meta: { requiresAuth: true}
     },
     {
-     path: '/otherpage/:id',
+      path: '/otherpage/:id',
       name: 'otherpage',
       component: otherpage
     },
     {
       path: '/shoppingcart',
       name: 'shoppingcart',
-      component: shoppingcartpage
+      component: shoppingcartpage,
+      meta: { requiresAuth: true}
     },
     {
       path: '/errandtask',
       name: 'errandtask',
-      component: errandtaskpage
+      component: errandtaskpage,
+      meta: { requiresAuth: true}
     },
     {
       path: '/product',
       name: 'product',
-      component: product
+      component: product,
+      meta: { requiresAuth: true}
     },
     {
       path: '/checkout/:id',
       name: 'checkoutpage',
       component: checkoutpage,
+      meta: { requiresAuth: true},
       children: [
-        {path: '0', component: submitorder},
-        {path: '1', component: payment},
-        {path: '2', component: payresult},
-        {path: '3', component: errandsubmit},
-        {path: '4', component: errandpayment}
+        // {path: '0', component: submitorder,meta: { requiresAuth: true}},
+        // {path: '1', component: payment,meta: { requiresAuth: true}},
+        // {path: '2', component: payresult,meta: { requiresAuth: true}},
+        // {path: '3', component: errandsubmit, meta: { requiresAuth: true}},
+        // {path: '4', component: errandpayment,meta: { requiresAuth: true}}
+        {path: '0', component: submitorder,meta: { requiresAuth: true}},
+        {path: '1', component: payment,meta: { requiresAuth: true}},
+        {path: '2', component: merchant_confirm,meta: { requiresAuth: true}},
+        {path: '3', component: buyer_confirm,meta: { requiresAuth: true}},
+        {path: '4', component: payresult,meta: { requiresAuth: true}},
+        {path: '5', component: errandsubmit, meta: { requiresAuth: true}},
+        {path: '6', component: errandpayment,meta: { requiresAuth: true}}
       ]
     },
     {
       path: '/payresult',
       name: 'success',
-      component: payresult
+      component: payresult,
+      meta: { requiresAuth: true}
     },
     {
       path: '/selfinfo',
-      component: selfinfo
+      name: 'selfinfo',
+      component: selfinfo,
+      meta: { requiresAuth: true}
     },
     {
       path: '/*',
       name: 'notfound',
-      component: notfound
+      component: notfound,
+      meta: { requiresAuth: false}
     }]
 })
 
-router.beforeEach((to, form, next) => {
-  const toflea = ['main', 'search2', "shoppingcart"]
-  const toerrand = ['errandmain', "errandtask"]
-  if (toflea.indexOf(to.name) > -1) {
-    store.state.storetype = "1";
-  }else if(toerrand.indexOf(to.name) > -1){
-    store.state.storetype = "2";
-  }
-  next()
-})
-export default router
 
+// router.beforeEach((to, from, next) => {
+//   let isLogin = sessionStorage.getItem('token')
+//   if (to.matched.some(record => record.meta.requiresAuth)) {
+//     if(isLogin){
+//       next()
+//     }else{
+//       next({
+//         path: '/',
+//         query:{redirect:to.fullPath}
+//       })
+//     }
+//   } else {
+//     next() // 确保一定要调用 next()
+//   }
+// })
+router.beforeEach((to, from, next) => {
+  let isLogin = sessionStorage.getItem('token')
+  const nextRoute = [ 'main','errandmain','search2','test','selfpage','otherpage','shoppingcart','errandtask','product','checkoutpage','success','selfinfo']
+  if (nextRoute.indexOf(to.name)>=0){
+    if (true){
+      alert("Please login first")
+      if (from.name === ('login' || 'register')){
+        next('/');
+        return
+      }
+      next({name:'login',params:{redirect:to.fullPath}});
+    }
+  }
+  next();
+})
+
+export default router;
 
