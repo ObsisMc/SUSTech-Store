@@ -74,7 +74,7 @@ export default {
     // axios.defaults.headers.common['satoken'] = store.state.token;
   },
   beforeRouteUpdate(to, from, next) {
-    this.step.active =parseInt(to.query.status) ;
+    this.step.active =parseInt(to.query.status);
     next();
   },
   components: {Payresult, Payment, Submitorder, Searchnavigator}

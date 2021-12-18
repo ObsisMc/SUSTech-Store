@@ -134,7 +134,7 @@ export default {
     },
     toOrder() {
       this.$router.push({
-        path: '/checkout/' + this.id + '/' + "3", query: {status: 0}
+        path: '/checkout/' + this.id + '/' + "5", query: {status: 0}
       });
     }
   },
