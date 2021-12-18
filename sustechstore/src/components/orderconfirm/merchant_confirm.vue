@@ -10,7 +10,7 @@
     <span>点击确认代表您已经确认了买家的订单</span>
     <span slot="footer" class="dialog-footer">
     <el-button @click="centerDialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+    <el-button type="primary" @click="handlePay()">确 定</el-button>
   </span>
   </el-dialog>
   </div>
@@ -23,6 +23,19 @@ export default {
     return {
       centerDialogVisible: false
     };
+  },
+  methods:{
+    handlePay() {
+      this.loading = true;
+      let nextstatus = parseInt(this.$route.query.status) + 1;
+      let noworderid = this.$route.params.id;
+      setTimeout(() => {
+        console.log("wait..");
+        this.$router.push({path: '/checkout/' + noworderid + '/' + nextstatus, query: {status: nextstatus}});
+        this.loading = false;
+      }, 1000)
+
+    }
   }
 }
 </script>
