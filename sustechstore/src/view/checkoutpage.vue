@@ -13,6 +13,8 @@
         <el-steps :active="step.active" finish-status="success" direction="horizontal" align-center>
           <el-step title="confirm order"></el-step>
           <el-step title="payment"></el-step>
+          <el-step title="merchant affirm"></el-step>
+          <el-step title="customer affirm"></el-step>
           <el-step title="trade result"></el-step>
         </el-steps>
       </el-col>
