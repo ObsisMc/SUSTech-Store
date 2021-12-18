@@ -112,6 +112,6 @@ export default {
 
 #chosenpic {
   /*border: orange solid 1px;*/
-  box-shadow: 0 3px 5px rgba(0, 0, 0, .2), 0 0 7px rgba(0, 0, 0, .1)
+  box-shadow:4px 4px 7px 3px rgba(0, 0, 0, 0.1);
 }
 </style>

@@ -35,9 +35,20 @@
             trigger="hover"
             :open-delay="200">
             <i class="el-icon-info detail" slot="reference"></i>
-            <i class="el-icon-user-solid" style="font-size:15px;"></i>
-            <span style="font-weight: bold;font-size: 15px;"><slot name="username"></slot></span>
-            <el-divider style="margin:0;"></el-divider>
+            <el-row>
+              <div @click="toOthers" style="float: left;">
+                <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                           size="medium" style="cursor: pointer;"></el-avatar>
+              </div>
+              <span class="roughdetail" style="margin-left: 10px;">
+                <span style="font-weight: bold;font-size: 15px; float: left;margin-top:10px;">
+              <slot name="username"></slot>
+            </span>
+              </span>
+
+            </el-row>
+            <!--            <el-divider style="margin:0;"></el-divider>-->
+            <div class="divider"></div>
             <slot name="intro">He or she is so lazy and there is nothing.</slot>
           </el-popover>
           <i class="el-icon-goods detail " @click="toGood"></i>
@@ -70,6 +81,9 @@ export default {
       });
       window.open(goodpage.href, '_blank');
       // this.$router.push({name: 'product', query: {id: this.id}});
+    },
+    toOthers() {
+      this.$router.push({name: "otherpage"});
     }
   },
   computed: {
@@ -162,7 +176,8 @@ export default {
   color: grey;
   margin: 10px 5px;
 }
-.detail:hover{
+
+.detail:hover {
   color: #99a9bf;
 }
 
@@ -170,8 +185,13 @@ export default {
   display: none;
 }
 
-/deep/ .el-divider--horizontal {
-  margin: 5px 0;
+.divider {
+  border: 0.5px solid silver;
+  width: 100%;
+  margin-bottom: 10px;
+  margin-top: 5px;
+  height: 0.5px;
 }
+
 
 </style>
