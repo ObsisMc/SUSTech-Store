@@ -11,19 +11,19 @@
                            :icon="goods[(o1 - 1) * col + o2 - 1].image"
                            :rating="4"
                            :saved="goods[(o1 - 1) * col + o2 - 1].saved"
+                           :destination="goods[(o1 - 1) * col + o2 - 1].destination"
+                           :origin="goods[(o1 - 1) * col + o2 - 1].origin"
                            @changeFlag="changeFlag">
               <template v-slot:description>
                 {{ goods[(o1 - 1) * col + o2 - 1].description }}
               </template>
               <template v-slot:nickName>
-                {{ goods[(o1 - 1) * col + o2 - 1].nickName }}
+                {{ goods[(o1 - 1) * col + o2 - 1].ownerNickname }}
               </template>
               <template v-slot:tips>
                 {{ goods[(o1 - 1) * col + o2 - 1].price }}
               </template>
-              <template>
-                {{}}
-              </template>
+
             </errandproduct>
           </el-col>
         </el-row>
@@ -45,36 +45,18 @@ export default {
       goods:
         [
           {
-            buyerId: 0,
-            createTime: "2021-12-18T11:48:34.228Z",
+            createTime: "2021-12-18T14:00:13.799Z",
             description: "string",
             destination: "string",
             id: 0,
             image: "string",
             name: "string",
             origin: "string",
-            ownerId: 0,
+            ownerIcon: "string",
+            ownerNickname: "string",
             price: 0,
-            status: "OPENED",
             type: "FETCH",
-            updateTime: "2021-12-18T11:48:34.228Z",
-            saved: false
-          },
-          {
-            buyerId: 0,
-            createTime: "2021-12-18T11:48:34.228Z",
-            description: "string",
-            destination: "string",
-            id: 0,
-            image: "string",
-            name: "string",
-            origin: "string",
-            ownerId: 0,
-            price: 0,
-            status: "OPENED",
-            type: "FETCH",
-            updateTime: "2021-12-18T11:48:34.228Z",
-            saved: false
+            updateTime: "2021-12-18T14:00:13.799Z"
           }
         ],
       col: 4
@@ -83,21 +65,21 @@ export default {
   methods: {
     getAllGoods() {
       // pass test
-      let url = "";
-      axios.get(url).then(response => {
+      let goodsurl = store.state.database + 'errand/listVO';
+      axios.get(goodsurl).then(response => {
         this.goods = response.data;
       })
     },
     getSearchTarget([target, cate]) {
       // pass test
-      let url = "";
+      let url = store.state.database + 'errand/search/' + target;
       axios.get(url).then(response => {
         this.goods = response.data;
       })
     },
     getProductsByCate(idx) {
       //pass
-      let url = "";
+      let url = store.state.database + 'errand/list/' + (idx-1);
       axios.get(url).then(response => {
         this.goods = response.data;
       })
@@ -111,11 +93,7 @@ export default {
     }
   },
   mounted() {
-    let goodsurl = store.state.database + 'errand/list';
-    // let goodsurl = "@/../static/goods.json";
-    axios.get(goodsurl).then(response => {
-      this.goods = response.data;
-    })
+    this.getAllGoods();
 
   }
 }

@@ -87,7 +87,7 @@
                 <el-form label-position="left" inline class="demo-table-expand">
                   <el-form-item label="Map">
                     <div class="baidumap">
-                      <mymap address="南方科技大学一丹图书馆">
+                      <mymap :address="destination">
                       </mymap>
                     </div>
                   </el-form-item>
@@ -121,7 +121,7 @@ import mymap from "@/components/baiduMap/baiduMapWithAddress";
 
 export default {
   name: "errandproduct",
-  props: ["imgurl", "id", "icon", "rating", "saved"],
+  props: ["imgurl", "id", "icon", "rating", "saved","destination","origin"],
   data() {
     return {
       drawer: false,
@@ -132,11 +132,11 @@ export default {
       endslocation: [
         {
           end: "Origin",
-          position: this.id
+          position: this.origin
         },
         {
           end: "Destination",
-          position: this.id
+          position: this.destination
         }
       ]
     };
@@ -180,6 +180,7 @@ export default {
       this.$emit("changeFlag", this.id);
     },
     openchat() {
+      alert("chat");
     },
     toOrder(){
       this.$router.push({

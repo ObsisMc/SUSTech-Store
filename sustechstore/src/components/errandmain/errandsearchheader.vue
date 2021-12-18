@@ -73,9 +73,6 @@ export default {
         this.$emit("getAllGoods");
       } else {
         this.$emit("getSearchTarget",[this.search.searchtarget,this.category.selected]);
-        axios.get(store.state.database + 'product/search/' + this.search.searchtarget).then(response => {
-          this.goodexhibition.good = response.data;
-        })
       }
     },
     selectOption(idx) {
