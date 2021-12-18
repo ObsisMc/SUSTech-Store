@@ -1,7 +1,7 @@
 <template>
   <div>
-<!--    <searchnavigator style="position: fixed;width: 100%;left: 0;top: 0;z-index: 1000;"></searchnavigator>-->
-<!--    <div style="height: 70px;"></div>-->
+    <searchnavigator style="position: fixed;width: 100%;left: 0;top: 0;z-index: 1000;"></searchnavigator>
+    <div style="height: 70px;"></div>
     <el-row>
       <el-col :span="12">
         <picexhibition :imgurllist="good.image"></picexhibition>
@@ -97,7 +97,8 @@ export default {
     }
   },
   mounted() {
-    axios.defaults.headers.common['satoken'] = store.state.token;
+    console.log(store.state.token);
+    axios.defaults.headers.common['satoken'] = JSON.parse(sessionStorage.getItem('token'));
     this.getProductInformation();
   }
 }

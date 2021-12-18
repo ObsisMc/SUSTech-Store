@@ -175,9 +175,9 @@ router.beforeEach((to, from, next) => {
           next({name: 'login', params: {redirect: to.fullPath}});
         }
       }
-
       next();
     })
+  // next();
 })
 
 

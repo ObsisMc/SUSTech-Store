@@ -75,11 +75,11 @@ export default {
   },
   methods: {
     toGood() {
-      let goodpage = this.$router.resolve({
+      this.$router.push({
         name: 'product',
         query: {id: this.id}
       });
-      window.open(goodpage.href, '_blank');
+      // window.open(goodpage.href, '_blank');
       // this.$router.push({name: 'product', query: {id: this.id}});
     },
     toOthers() {

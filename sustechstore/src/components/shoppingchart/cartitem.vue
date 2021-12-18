@@ -57,6 +57,8 @@
 </template>
 
 <script>
+import {store} from "../../store/store";
+
 export default {
   name: "cartitem",
   props: ['imgurl', 'index', 'id', 'orderstatus'],
@@ -65,11 +67,11 @@ export default {
       this.$emit('removeGoods', this.index);
     },
     toGood() {
-      let goodpage = this.$router.resolve({
+      console.log(store.state.token)
+      this.$router.push({
         name: 'product',
         query: {id: this.id}
       });
-      window.open(goodpage.href, '_blank');
     },
     getOrderTagStatus(s) {
       if (s === 0) {
