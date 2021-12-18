@@ -23,6 +23,7 @@ import errandtaskpage from "../view/errandtaskpage";
 import errandsubmit from "../components/orderconfirm/errandsubmit";
 import errandpayment from "../components/orderconfirm/errandpayment";
 import {store} from "../store/store";
+import axios from "axios";
 
 Vue.use(Router)
 
@@ -161,18 +162,20 @@ router.beforeEach((to, from, next) => {
   }else if(toerrand.indexOf(to.name) > -1){
     store.state.storetype = "2";
   }
-  if (nextRoute.indexOf(to.name)>=0){
-    // if (true){
-    //   alert("Please login first")
-    //   if (from.name === ('login' || 'register')){
-    //     next('/');
-    //     return
-    //   }
-    //   next({name:'login',params:{redirect:to.fullPath}});
-    // }
-  }
-  next();
-})
+  let goodsurl = store.state.database + 'user/isLogin';
+  axios.get(goodsurl).then(
+    response =>{
+      const nextRoute = [ 'main','errandmain','search2','test','selfpage','otherpage','shoppingcart','errandtask','product','checkoutpage','success','selfinfo']
+      if (nextRoute.indexOf(to.name)>=0){
+        if (!(response.status === "200")){
+          if (from.name === ('login' || 'register')){
+            next('/');
+            return
+          }
+          next({name:'login',params:{redirect:to.fullPath}});
+        }
+      }
+      next();
+})})
 
-export default router;
 
