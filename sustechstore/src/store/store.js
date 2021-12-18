@@ -2,7 +2,7 @@ export const store = {
   debug: false,
   state: {
     token: '1',
-    database: "http://10.26.45.36:8181/",
+    database: "http://10.15.211.127:8181/",
     storetype: "1"
   },
   setToken (newValue) {

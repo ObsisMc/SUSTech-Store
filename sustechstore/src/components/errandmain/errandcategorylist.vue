@@ -7,8 +7,8 @@
                   v-for="o2 in o1*col>goods.length?goods.length-(o1-1)*col:col"
                   :key="o2">
             <errandproduct :imgurl="goods[(o1-1)*col + o2 - 1].image"
-                           :id="goods[(o1-1)*col + o2 - 1].productId"
-                           :icon="goods[(o1 - 1) * col + o2 - 1].icon"
+                           :id="goods[(o1-1)*col + o2 - 1].id"
+                           :icon="goods[(o1 - 1) * col + o2 - 1].image"
                            :rating="4"
                            :saved="goods[(o1 - 1) * col + o2 - 1].saved"
                            @changeFlag="changeFlag">
@@ -18,8 +18,11 @@
               <template v-slot:nickName>
                 {{ goods[(o1 - 1) * col + o2 - 1].nickName }}
               </template>
-              <template v-slot:price>
+              <template v-slot:tips>
                 {{ goods[(o1 - 1) * col + o2 - 1].price }}
+              </template>
+              <template>
+                {{}}
               </template>
             </errandproduct>
           </el-col>
@@ -111,9 +114,7 @@ export default {
     let goodsurl = store.state.database + 'errand/list';
     // let goodsurl = "@/../static/goods.json";
     axios.get(goodsurl).then(response => {
-      console.log(response.data)
-      // this.goods = response.data;
-      console.log(this.goods)
+      this.goods = response.data;
     })
 
   }

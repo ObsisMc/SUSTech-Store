@@ -66,7 +66,7 @@
           </el-row>
           <el-row style="margin-top: 40px;">
             <span class="pricespan">
-              ¥ <slot name="price"></slot>
+              ¥ <slot name="price">0</slot>
             </span>
             <span class="tipsspan">
               + tips: <slot name="tips">0</slot>
@@ -180,7 +180,6 @@ export default {
       this.$emit("changeFlag", this.id);
     },
     openchat() {
-
     },
     toOrder(){
       this.$router.push({
