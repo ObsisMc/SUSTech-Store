@@ -22,6 +22,7 @@ import errandmainpage from "../view/errandmainpage";
 import errandtaskpage from "../view/errandtaskpage";
 import errandsubmit from "../components/orderconfirm/errandsubmit";
 import errandpayment from "../components/orderconfirm/errandpayment";
+import {store} from "../store/store";
 
 Vue.use(Router)
 
@@ -153,15 +154,22 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   let isLogin = sessionStorage.getItem('token')
   const nextRoute = [ 'main','errandmain','search2','test','selfpage','otherpage','shoppingcart','errandtask','product','checkoutpage','success','selfinfo']
+  const toflea = ['main', 'search2', "shoppingcart"]
+  const toerrand = ['errandmain', "errandtask"]
+  if (toflea.indexOf(to.name) > -1) {
+    store.state.storetype = "1";
+  }else if(toerrand.indexOf(to.name) > -1){
+    store.state.storetype = "2";
+  }
   if (nextRoute.indexOf(to.name)>=0){
-    if (true){
-      alert("Please login first")
-      if (from.name === ('login' || 'register')){
-        next('/');
-        return
-      }
-      next({name:'login',params:{redirect:to.fullPath}});
-    }
+    // if (true){
+    //   alert("Please login first")
+    //   if (from.name === ('login' || 'register')){
+    //     next('/');
+    //     return
+    //   }
+    //   next({name:'login',params:{redirect:to.fullPath}});
+    // }
   }
   next();
 })

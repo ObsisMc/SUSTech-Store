@@ -1,6 +1,18 @@
 <template>
   <div>
-    <mymap></mymap>
+    <el-upload
+      class="upload-demo"
+      :action="action"
+      :on-preview="handlePreview"
+      :on-remove="handleRemove"
+      :before-remove="beforeRemove"
+      multiple
+      :limit="3"
+      :on-exceed="handleExceed"
+      :file-list="fileList">
+      <el-button size="small" type="primary">点击上传</el-button>
+      <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+    </el-upload>
   </div>
 </template>
 
@@ -16,74 +28,35 @@ import Testlist from "./newmainpage/testlist";
 import Cartlist from "./shoppingchart/cartlist";
 import mymap from "./baiduMap/baiduMap";
 import FlipCountdown from 'vue2-flip-countdown';
+import {store} from "../store/store";
 
 export default {
   name: "test",
   data() {
     return {
-      totalprice: 1600,
-      balance: 10000,
-      dialogVisible: false,
-      activeName: 'vc',
-      qrto: '/success',
-      active: 0
-    }
-  },
-  components: {
-    Cartlist,
-    Testlist,
-    Mainpageshow,
-    Mainpagegoodlist,
-    Singlegood,
-    Mainfilter,
-    Searchfilter,
-    Searchnavigator,
-    Searchbody,
-    navigator,
-    FlipCountdown,
-    mymap
+      fileList: [{
+        name: 'food.jpeg',
+        url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+      }, {
+        name: 'food2.jpeg',
+        url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+      }],
+      action: store.state.database + "/productImage/postImage"
+    };
   },
   methods: {
-    payorder() {
-      this.dialogVisible = true;
-      this.qrto = 'https://www.baidu.com/'
-      this.$nextTick(() => {
-        this.createQrcode()
-      })
-    },
-    createQrcode() {
-      this.qr = new QRCode('wechatqr', {
-        text: this.qrto, // 二维码内容
-        width: 100,
-        height: 100
-        // colorDark: '#000000',
-        // colorLight: '#ffffff',
-      });
-    },
-    handleClose(done) {
-      this.$confirm('确认关闭？')
-        .then(_ => {
-          done();
-          this.cancelorder();
-        })
-        .catch(_ => {
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
 
-        });
     },
-    handleClick(tab, event) {
-      console.log(tab, event);
+    handlePreview(file) {
+      console.log(file);
     },
-    handlePay() {
-      this.dialogVisible = false;
-      this.$router.push('/payresult');
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
     },
-    cancelorder() {
-      this.dialogVisible = false;
-      this.activeName = 'vc';
-      this.$refs.wechatqrref.innerHTML = '';
-    },
-    next() {
-      if (this.active++ > 2) this.active = 0;
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`);
     }
   }
 }

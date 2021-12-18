@@ -42,27 +42,35 @@ export default {
       goods:
         [
           {
-            description: "nothing is here",
-            icon: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-            id: 733,
-            image: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-            name: "ham",
-            nickName: "unamed",
+            buyerId: 0,
+            createTime: "2021-12-18T11:48:34.228Z",
+            description: "string",
+            destination: "string",
+            id: 0,
+            image: "string",
+            name: "string",
+            origin: "string",
             ownerId: 0,
-            price: 200,
-            productId: 734,
+            price: 0,
+            status: "OPENED",
+            type: "FETCH",
+            updateTime: "2021-12-18T11:48:34.228Z",
             saved: false
           },
           {
-            description: "nothing is here",
-            icon: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-            id: 733,
-            image: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-            name: "ham",
-            nickName: "unamed",
+            buyerId: 0,
+            createTime: "2021-12-18T11:48:34.228Z",
+            description: "string",
+            destination: "string",
+            id: 0,
+            image: "string",
+            name: "string",
+            origin: "string",
             ownerId: 0,
-            price: 200,
-            productId: 734,
+            price: 0,
+            status: "OPENED",
+            type: "FETCH",
+            updateTime: "2021-12-18T11:48:34.228Z",
             saved: false
           }
         ],
@@ -86,7 +94,6 @@ export default {
     },
     getProductsByCate(idx) {
       //pass
-
       let url = "";
       axios.get(url).then(response => {
         this.goods = response.data;
@@ -98,15 +105,15 @@ export default {
           this.goods[i].saved = !this.goods[i].saved;
         }
       }
-
-
     }
   },
   mounted() {
-    // let goodsurl = store.state.database + 'cart/findAllCartVO';
-    let goodsurl = "@/../static/goods.json";
+    let goodsurl = store.state.database + 'errand/list';
+    // let goodsurl = "@/../static/goods.json";
     axios.get(goodsurl).then(response => {
-      this.goods = response.data.goods;
+      console.log(response.data)
+      // this.goods = response.data;
+      console.log(this.goods)
     })
 
   }
