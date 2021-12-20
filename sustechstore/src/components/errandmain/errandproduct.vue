@@ -14,8 +14,17 @@
           <slot name="nickName">nickname</slot>
         </span>
       </el-row>
-
     </el-card>
+
+    <el-dialog
+      title="Chat"
+      :visible.sync="chatVisible"
+      width="50%">
+      <chatwindow></chatwindow>
+
+      <span slot="footer" class="dialog-footer">
+  </span>
+    </el-dialog>
 
     <el-drawer
       :visible.sync="drawer"
@@ -87,7 +96,7 @@
                 <el-form label-position="left" inline class="demo-table-expand">
                   <el-form-item label="Map">
                     <div class="baidumap">
-                      <mymap :address="destination">
+                      <mymap :address="props.row.position">
                       </mymap>
                     </div>
                   </el-form-item>
@@ -118,10 +127,11 @@
 <script>
 import axios from "axios";
 import mymap from "@/components/baiduMap/baiduMapWithAddress";
+import Chatwindow from "../chatroom/chatwindow";
 
 export default {
   name: "errandproduct",
-  props: ["imgurl", "id", "icon", "rating", "saved","destination","origin"],
+  props: ["imgurl", "id", "icon", "rating", "saved", "destination", "origin"],
   data() {
     return {
       drawer: false,
@@ -138,7 +148,8 @@ export default {
           end: "Destination",
           position: this.destination
         }
-      ]
+      ],
+      chatVisible:false
     };
   },
   methods: {
@@ -180,16 +191,16 @@ export default {
       this.$emit("changeFlag", this.id);
     },
     openchat() {
-      alert("chat");
+      this.chatVisible=true;
     },
-    toOrder(){
+    toOrder() {
       this.$router.push({
         path: '/checkout/' + this.id + '/' + "5", query: {status: 0}
       });
     },
     toUser() {
       this.$router.push({
-        path:"/otherpage"
+        path: "/otherpage"
       })
     }
   },
@@ -199,6 +210,7 @@ export default {
     }
   },
   components: {
+    Chatwindow,
     mymap: resolve => {
       require(['@/components/baiduMap/baiduMapWithAddress'], resolve)
     }
@@ -251,8 +263,9 @@ export default {
   border: 1px solid silver;
   margin: 20px 10px;
 }
-.takebutton{
-  margin:30px 0;
+
+.takebutton {
+  margin: 30px 0;
   padding: 25px 80px;
 }
 

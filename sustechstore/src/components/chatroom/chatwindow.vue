@@ -1,82 +1,82 @@
 <template>
 
 
-        <div class="talk" v-show="flag">
-          <!--div class="talk-header">
-            <div class="talk-header-icon">
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-gengduocaozuo"></use>
-              </svg>
-              <svg class="icon" aria-hidden="true" @click="exit">
-                <use xlink:href="#icon-guanbi"></use>
-              </svg>
-            </div>
-          </div-->
+  <div class="talk" v-show="flag">
+    <!--div class="talk-header">
+      <div class="talk-header-icon">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-gengduocaozuo"></use>
+        </svg>
+        <svg class="icon" aria-hidden="true" @click="exit">
+          <use xlink:href="#icon-guanbi"></use>
+        </svg>
+      </div>
+    </div-->
 
-          <div class="talk-content ">
+    <div class="talk-content ">
 
-            <div v-for="item  in contentDiv" style="margin-top: 20px">
-              <div style="text-align: center">
-                <p style="font-size: 1px;color: #9b9b9b"> {{ item.time }}</p>
-              </div>
-              <div style="display: flex;">
+      <div v-for="item  in contentDiv" style="margin-top: 20px">
+        <div style="text-align: center">
+          <p style="font-size: 1px;color: #9b9b9b"> {{ item.time }}</p>
+        </div>
+        <div style="display: flex;">
 
-                <div class="name_right" v-if="item.show">
-                  <p style="font-size: 1px; "> {{ item.name }} </p>
-                </div>
-                <div class="url_right" v-if="item.show">
-                  <el-avatar shape="circle" :size="30" :src="item.url"></el-avatar>
-                </div>
-                <div class="url-left" v-if="!item.show">
-                  <el-avatar shape="circle" :size="30" :src="item.url"></el-avatar>
-                </div>
-
-
-                <div class="name_left" v-if="!item.show">
-                  <p style="font-size: 1px;"> {{ item.name }} </p>
-                </div>
-
-              </div>
-
-
-              <div v-html="item.content"
-                   class="content_left" v-if="!item.show">
-              </div>
-
-              <div v-html="item.content"
-                   class="content_right" v-if="item.show">
-              </div>
-
-            </div>
-
+          <div class="name_right" v-if="item.show">
+            <p style="font-size: 1px; "> {{ item.name }} </p>
+          </div>
+          <div class="url_right" v-if="item.show">
+            <el-avatar shape="circle" :size="30" :src="item.url"></el-avatar>
+          </div>
+          <div class="url-left" v-if="!item.show">
+            <el-avatar shape="circle" :size="30" :src="item.url"></el-avatar>
           </div>
 
 
-          <div class=" talk-message
-                ">
-
-            <div class="talk-message-face">
-              <svg class="icon" aria-hidden="true" @click="isShow">
-                <use xlink:href="#icon-biaoqing"></use>
-              </svg>
-              <emotion :emotionIsShow="emotionIsShow" @sendEmotionSelect="getValue"></emotion>
-            </div>
-            <div class="talk-message-content">
-
-              <el-input
-                v-model="textarea"
-                resize="none"
-                type="textarea"
-                rows="1"
-                @keyup.enter.native="submit"
-              ></el-input>
-            </div>
-            <div class="talk-message-send">
-              <el-button type="text" style="color:#9b9b9b" @click="submit">发送</el-button>
-            </div>
+          <div class="name_left" v-if="!item.show">
+            <p style="font-size: 1px;"> {{ item.name }} </p>
           </div>
 
         </div>
+
+
+        <div v-html="item.content"
+             class="content_left" v-if="!item.show">
+        </div>
+
+        <div v-html="item.content"
+             class="content_right" v-if="item.show">
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class=" talk-message
+                ">
+
+      <div class="talk-message-face">
+        <svg class="icon" aria-hidden="true" @click="isShow">
+          <use xlink:href="#icon-biaoqing"></use>
+        </svg>
+        <emotion :emotionIsShow="emotionIsShow" @sendEmotionSelect="getValue"></emotion>
+      </div>
+      <div class="talk-message-content">
+
+        <el-input
+          v-model="textarea"
+          resize="none"
+          type="textarea"
+          rows="1"
+          @keyup.enter.native="submit"
+        ></el-input>
+      </div>
+      <div class="talk-message-send">
+        <el-button type="text" style="color:#9b9b9b" @click="submit">发送</el-button>
+      </div>
+    </div>
+
+  </div>
 
 
 </template>
@@ -84,13 +84,14 @@
 import emotion from './emotion.vue';
 import './iconfont.js'
 import "./talk.css"
-export default{
-  name:"chatwindow",
-components :{
-  emotion
-},
-  data(){
-  return {
+
+export default {
+  name: "chatwindow",
+  components: {
+    emotion
+  },
+  data() {
+    return {
 
       url: "https:/rescdn.qqmail.com/node/wwopen/wwopenmng/images/qq_emotion/qq/",
       eList: ['占位', '微笑', '撇嘴', '色', '发呆', '得意', '流泪', '害羞', '闭嘴', '睡', '大哭',
@@ -116,8 +117,8 @@ components :{
       userPhoto: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
       otherPhoto: "https://img1.baidu.com/it/u=2805547224,266493745&fm=26&fmt=auto"
 
-  }
-    },
+    }
+  },
 
   methods: {
 

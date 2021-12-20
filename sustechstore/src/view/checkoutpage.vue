@@ -32,8 +32,18 @@
       </el-col>
     </el-row>
 
-    <!--    <el-button style="margin-top: 12px;" @click="next">下一步</el-button>-->
+    <el-dialog
+      title="Chat"
+      :visible.sync="chatVisible"
+      width="50%">
+      <chatwindow></chatwindow>
+
+      <span slot="footer" class="dialog-footer">
+  </span>
+    </el-dialog>
   </div>
+
+
 
 </template>
 
@@ -44,6 +54,7 @@ import Payment from "../components/orderconfirm/payment";
 import Payresult from "../components/orderconfirm/payresult";
 import axios from "axios";
 import {store} from "../store/store";
+import Chatwindow from "../components/chatroom/chatwindow";
 
 export default {
   name: "checkoutpage",
@@ -52,7 +63,8 @@ export default {
       rootpath: '',
       step: {
         active: 0
-      }
+      },
+      chatVisible: false
 
     }
   },
@@ -66,18 +78,18 @@ export default {
       }
     },
     openchat() {
-      alert("chat");
+      this.chatVisible=true;
     }
   },
   mounted() {
-    this.step.active = parseInt(this.$route.query.status) ;
+    this.step.active = parseInt(this.$route.query.status);
     // axios.defaults.headers.common['satoken'] = store.state.token;
   },
   beforeRouteUpdate(to, from, next) {
-    this.step.active =parseInt(to.query.status);
+    this.step.active = parseInt(to.query.status);
     next();
   },
-  components: {Payresult, Payment, Submitorder, Searchnavigator}
+  components: {Chatwindow, Payresult, Payment, Submitorder, Searchnavigator}
 }
 </script>
 

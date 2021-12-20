@@ -26,27 +26,38 @@
       </el-rate>
     </el-row>
 
+    <el-dialog
+      title="Chat"
+      :visible.sync="chatVisible"
+      width="50%">
+      <chatwindow></chatwindow>
 
+      <span slot="footer" class="dialog-footer">
+  </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import Chatwindow from "../chatroom/chatwindow";
 export default {
   name: "userinfo",
+  components: {Chatwindow},
   props: ["rating"],
   data() {
     return {
       ratingobj: {
         colors: ['#99A9BF', '#F7BA2A', '#FF9900']
-      }
+      },
+      chatVisible: false
     }
   },
   methods: {
     openchat() {
-      alert()
+      this.chatVisible=true;
     },
     toOthers() {
-      this.$router.push({name:"otherpage"})
+      this.$router.push({name: "otherpage"})
     }
   }
 }

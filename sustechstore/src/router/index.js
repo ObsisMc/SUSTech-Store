@@ -160,24 +160,28 @@ router.beforeEach((to, from, next) => {
   } else if (toerrand.indexOf(to.name) > -1) {
     store.state.storetype = "2";
   }
-  let goodsurl = store.state.database + 'user/isLogin';
-  const nextRoute = ['main', 'errandmain', 'search2', 'selfpage', 'otherpage', 'shoppingcart', 'errandtask', 'product', 'checkoutpage', 'success', 'selfinfo']
-  if (nextRoute.indexOf(to.name) >= 0) {
-    axios.get(goodsurl).then(
-      response => {
-        if (response.status !== 200 && response.status !== "200" ) {
-          if (from.name === ('login' || 'register')) {
-            next('/');
-            return
-          }
-          next({name: 'login', params: {redirect: to.fullPath}});
-        }
-        next();
-      })
-  }
-  else{
-    next();
-  }
+  next();
+  // TODO 即使未登录islogin也会返回true
+  // let goodsurl = store.state.database + 'user/isLogin';
+  // const nextRoute = ['main', 'errandmain', 'search2','test', 'selfpage', 'otherpage', 'shoppingcart', 'errandtask', 'product', 'checkoutpage', 'success', 'selfinfo']
+  // if (nextRoute.indexOf(to.name) >= 0) {
+  //   axios.get(goodsurl).then(
+  //     response => {
+  //       if (response.status !== 200 && response.status !== "200" ) {
+  //         if (from.name === ('login' || 'register')) {
+  //           next('/');
+  //           return
+  //         }
+  //         next({name: 'login', params: {redirect: to.fullPath}});
+  //       }
+  //       alert(response.status )
+  //       next();
+  //     })
+  // }
+  // else{
+  //   next();
+  // }
+
 
 })
 
