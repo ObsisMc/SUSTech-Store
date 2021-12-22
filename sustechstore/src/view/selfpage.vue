@@ -1,4 +1,3 @@
-
 <template>
   <div id="self">
     <el-menu
@@ -15,17 +14,20 @@
         <el-menu-item
           index="1-1"
           @click="(BuyOrderVisible = true), (formBuyOrder = getBuyorder())"
-          >我的购买订单</el-menu-item
+        >我的购买订单
+        </el-menu-item
         >
         <el-menu-item
           index="1-2"
           @click="(SellOrderVisible = true), (formSellOrder = getSellorder())"
-          >我的卖出订单</el-menu-item
+        >我的卖出订单
+        </el-menu-item
         >
         <el-menu-item
           index="1-3"
           @click="(locationVisible = true), (locations = getLocation())"
-          >我的交易地址</el-menu-item
+        >我的交易地址
+        </el-menu-item
         >
       </el-submenu>
       <el-submenu index="2">
@@ -34,13 +36,16 @@
         <el-menu-item index="2-2">充值</el-menu-item>
       </el-submenu>
       <el-menu-item index="3">
-        <router-link to="/selfinfo"> 详细信息 </router-link></el-menu-item
+        <router-link to="/selfinfo"> 详细信息</router-link>
+      </el-menu-item
       >
       <el-menu-item index="4">
-        <router-link to="/main"> 返回主页 </router-link></el-menu-item
+        <router-link to="/main"> 返回主页</router-link>
+      </el-menu-item
       >
       <el-menu-item index="5">
-        <router-link to="/"> 登出 </router-link></el-menu-item
+        <router-link to="/"> 登出</router-link>
+      </el-menu-item
       >
     </el-menu>
 
@@ -65,7 +70,7 @@
         placeholder="添加新地址"
         style="width: 650px"
       ></el-input>
-      <el-button type="primary" @click="addLocation()"> 添加 </el-button>
+      <el-button type="primary" @click="addLocation()"> 添加</el-button>
     </el-dialog>
 
     <el-dialog title="购买订单" :visible.sync="BuyOrderVisible">
@@ -154,14 +159,14 @@
             type="primary"
             id="searchBuy"
             @click="dialogFormVisibleSell = true"
-            >发布商品
+          >发布商品
           </el-button>
           <el-button
             icon="el-icon-sell"
             type="primary"
             id="searchPao"
             @click="dialogFormVisiblePao = true"
-            >发布跑腿
+          >发布跑腿
           </el-button>
         </el-button-group>
       </el-row>
@@ -203,17 +208,17 @@
           </el-select>
         </el-form-item>
         <el-form-item label="">
-   <el-upload
-  action=""
-  accept="image/jpeg,image/png"
-  :on-change="onUploadChange"
-  :auto-upload="false"
-  :show-file-list="false"
-  :limit="3">
-    <el-button slot="trigger" size="small" type="primary">选取</el-button>
-    <!--el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传</el-button-->
-    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不能超过1m</div>
-</el-upload>
+          <el-upload
+            action=""
+            accept="image/jpeg,image/png"
+            :on-change="onUploadChange"
+            :auto-upload="false"
+            :show-file-list="false"
+            :limit="3">
+            <el-button slot="trigger" size="small" type="primary">选取</el-button>
+            <!--el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传</el-button-->
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不能超过1m</div>
+          </el-upload>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -221,7 +226,8 @@
         <el-button
           type="primary"
           @click="(dialogFormVisibleSell = false), Sell()"
-          >确 定</el-button
+        >确 定
+        </el-button
         >
       </div>
     </el-dialog>
@@ -262,27 +268,28 @@
           </el-select>
         </el-form-item>
         <el-form-item label="">
-<el-upload
-  action=""
-  accept="image/jpeg,image/png"
-  :on-change="onUploadChange"
-  :auto-upload="false"
-  :show-file-list="false">
-    <el-button slot="trigger" size="small" type="primary">选取</el-button>
-    <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传</el-button>
-    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不能超过1m</div>
-</el-upload>
+          <el-upload
+            action=""
+            accept="image/jpeg,image/png"
+            :on-change="onUploadChange"
+            :auto-upload="false"
+            :show-file-list="false">
+            <el-button slot="trigger" size="small" type="primary">选取</el-button>
+            <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不能超过1m</div>
+          </el-upload>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisibleBuy = false">取 消</el-button>
         <el-button type="primary" @click="dialogFormVisibleBuy = false"
-          >确 定</el-button
+        >确 定
+        </el-button
         >
       </div>
     </el-dialog>
     <el-dialog title="发布跑腿" :visible.sync="dialogFormVisiblePao">
-      <mymap> </mymap>
+      <mymap></mymap>
     </el-dialog>
   </div>
 </template>
@@ -290,7 +297,7 @@
 
 <script>
 import axios from "axios";
-import { store } from "../store/store";
+import {store} from "../store/store";
 import mymap from "../components/baiduMap/baiduMap.vue";
 
 axios.defaults.withCredentials = true;
@@ -330,8 +337,8 @@ export default {
       userId: 0,
       activeIndex: "1",
       uploadfileList: [],
-      base64Photo:'',
-      base64PhotoList :[],
+      base64Photo: '',
+      base64PhotoList: [],
       //发布商品页面
       dialogFormVisibleSell: false,
       formSell: {
@@ -341,7 +348,7 @@ export default {
         type: 0,
         price: null,
         time: null,
-        SellProductPhoto:[],
+        SellProductPhoto: [],
 
       },
       formSellLabelWidth: "100px",
@@ -389,8 +396,10 @@ export default {
   },
   methods: {
 
-    delLocation(lid) {},
-    addLocation() {},
+    delLocation(lid) {
+    },
+    addLocation() {
+    },
     showRealPath: function (id) {
       console.log(document.getElementById(id).value)
     },
@@ -412,7 +421,7 @@ export default {
         updateTime: "",
       };
 
-      axios.post(store.state.database + "/product/add",to).then((response) => {
+      axios.post(store.state.database + "/product/add", to).then((response) => {
         console.log(response);
         if (response.data) {
           this.$message({
@@ -510,36 +519,35 @@ export default {
       console.log(ans);
       return ans;
     },
- onUploadChange(file)
-  {
+    onUploadChange(file) {
 
-    let self =this;
-    const isIMAGE = (file.raw.type === 'image/jpeg' || file.raw.type === 'image/png');
-    const isLt1M = file.size / 1024 / 1024 < 10;
+      let self = this;
+      const isIMAGE = (file.raw.type === 'image/jpeg' || file.raw.type === 'image/png');
+      const isLt1M = file.size / 1024 / 1024 < 10;
 
-    if (!isIMAGE) {
-      this.$message.error('只能上传jpg/png图片!');
-      return false;
-    }
-    if (!isLt1M) {
-      this.$message.error('上传文件大小不能超过 10MB!');
-      return false;
-    }
-    var reader = new FileReader();
-    reader.readAsDataURL(file.raw);
-    reader.onload = function(e){
+      if (!isIMAGE) {
+        this.$message.error('只能上传jpg/png图片!');
+        return false;
+      }
+      if (!isLt1M) {
+        this.$message.error('上传文件大小不能超过 10MB!');
+        return false;
+      }
+      var reader = new FileReader();
+      reader.readAsDataURL(file.raw);
+      reader.onload = function (e) {
 
         // this.$options.methods.storeBase64(this.result)
-        self.base64Photo=this.result
+        self.base64Photo = this.result
         self.base64PhotoList.push(self.base64Photo)
         console.log(self.base64PhotoList)
-        self.base64Photo=''
-    }
+        self.base64Photo = ''
+      }
 
-  },
-  clearPhoto(){
-   this.base64PhotoList=[]
-  },
+    },
+    clearPhoto() {
+      this.base64PhotoList = []
+    },
   },
 
   mounted() {
@@ -576,6 +584,7 @@ export default {
   height: 100%;
   position: fixed;
 }
+
 #back {
   /*  background-image: url("../assets/nkd.png");
 */
@@ -585,6 +594,7 @@ export default {
   border: 10px;
   background-size: cover;
 }
+
 #changePhoto {
   position: absolute;
   top: 340px;
@@ -599,6 +609,7 @@ export default {
   left: 50%;
   transform: translateX(-50%);
 }
+
 #xinyu {
   position: absolute;
   top: 365px;
@@ -606,17 +617,20 @@ export default {
   transform: translateX(-220%);
   color: navajowhite;
 }
+
 #bas {
   margin: 25px;
   left: 50%;
   transform: translateX(0%);
 }
+
 #particles-js {
   width: 100%;
   /* height: calc(100% - 100px);*/
   height: 100%;
   position: relative;
 }
+
 #name {
   position: absolute;
   top: 280px;
@@ -624,6 +638,7 @@ export default {
   left: 50%;
   transform: translateX(-60%);
 }
+
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
@@ -631,9 +646,11 @@ export default {
   position: relative;
   overflow: hidden;
 }
+
 .avatar-uploader .el-upload:hover {
   border-color: #409eff;
 }
+
 .avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
@@ -642,6 +659,7 @@ export default {
   line-height: 178px;
   text-align: center;
 }
+
 #avatarBuy {
   width: 178px;
   height: 178px;

@@ -25,7 +25,7 @@
         <el-col :span="24/goodexhibition.col"
                 v-for="o2 in o1*goodexhibition.col>goodexhibition.good.length?goodexhibition.good.length-(o1-1)*goodexhibition.col:goodexhibition.col"
                 :key="o2">
-          <exhibition :imgurl="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].fileName"
+          <exhibition :imgurl="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].image"
                       :id="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].id">
             <template v-slot:title>
               {{ goodexhibition.good[(o1 - 1) * goodexhibition.col + o2 - 1].name }}
@@ -63,17 +63,16 @@ export default {
       },
       sort: "relevance",
       goodexhibition: {
-        good: [{
-          "categoryleveloneId": 0,
-          "categorylevelthreeId": 0,
-          "categoryleveltwoId": 0,
-          "description": "",
-          "fileName": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-          "id": 0,
-          "name": "string",
-          "ownerId": 0,
-          "price": 0
-        }],
+        good: [
+          {
+            description: "",
+            image: "",
+            id: 0,
+            name: "string",
+            ownerId: 0,
+            price: 100
+          }
+        ],
         col: 4
       }
 
@@ -109,11 +108,9 @@ export default {
 
     },
     getAllGoods() {
-      let goodsurl = store.state.database + 'product/list';
+      let goodsurl = store.state.database + 'product/listProductVO';
       let myurl = "@/../static/goods.json";
       axios.get(goodsurl).then(response => {
-        // this.goodexhibition.good = response.data.goods;
-        console.log(response);
         this.goodexhibition.good = response.data;
       })
     }

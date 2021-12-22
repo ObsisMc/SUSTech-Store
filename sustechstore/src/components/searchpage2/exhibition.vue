@@ -7,11 +7,11 @@
           <div class="bottom clearfix" style="height: 100px;">
             <el-row>
               <el-col :span="16">
-                <el-col :span="12">
+                <el-col :span="18">
                   <span class="title"><slot name="title"></slot></span>
                 </el-col>
-                <el-col :span="12">
-               <span style=" font-size: 18px;  float: left;">
+                <el-col :span="6">
+               <span style=" font-size: 15px;  float: left;">
                   ¥ <slot name="price"></slot>
               </span>
                 </el-col>
@@ -116,6 +116,7 @@ export default {
   font-weight: bold;
   float: left;
   margin-left: 5px;
+  font-size: 15px;
 
 }
 

@@ -109,8 +109,7 @@ export default {
         "id": 733,
         "name": "Hambuger ad",
         "ownerId": 'unamed',
-        "price": 1000,
-        "orderid": 0
+        "price": 1000
       },
 
       loading: false
@@ -120,20 +119,22 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.loading = true;
+          // this.loading = true;
           let nextstatus = parseInt(this.$route.query.status) + 1;
-          axios.post(store.state.database + 'order/add/' + this.goods.id + '/' + this.ruleForm.region).then(response => {
-            if (response.status === 200) {
-              alert(this.goods.orderid);
-              this.$router.push({
-                path: '/checkout/' + this.goods.orderid + '/' + nextstatus, query: {status: nextstatus}
-              });
-              this.loading = false;
-            } else {
-              this.$router.push({name: 'shoppningcart'});
-              alert("Error happens!");
-            }
-          })
+          // axios.post(store.state.database + 'order/add/' + this.goods.id + '/' + this.ruleForm.region).then(response => {
+          //   if (response.status === 200) {
+          //     this.$router.push({
+          //       path: '/checkout/' + nextstatus, query: {status: nextstatus, orderid: response.data}
+          //     });
+          //     this.loading = false;
+          //   } else {
+          //     this.$router.push({name: 'shoppningcart'});
+          //     alert("Error happens!");
+          //   }
+          // })
+          this.$router.push({
+                  path: '/checkout/' + this.goods.orderid + '/' + nextstatus, query: {status: nextstatus}
+                });
         } else {
           console.log('error submit!!');
           return false;
@@ -146,6 +147,7 @@ export default {
   },
   mounted() {
     axios.defaults.headers.common['satoken'] = store.state.token;
+    // TODO 需要改成VO
     axios.get(store.state.database + 'product/findById/' + this.$route.params.id).then(response => {
       if (response.status === 200) {
         this.goods = response.data;

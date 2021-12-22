@@ -6,7 +6,7 @@
           <el-col :span="24/goods.col"
                   v-for="o2 in o1*goods.col>goods.good.length?goods.good.length-(o1-1)*goods.col:goods.col"
                   :key="o2">
-            <singlegood :imgurl="goods.good[(o1-1)*goods.col + o2 - 1].fileName"
+            <singlegood :imgurl="goods.good[(o1-1)*goods.col + o2 - 1].image"
                         :id="goods.good[(o1-1)*goods.col + o2 - 1].id">
               <template v-slot:title>
                 {{ goods.good[(o1 - 1) * goods.col + o2 - 1].name }}
@@ -16,6 +16,9 @@
               </template>
               <template v-slot:username>
                 {{ goods.user[(o1 - 1) * goods.col + o2 - 1].name }}
+              </template>
+              <template v-slot:description>
+                {{goods.good[(o1 - 1) * goods.col + o2 - 1].description}}
               </template>
           <template v-slot:price>
             {{goods.good[(o1 - 1) * goods.col + o2 - 1].price}}
@@ -41,11 +44,8 @@ export default {
       goods: {
         good: [
           {
-            categoryleveloneId: 0,
-            categorylevelthreeId: 0,
-            categoryleveltwoId: 0,
             description: "",
-            fileName: "",
+            image: "",
             id: 0,
             name: "string",
             ownerId: 0,
@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     getAllGoods() {
-      let goodsurl = store.state.database + 'product/list';
+      let goodsurl = store.state.database + 'product/listProductVO';
       let myurl = "@/../static/goods.json";
       axios.get(goodsurl).then(response => { // 要是是动态路由，需要再加一个../
         console.log(response);

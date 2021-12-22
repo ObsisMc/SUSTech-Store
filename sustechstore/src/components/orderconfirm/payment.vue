@@ -65,11 +65,21 @@ export default {
     }
   },
   watch: {
-    $route(to){
-      if(to.name==="payment"){
-        let url = store.state.database +"";
-      }
-    }
+    // $route(to){
+    //   if(to.name==="payment"){
+    //     alert("hi")
+    //     alert(to.query.orderid)
+    //     let getbalanceurl = store.state.database +"user/userInfo";
+    //     axios.get(getbalanceurl).then(response=>{
+    //       this.balance=response.data.balance;
+    //     })
+    //     // let getorderurl = store.state.database+"";
+    //     // axios.get(getorderurl).then(response=>{
+    //     //
+    //     // })
+    //     next();
+    //   }
+    // }
   },
   components: {Countdown}
 }

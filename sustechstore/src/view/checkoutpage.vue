@@ -89,6 +89,7 @@ export default {
     // axios.defaults.headers.common['satoken'] = store.state.token;
   },
   beforeRouteUpdate(to, from, next) {
+    alert("main")
     this.step.active = parseInt(to.query.status);
     next();
   },

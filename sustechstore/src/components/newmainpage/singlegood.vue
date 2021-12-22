@@ -9,11 +9,7 @@
           <div :style="{backgroundImage: color, backgroundSize:'contain'}"
                class="textshow">
         <span>
-          {{ msg }}
-          22222222222222222222222222222222222222222222222222222222222222222222222222222
-          22222222222222222222222222222222222222222222222222222222222222222222222222222
-          22222222222222222222222222222222222222222222222222222222222222222222222222222
-          22222222222222222222222222222222222222222222222222222222222222222222222222222
+          <slot name="description">There is nothing</slot>
         </span>
           </div>
         </div>
@@ -21,8 +17,11 @@
       <el-row>
         <el-col :span="16">
       <span class="info">
-        <slot name="title"></slot>
-        <span style=" font-size: 18px; margin-left: 20px; ">
+        <span style=" font-size: 15px;">
+          <slot name="title"></slot>
+        </span>
+
+        <span style=" font-size: 15px; margin-left: 20px; ">
             ¥ <slot name="price"></slot>
         </span>
 
@@ -92,8 +91,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.imgurl)
-
     if (this.imgurl === '') {
       console.log("into")
       console.log(this.imgurl)
