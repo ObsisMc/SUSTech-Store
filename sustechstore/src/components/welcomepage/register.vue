@@ -9,19 +9,43 @@
           <el-input v-model.number="ruleForm.studentID"></el-input>
         </el-form-item>
         <el-form-item label="email" prop="email">
-          <el-input v-model.number="ruleForm.email"></el-input>
+          <el-row>
+            <el-col :span="10">
+              <el-input v-model.number="ruleForm.studentID" disabled></el-input>
+            </el-col>
+            <el-col :span="14">
+              <el-dropdown>
+                <span class="el-dropdown-link">
+                  @mail.sustech.edu.cn <i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item>@mail.sustech.edu.cn</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </el-col>
+          </el-row>
+        </el-form-item>
+        <el-form-item prop="code">
+          <el-row>
+            <el-col :span="10">
+              <el-input v-model.number="ruleForm.code"></el-input>
+            </el-col>
+            <el-col :span="14">
+              <el-button type="success" plain @click="verifyEmail" style="padding: 10px 40px;" >Verify Email</el-button>
+            </el-col>
+          </el-row>
         </el-form-item>
         <el-form-item label="password" prop="pass">
           <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="confirm_psw" prop="checkPass" >
+        <el-form-item label="confirm_psw" prop="checkPass">
           <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
           <el-button @click="resetForm('ruleForm')">重置</el-button>
           <router-link to="/">
-            <el-button >返回登录界面</el-button>
+            <el-button>返回登录界面</el-button>
           </router-link>
         </el-form-item>
       </el-form>
@@ -32,9 +56,10 @@
 <script>
 import axios from 'axios'
 import {store} from "../../store/store";
+
 export default {
   name: 'register',
-  data () {
+  data() {
     var checkNickname = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入nickname'));
@@ -42,14 +67,6 @@ export default {
       callback();
     };
     var checkuserID = (rule, value, callback) => {
-      // if (value === '') {
-      //   callback(new Error('请输入userID'));
-      // }
-      // if (this.ruleForm.studentID !== '^[0-9]{0,8}$') {
-      //   callback(new Error('只能输入8位数字'));
-      // }else {
-      //   callback();
-      // }
       const regUser = /^[0-9]{8}$/
       if (regUser.test(value)) {
         return callback()
@@ -57,21 +74,7 @@ export default {
       callback(new Error('请输入student ID'))
     };
     var checkemail = (rule, value, callback) => {
-      // if (value === '') {
-      //   callback(new Error('请输入email'));
-      // }
-      // // eslint-disable-next-line no-useless-escape
-      // if (this.ruleForm.email !== '^[0-9]\d{8}qwe$') {
-      //   callback(new Error('只能输入SUSTECH邮箱'));
-      // } else {
-      // callback();
-      // }
-      // const regUser = /'[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+'/
-      // if (regUser.test(value)) {
-      //   return callback()
-      // }
       callback();
-      // callback(new Error('邮箱名称允许汉字、字母、数字，域名只允许英文域名'))
     };
 
     var validatePass = (rule, value, callback) => {
@@ -92,7 +95,16 @@ export default {
       } else {
         callback()
       }
-    }
+    };
+    var checkEmailCode = (rule, value, callback) => {
+      if (this.ruleForm.verifiedcode === '') {
+        callback(new Error("请验证邮箱"));
+      } else if (value !== this.ruleForm.verifiedcode) {
+        callback(new Error("验证码错误"));
+      } else {
+        callback();
+      }
+    };
 
     return {
       ruleForm: {
@@ -100,14 +112,16 @@ export default {
         checkPass: '',
         email: '',
         nickname: '',
-        studentID: ''
+        studentID: '',
+        code: '',
+        verifiedcode: ''
       },
       rules: {
         pass: [
-          { validator: validatePass, trigger: 'blur' }
+          {validator: validatePass, trigger: 'blur'}
         ],
         checkPass: [
-          { validator: validatePass2, trigger: 'blur' }
+          {validator: validatePass2, trigger: 'blur'}
         ],
         nickname: [
           {validator: checkNickname, trigger: 'blur'}
@@ -117,6 +131,9 @@ export default {
         ],
         email: [
           {validator: checkemail, trigger: 'blur'}
+        ],
+        code: [
+          {validator: checkEmailCode, trigger: 'blur', required: true}
         ]
         // age: [
         //   { validator: checkAge, trigger: 'blur' }
@@ -125,11 +142,11 @@ export default {
     }
   },
   methods: {
-    returnForm () {
+    returnForm() {
       // 返回login界面
       this.$router.push('/')
     },
-    Form () {
+    Form() {
       axios.post(store.state.database + 'user/register', {
         email: this.ruleForm.email,
         nickName: this.ruleForm.nickname,
@@ -141,14 +158,14 @@ export default {
         console.log(this.ruleForm.checkPass)
         console.log(this.ruleForm.studentID)
         console.log(response)
-        if (response.data.data !== '注册成功'){
+        if (response.data.data !== '注册成功') {
           alert(response.data.data)
         } else {
           this.$router.push('/')
         }
       })
     },
-    submitForm (formName) {
+    submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.Form()
@@ -158,10 +175,17 @@ export default {
         }
       })
     },
-    resetForm (formName) {
+    resetForm(formName) {
       this.$refs[formName].resetFields()
+    },
+    verifyEmail() {
+      let email = this.ruleForm.studentID + "@mail.sustech.edu.cn";
+      axios.post(store.state.database + "user/verifyEmail/"+email ).then(response => {
+        this.ruleForm.verifiedcode = response.data;
+      })
     }
-  }
+  },
+  computed: {}
 }
 </script>
 
@@ -170,6 +194,7 @@ export default {
   height: 100%;
   background-color: #2e4e6e;
 }
+
 .zhuce {
   position: absolute;
   top: 50%;
@@ -180,8 +205,18 @@ export default {
   background-color: #fff;
   border-radius: 3px;
 }
+
 .el-form-item {
   margin-top: 30px;
   width: 400px;
+}
+
+.el-dropdown-link {
+  cursor: pointer;
+  color: #409EFF;
+}
+
+.el-icon-arrow-down {
+  font-size: 12px;
 }
 </style>

@@ -116,10 +116,12 @@ export default {
         passWord: ''
       },
       loginRules: {
-        userName: [{required: true, message: '请输入用户名', trigger: 'blur'},
+        userName: [
+          {required: true, message: '请输入用户名', trigger: 'blur'},
           {min: 4, max: 25, message: '长度在4到25个字符之间'}
         ],
-        passWord: [{required: true, message: '请输入密码', trigger: 'blur'},
+        passWord: [
+          {required: true, message: '请输入密码', trigger: 'blur'},
           {min: 6, max: 20, message: '长度在6到30字符之间'},
           {
             pattern: /^(\w){6,20}$/,
@@ -130,14 +132,15 @@ export default {
   },
   methods: {// 提交登录
     submitForm() {
-
       axios.post(store.state.database + '/user/login', {
         password: this.loginForm.passWord,
         uid: this.loginForm.userName
       }).then(response => {
-        console.log(response.data.data);
-        if (! response.data.data) {
-          alert('Please register the user.')
+        if (response.data.data === null || !response.data.data.tokenValue) {
+          this.$message({
+            message: "No such user or password is wrong",
+            type: "error"
+          })
         } else {
           store.state.token = response.data.data.tokenValue;
           this.$router.push('/main');
