@@ -26,6 +26,7 @@
                     icon="el-icon-check"
                     size="medium"
                     round
+                    @click="submit()"
                   >
                     确认修改
                   </el-button>
@@ -34,10 +35,21 @@
           <div>
 
               <el-avatar id="ava"
-      src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+      :src='ava'
         :size="150"
       ></el-avatar>
-      <el-button size="small" type="primary" id="photo">更换头像</el-button>
+
+         <el-upload
+  action=""
+  accept="image/jpeg,image/png"
+  :on-change="onUploadChange"
+  :auto-upload="false"
+  :show-file-list="false"
+  :limit="1"
+  id='photo'>
+    <el-button slot="trigger" size="small" type="primary">更换头像</el-button>
+    <!--el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传</el-button-->
+         </el-upload>
 
 <div id="div1">
   用户昵称:
@@ -112,11 +124,13 @@ axios.defaults.crossDomain=true
           uid:11111111,
           changeInfo:true,
           radio:"women",
+          ava:'',
           inputName:"",
           inputEmail:"",
           inputGender:"",
           inputpassword:"",
           inputMobile:"",
+          base64Photo:"",
       }
     },
     methods: {
@@ -126,7 +140,39 @@ axios.defaults.crossDomain=true
       handleDelete(index, row) {
         console.log(index, row)
       },
+onUploadChange(file)
+  {
 
+    let self =this;
+    const isIMAGE = (file.raw.type === 'image/jpeg' || file.raw.type === 'image/png');
+    const isLt1M = file.size / 1024 / 1024 < 10;
+
+    if (!isIMAGE) {
+      this.$message.error('只能上传jpg/png图片!');
+      return false;
+    }
+    if (!isLt1M) {
+      this.$message.error('上传文件大小不能超过 10MB!');
+      return false;
+    }
+    var reader = new FileReader();
+    reader.readAsDataURL(file.raw);
+    reader.onload = function(e){
+
+        // this.$options.methods.storeBase64(this.result)
+        self.base64Photo=this.result
+
+
+    }
+
+  },
+  submit(){
+      axios.defaults.headers.common["satoken"] = store.state.token;
+      console.log(this.base64Photo)
+      axios.post(store.state.database+'/user/addUserIcon',this.base64Photo).then(response=>{
+        console.log(response)
+      })
+  }
     },
     mounted(){
 
@@ -137,6 +183,7 @@ axios.defaults.crossDomain=true
         this.name =response.data.nickName
         this.mobile=response.data.mobile
         this.uid=response.data.uid
+        this.ava=response.data.icon
         if(response.data.uid){
             this.radio="men"
         }
@@ -237,13 +284,13 @@ margin-top: 280px;
 }
 #ava{
  position: absolute;
- left: 44%;
+ left: 46%;
  margin-top: 0px;
-transform: translateX(-60%)
+transform: translateX(-40%)
  }
 #photo{
   position: absolute;
- left: 40%;
+ left: 44%;
  margin-top: 150px;
 }
 </style>
