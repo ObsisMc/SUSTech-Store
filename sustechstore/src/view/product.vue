@@ -77,7 +77,6 @@ export default {
       axios.get(store.state.database + 'product/findById/' + goodid
       ).then(response => {
         this.good = response.data;
-        document.title = this.good.name;
       })
     },
     toOrder() {

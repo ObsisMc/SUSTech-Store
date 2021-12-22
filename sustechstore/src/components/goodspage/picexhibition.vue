@@ -7,10 +7,13 @@
                   fit="contain" class="mainpic"></el-image>
       </el-col>
       <el-col :span="2">
+
         <el-row v-for="o1 in imgurllist.length" :key="o1" class="picitem">
           <el-image :src="imgurllist[o1-1]" alt="失败"
                     fit="contain" @click="chooseimg(o1)"></el-image>
         </el-row>
+
+
       </el-col>
     </el-row>
     <el-row style="margin-top: 40px;">
@@ -49,6 +52,7 @@
 <script>
 import Relatedgoods from "./relatedgoods";
 import axios from "axios";
+
 var lastchosenidx = 0;
 export default {
   name: "picexhibition",
@@ -82,7 +86,7 @@ export default {
       pics[index - 1].firstChild.setAttribute("id", "chosenpic");
       lastchosenidx = index - 1;
     },
-    getRelatedProducts(){
+    getRelatedProducts() {
       var url = "@/../static/goods2.json";
       axios.get(url).then(response => {
         this.goods.good = response.data.goods;
@@ -112,6 +116,6 @@ export default {
 
 #chosenpic {
   /*border: orange solid 1px;*/
-  box-shadow:4px 4px 7px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 4px 7px 3px rgba(0, 0, 0, 0.1);
 }
 </style>
