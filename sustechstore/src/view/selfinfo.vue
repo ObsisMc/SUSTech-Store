@@ -33,7 +33,7 @@
               </div>
           <div>
 
-              <el-avatar
+              <el-avatar id="ava"
       src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
         :size="150"
       ></el-avatar>
@@ -204,42 +204,46 @@ axios.defaults.crossDomain=true
 #div1{
   position: absolute;
   left: 10%;
-margin-top: 80px;
+margin-top: 180px;
 
 }
 #div2{
   position: absolute;
   left: 60%;
+  margin-top: 80px;
 
 }
 #div3{
   position: absolute;
   left: 10%;
-margin-top: 160px;
+margin-top: 280px;
 }
 #div4{
   position: absolute;
   left: 60%;
-margin-top: 80px;
+margin-top: 180px;
 }
 #div5{
   position: absolute;
   left: 10%;
+  margin-top:80px ;
+
 
 }
 #div6{
   position: absolute;
   left: 60%;
-margin-top: 160px;
+margin-top: 280px;
 }
-.el-avater{
+#ava{
  position: absolute;
- left: 50%;
+ left: 44%;
  margin-top: 0px;
-}
+transform: translateX(-60%)
+ }
 #photo{
   position: absolute;
- left: 44%;
+ left: 40%;
  margin-top: 150px;
 }
 </style>
