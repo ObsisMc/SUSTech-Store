@@ -4,7 +4,7 @@
     <div style="height: 70px;"></div>
     <el-row>
       <el-col :span="12">
-        <picexhibition :imgurllist="good.image"></picexhibition>
+        <picexhibition :imgurllist="good.image" :mainimg="good.image[0]"></picexhibition>
       </el-col>
       <el-col :span="1">
         <el-divider direction="vertical"><i class="el-icon-mobile-phone"></i></el-divider>
@@ -56,27 +56,35 @@ export default {
       orderstatus: 0,
 
       good: {
-        categoryleveloneId: 0,
-        categorylevelthreeId: 0,
-        categoryleveltwoId: 0,
-        createTime: "2021-11-24T13:46:26.467Z",
         description: "A sectional sofa or an L shaped sofa can make a great addition to your living room based on your needs",
         id: 0,
         image: ["https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg", "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"],
         name: "Product name",
         ownerId: 0,
         price: 1250,
-        updateTime: "2021-11-24T13:46:26.467Z"
+        nickName: "string",
+        icon: "string"
       }
     }
+
   },
   methods: {
-    // this.$router.push('/main'),
     getProductInformation() {
       let goodid = this.$route.query.id;
-      axios.get(store.state.database + 'product/findById/' + goodid
+      axios.get(store.state.database + 'product/findProductVOById/' + goodid
       ).then(response => {
-        this.good = response.data;
+        this.good.description = response.data.description;
+        this.good.id = response.data.id;
+        this.good.name = response.data.name;
+        this.good.ownerId = response.data.ownerId;
+        this.good.price = response.data.price;
+        this.good.nickName = response.data.nickName;
+        this.good.icon = response.data.icon;
+        console.log("get product:", response.data)
+      })
+      axios.get(store.state.database + "productImage/listProductImageByProductId/" + goodid).then(response => {
+        this.good.image = response.data;
+        console.log("imagelist:",response.data)
       })
     },
     toOrder() {
@@ -96,8 +104,7 @@ export default {
     }
   },
   mounted() {
-    console.log(store.state.token);
-    axios.defaults.headers.common['satoken'] = JSON.parse(sessionStorage.getItem('token'));
+    axios.defaults.headers.common['satoken'] = store.state.token;
     this.getProductInformation();
   }
 }
@@ -122,7 +129,8 @@ export default {
   height: calc(80vh);
   margin: 5px 0;
 }
-/deep/ .el-divider--horizontal{
+
+/deep/ .el-divider--horizontal {
   margin-top: 20px;
   margin-bottom: 10px;
 }

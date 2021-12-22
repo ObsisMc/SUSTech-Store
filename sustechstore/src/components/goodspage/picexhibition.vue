@@ -12,7 +12,7 @@
           <el-image :src="imgurllist[o1-1]" alt="失败"
                     fit="contain" @click="chooseimg(o1)"></el-image>
         </el-row>
-
+  <el-button @click="getImage">hi</el-button>
 
       </el-col>
     </el-row>
@@ -56,10 +56,9 @@ import axios from "axios";
 var lastchosenidx = 0;
 export default {
   name: "picexhibition",
-  props: ["imgurllist"],
+  props: ["imgurllist","mainimg"],
   data() {
     return {
-      mainimg: this.imgurllist[0],
       goods: {
         good: [
           {
@@ -92,6 +91,9 @@ export default {
         this.goods.good = response.data.goods;
       })
 
+    },
+    getImage(){
+      console.log(this.imgurllist);
     }
   },
   mounted() {

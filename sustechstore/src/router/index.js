@@ -102,11 +102,6 @@ const router = new Router({
       component: checkoutpage,
       meta: {requiresAuth: true},
       children: [
-        // {path: '0', component: submitorder,meta: { requiresAuth: true}},
-        // {path: '1', component: payment,meta: { requiresAuth: true}},
-        // {path: '2', component: payresult,meta: { requiresAuth: true}},
-        // {path: '3', component: errandsubmit, meta: { requiresAuth: true}},
-        // {path: '4', component: errandpayment,meta: { requiresAuth: true}}
         {path: '0', component: submitorder, meta: {requiresAuth: true}},
         {path: '1', component: payment, meta: {requiresAuth: true}},
         {path: '2', component: merchant_confirm, meta: {requiresAuth: true}},
@@ -137,21 +132,6 @@ const router = new Router({
 })
 
 
-// router.beforeEach((to, from, next) => {
-//   let isLogin = sessionStorage.getItem('token')
-//   if (to.matched.some(record => record.meta.requiresAuth)) {
-//     if(isLogin){
-//       next()
-//     }else{
-//       next({
-//         path: '/',
-//         query:{redirect:to.fullPath}
-//       })
-//     }
-//   } else {
-//     next() // 确保一定要调用 next()
-//   }
-// })
 router.beforeEach((to, from, next) => {
   const toflea = ['main', 'search2', "shoppingcart"]
   const toerrand = ['errandmain', "errandtask"]
@@ -160,29 +140,23 @@ router.beforeEach((to, from, next) => {
   } else if (toerrand.indexOf(to.name) > -1) {
     store.state.storetype = "2";
   }
-  next();
-  // TODO 即使未登录islogin也会返回true
-  // let goodsurl = store.state.database + 'user/isLogin';
-  // const nextRoute = ['main', 'errandmain', 'search2','test', 'selfpage', 'otherpage', 'shoppingcart', 'errandtask', 'product', 'checkoutpage', 'success', 'selfinfo']
-  // if (nextRoute.indexOf(to.name) >= 0) {
-  //   axios.get(goodsurl).then(
-  //     response => {
-  //       if (response.status !== 200 && response.status !== "200" ) {
-  //         if (from.name === ('login' || 'register')) {
-  //           next('/');
-  //           return
-  //         }
-  //         next({name: 'login', params: {redirect: to.fullPath}});
-  //       }
-  //       alert(response.status )
-  //       next();
-  //     })
-  // }
-  // else{
-  //   next();
-  // }
-
-
+  let goodsurl = store.state.database + 'user/isLogin';
+  const nextRoute = ['main', 'errandmain', 'search2', 'test', 'selfpage', 'otherpage', 'shoppingcart', 'errandtask', 'product', 'checkoutpage', 'success', 'selfinfo']
+  if (from.name !== "login" && nextRoute.indexOf(to.name) >= 0) {
+    axios.get(goodsurl).then(
+      response => {
+        if (response.data !== true && response.data !== "true") {
+          if (from.name === ('login' || 'register')) {
+            next('/');
+            return
+          }
+          next({name: 'login', params: {redirect: to.fullPath}});
+        }
+        next();
+      })
+  } else {
+    next();
+  }
 })
 
 
