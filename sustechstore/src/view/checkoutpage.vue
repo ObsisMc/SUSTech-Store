@@ -23,7 +23,10 @@
     <el-row>
       <el-col :span="2" style="border:1px solid transparent;"></el-col>
       <el-col :span="20">
+        <keep-alive  v-if="!$route.meta.noKeepAlive">
         <router-view></router-view>
+        </keep-alive>
+        <router-view v-if="$route.meta.noKeepAlive"></router-view>
       </el-col>
       <el-col :span="2" style="border:1px solid transparent;">
         <el-badge :value="12">

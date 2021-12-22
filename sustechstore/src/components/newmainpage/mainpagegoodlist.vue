@@ -79,7 +79,6 @@ export default {
           this.goods.good = response.data;
         })
       }
-
     },
     load() {
       let newgood = {

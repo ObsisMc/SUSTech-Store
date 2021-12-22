@@ -84,7 +84,6 @@ export default {
       })
       axios.get(store.state.database + "productImage/listProductImageByProductId/" + goodid).then(response => {
         this.good.image = response.data;
-        console.log("imagelist:",response.data)
       })
     },
     toOrder() {

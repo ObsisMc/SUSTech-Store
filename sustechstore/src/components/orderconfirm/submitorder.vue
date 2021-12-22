@@ -56,8 +56,8 @@
       </el-form-item>
       <el-form-item label="Address" prop="region">
         <el-select v-model="ruleForm.region" placeholder="Select trade address">
-          <el-option label="The second dorm" value="dorm2"></el-option>
-          <el-option label="Lake dorm" value="dormlake"></el-option>
+          <el-option label="The second dorm" value="南方科技大学二期宿舍"></el-option>
+          <el-option label="Lake dorm" value="南方科技大学书院5栋"></el-option>
         </el-select>
         <el-input v-model="ruleForm.detailaddress" placeholder="Enter detail address"
                   style="width: 50%; margin-left: 20px;"></el-input>
@@ -124,6 +124,7 @@ export default {
           let nextstatus = parseInt(this.$route.query.status) + 1;
           axios.post(store.state.database + 'order/add/' + this.goods.id + '/' + this.ruleForm.region).then(response => {
             if (response.status === 200) {
+              alert(this.goods.orderid);
               this.$router.push({
                 path: '/checkout/' + this.goods.orderid + '/' + nextstatus, query: {status: nextstatus}
               });

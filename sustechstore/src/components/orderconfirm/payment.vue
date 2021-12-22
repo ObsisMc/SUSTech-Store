@@ -22,6 +22,7 @@
 
 <script>
 import Countdown from "./countdown";
+import axios from "axios";
 
 export default {
   name: "payment",
@@ -30,7 +31,7 @@ export default {
       paymode: 0,
       price: 1000.5,
       activeName: 'vc',
-      balance: 100000,
+      balance: 100,
       qrto: 'https://www.baidu.com/',
       loading: false
     }
@@ -63,18 +64,19 @@ export default {
       });
     }
   },
-  mounted() {
-    this.qrto = 'https://www.baidu.com/';
-    // this.$nextTick(() => {
-    //   this.createQrcode()
-    // })
+  watch: {
+    $route(to){
+      if(to.name==="payment"){
+        let url = store.state.database +"";
+      }
+    }
   },
   components: {Countdown}
 }
 </script>
 
 <style scoped>
-flip-countdown.flip-card[data-v-cff81de8]{
-  font-size:1.8rem;
+flip-countdown.flip-card[data-v-cff81de8] {
+  font-size: 1.8rem;
 }
 </style>

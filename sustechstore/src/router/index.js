@@ -102,13 +102,13 @@ const router = new Router({
       component: checkoutpage,
       meta: {requiresAuth: true},
       children: [
-        {path: '0', component: submitorder, meta: {requiresAuth: true}},
-        {path: '1', component: payment, meta: {requiresAuth: true}},
-        {path: '2', component: merchant_confirm, meta: {requiresAuth: true}},
-        {path: '3', component: buyer_confirm, meta: {requiresAuth: true}},
-        {path: '4', component: payresult, meta: {requiresAuth: true}},
-        {path: '5', component: errandsubmit, meta: {requiresAuth: true}},
-        {path: '6', component: errandpayment, meta: {requiresAuth: true}}
+        {path: '0', component: submitorder,name:"submitorder", meta: {requiresAuth: true}},
+        {path: '1', component: payment,name:"payment", meta: {requiresAuth: true}},
+        {path: '2', component: merchant_confirm,name:"merchant_confirm", meta: {requiresAuth: true}},
+        {path: '3', component: buyer_confirm,name:"buyer_confirm", meta: {requiresAuth: true}},
+        {path: '4', component: payresult,name:"payresult", meta: {requiresAuth: true}},
+        {path: '5', component: errandsubmit,name:"errandsubmit", meta: {requiresAuth: true}},
+        {path: '6', component: errandpayment,name:"errandpayment", meta: {requiresAuth: true}}
       ]
     },
     {
@@ -140,23 +140,24 @@ router.beforeEach((to, from, next) => {
   } else if (toerrand.indexOf(to.name) > -1) {
     store.state.storetype = "2";
   }
-  let goodsurl = store.state.database + 'user/isLogin';
-  const nextRoute = ['main', 'errandmain', 'search2', 'test', 'selfpage', 'otherpage', 'shoppingcart', 'errandtask', 'product', 'checkoutpage', 'success', 'selfinfo']
-  if (from.name !== "login" && nextRoute.indexOf(to.name) >= 0) {
-    axios.get(goodsurl).then(
-      response => {
-        if (response.data !== true && response.data !== "true") {
-          if (from.name === ('login' || 'register')) {
-            next('/');
-            return
-          }
-          next({name: 'login', params: {redirect: to.fullPath}});
-        }
-        next();
-      })
-  } else {
-    next();
-  }
+  next();
+  // let goodsurl = store.state.database + 'user/isLogin';
+  // const nextRoute = ['main', 'errandmain', 'search2', 'test', 'selfpage', 'otherpage', 'shoppingcart', 'errandtask', 'product', 'checkoutpage', 'success', 'selfinfo']
+  // if (from.name !== "login" && nextRoute.indexOf(to.name) >= 0) {
+  //   axios.get(goodsurl).then(
+  //     response => {
+  //       if (response.data !== true && response.data !== "true") {
+  //         if (from.name === ('login' || 'register')) {
+  //           next('/');
+  //           return
+  //         }
+  //         next({name: 'login', params: {redirect: to.fullPath}});
+  //       }
+  //       next();
+  //     })
+  // } else {
+  //   next();
+  // }
 })
 
 

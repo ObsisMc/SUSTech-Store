@@ -292,7 +292,6 @@
 import axios from "axios";
 import { store } from "../store/store";
 import mymap from "../components/baiduMap/baiduMap.vue";
-import photoupload from "../components/photoUpload/photoUpload.vue"
 
 axios.defaults.withCredentials = true;
 axios.defaults.crossDomain = true;
@@ -315,7 +314,7 @@ export default {
 },*/
   name: "selfpage",
   components: {
-    mymap,photoupload,
+    mymap
   },
 
   data() {
