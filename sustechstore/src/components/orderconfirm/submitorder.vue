@@ -15,8 +15,8 @@
           <el-row :gutter="20">
             <el-col :span="6">
               <el-image
-                :src=goods.fileName
-                fit="cover">
+                :src="goods.image"
+                fit="fit">
               </el-image>
 
             </el-col>
@@ -35,15 +35,15 @@
               <el-row>
                 <el-avatar class="roughdetail"
                            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
-                <span class="roughdetail" style="margin-left: 10px;">{{ goods.ownerId }}</span>
+                <span class="roughdetail" style="margin-left: 10px;">{{ goods.nickName }}</span>
                 <!--                <i class="el-icon-user roughdetail">{{goods.ownerId}}</i>-->
               </el-row>
             </el-col>
             <el-col :span="8">
               <ul style="overflow:auto;height:100px;">
-                <li v-for="i in 10"
+                <li v-for="i in 1"
                     style="background-color: #e8f3fe;list-style-type:none; margin:3px 3px; color: #7dbcfc;">
-                  this is items of good
+                  {{ goods.description }}
                 </li>
               </ul>
             </el-col>
@@ -113,15 +113,14 @@ export default {
         ]
       },
       goods: {
-        "categoryleveloneId": "study",
-        "categorylevelthreeId": 0,
-        "categoryleveltwoId": 0,
-        "description": "",
-        "fileName": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
+        "image": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
         "id": 733,
         "name": "Hambuger ad",
         "ownerId": 'unamed',
-        "price": 1000
+        "price": 1000,
+        "description": "string",
+        "icon": "string",
+        "nickName": "string"
       },
 
       loading: false
@@ -131,22 +130,23 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          // this.loading = true;
+          this.loading = true;
           let nextstatus = parseInt(this.$route.query.status) + 1;
-          // axios.post(store.state.database + 'order/add/' + this.goods.id + '/' + this.ruleForm.region).then(response => {
-          //   if (response.status === 200) {
-          //     this.$router.push({
-          //       path: '/checkout/' + nextstatus, query: {status: nextstatus, orderid: response.data}
-          //     });
-          //     this.loading = false;
-          //   } else {
-          //     this.$router.push({name: 'shoppningcart'});
-          //     alert("Error happens!");
-          //   }
-          // })
-          this.$router.push({
-            path: '/checkout/' + this.goods.orderid + '/' + nextstatus, query: {status: nextstatus}
-          });
+          axios.post(store.state.database + 'order/add/' + this.goods.id + '/' + this.ruleForm.region).then(response => {
+            if (response.status === 200) {
+              this.$router.push({
+                path: '/checkout/' + this.goods.id + '/' + nextstatus,
+                query: {status: nextstatus, orderid: response.data}
+              });
+              this.loading = false;
+            } else {
+              this.$router.push({name: 'shoppningcart'});
+              alert("Error happens!");
+            }
+          })
+          // this.$router.push({
+          //   path: '/checkout/' + this.goods.id + '/' + nextstatus, query: {status: nextstatus}
+          // });
         } else {
           console.log('error submit!!');
           return false;
@@ -160,15 +160,15 @@ export default {
   mounted() {
     axios.defaults.headers.common['satoken'] = store.state.token;
     // TODO 需要改成VO
-    axios.get(store.state.database + 'product/findById/' + this.$route.params.id).then(response => {
+    axios.get(store.state.database + 'product/findProductVOById/' + this.$route.params.id).then(response => {
       if (response.status === 200) {
         this.goods = response.data;
       }
     })
   },
-  computed:{
+  computed: {
     // todo 这里需要改善
-    getDetailAdress: function (){
+    getDetailAdress: function () {
 
     }
   }

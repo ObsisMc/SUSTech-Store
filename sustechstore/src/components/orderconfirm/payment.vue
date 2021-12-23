@@ -61,25 +61,28 @@ export default {
         height: 200
         // colorDark: '#000000',
         // colorLight: '#ffffff',
+
       });
     }
   },
   watch: {
-    // $route(to){
-    //   if(to.name==="payment"){
-    //     alert("hi")
-    //     alert(to.query.orderid)
-    //     let getbalanceurl = store.state.database +"user/userInfo";
-    //     axios.get(getbalanceurl).then(response=>{
-    //       this.balance=response.data.balance;
-    //     })
-    //     // let getorderurl = store.state.database+"";
-    //     // axios.get(getorderurl).then(response=>{
-    //     //
-    //     // })
-    //     next();
-    //   }
-    // }
+    $route(to){
+      alert("in payment")
+      if(to.name==="payment"){
+        alert("into")
+        let getbalanceurl = store.state.database +"user/userInfo";
+        // axios.get(getbalanceurl).then(response=>{
+        //   this.balance=response.data.balance;
+        //   console.log(response.data.balance);
+        // })
+        alert("out")
+        // let getorderurl = store.state.database+"";
+        // axios.get(getorderurl).then(response=>{
+        //
+        // })
+        next();
+      }
+    }
   },
   components: {Countdown}
 }

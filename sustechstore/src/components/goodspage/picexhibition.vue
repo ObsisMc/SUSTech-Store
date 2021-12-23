@@ -12,7 +12,6 @@
           <el-image :src="imgurllist[o1-1]" alt="失败"
                     fit="contain" @click="chooseimg(o1)"></el-image>
         </el-row>
-  <el-button @click="getImage">hi</el-button>
 
       </el-col>
     </el-row>

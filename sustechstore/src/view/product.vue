@@ -25,7 +25,7 @@
         </el-row>
         <el-divider></el-divider>
         <el-row>
-          <userinfo :rating="rating">
+          <userinfo :rating="rating" :ownerid="good.ownerId">
             <template v-slot:owner>
               unamed
             </template>

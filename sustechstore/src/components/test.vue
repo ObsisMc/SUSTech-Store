@@ -14,6 +14,7 @@
       <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
     </el-upload>
     <chatwindow></chatwindow>
+
   </div>
 
 </template>
@@ -62,6 +63,10 @@ export default {
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);
     }
+  },
+  mounted() {
+    let teststr = "123";
+    alert(type(teststr))
   }
 }
 </script>

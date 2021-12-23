@@ -4,7 +4,7 @@
       <el-col :span="6">
         <el-image
           :src="imgurl"
-          fit="cover">
+          fit="fit">
         </el-image>
       </el-col>
       <el-col :span="6">

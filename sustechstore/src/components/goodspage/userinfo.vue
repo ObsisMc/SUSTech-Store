@@ -40,10 +40,11 @@
 
 <script>
 import Chatwindow from "../chatroom/chatwindow";
+
 export default {
   name: "userinfo",
   components: {Chatwindow},
-  props: ["rating"],
+  props: ["rating","ownerid"],
   data() {
     return {
       ratingobj: {
@@ -54,10 +55,10 @@ export default {
   },
   methods: {
     openchat() {
-      this.chatVisible=true;
+      this.chatVisible = true;
     },
     toOthers() {
-      this.$router.push({name: "otherpage"})
+      this.$router.push({name: "otherpage", params: {id: this.ownerid}})
     }
   }
 }
