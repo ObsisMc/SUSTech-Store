@@ -56,10 +56,18 @@
       </el-form-item>
       <el-form-item label="Address" prop="region">
         <el-select v-model="ruleForm.region" placeholder="Select trade address">
-          <el-option label="The second dorm" value="南方科技大学二期宿舍"></el-option>
-          <el-option label="Lake dorm" value="南方科技大学书院5栋"></el-option>
+          <el-option label="SUSTECH" value="SUSTECH"></el-option>
+          <el-option label="others" value="others"></el-option>
         </el-select>
-        <el-input v-model="ruleForm.detailaddress" placeholder="Enter detail address"
+      </el-form-item>
+      <el-form-item label="Detail Address" prop="detailaddress">
+        <el-select v-if="ruleForm.region==='SUSTECH'" v-model="ruleForm.detailaddress"
+                   placeholder="Select detail address">
+          <el-option label="The second dorm" :value="this.ruleForm.schoolregin.dorm2"></el-option>
+          <el-option label="Lake dorm" :value="this.ruleForm.schoolregin.lakedorm"></el-option>
+        </el-select>
+        <el-input v-if="ruleForm.region==='others'" v-model="ruleForm.detailaddress"
+                  placeholder="Enter detail address"
                   style="width: 50%; margin-left: 20px;"></el-input>
       </el-form-item>
 
@@ -91,13 +99,17 @@ export default {
       ruleForm: {
         goodtype: 0,
         detailaddress: '',
-        region: '',
+        schoolregin: {
+          dorm2: "南方科技大学二期宿舍",
+          lakedorm: "南方科技大学书院5栋"
+        },
+        region: 'SUSTECH',
         paymode: false,
         notes: ''
       },
       rules: {
-        region: [
-          {required: true, message: 'Please select a address', trigger: 'change'}
+        detailaddress: [
+          {required: true, message: 'Please input detail address', trigger: 'change'}
         ]
       },
       goods: {
@@ -133,8 +145,8 @@ export default {
           //   }
           // })
           this.$router.push({
-                  path: '/checkout/' + this.goods.orderid + '/' + nextstatus, query: {status: nextstatus}
-                });
+            path: '/checkout/' + this.goods.orderid + '/' + nextstatus, query: {status: nextstatus}
+          });
         } else {
           console.log('error submit!!');
           return false;
@@ -153,6 +165,12 @@ export default {
         this.goods = response.data;
       }
     })
+  },
+  computed:{
+    // todo 这里需要改善
+    getDetailAdress: function (){
+
+    }
   }
 }
 </script>
