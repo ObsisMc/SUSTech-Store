@@ -39,17 +39,8 @@
         :size="150"
       ></el-avatar>
 
-         <el-upload
-  action=""
-  accept="image/jpeg,image/png"
-  :on-change="onUploadChange"
-  :auto-upload="false"
-  :show-file-list="false"
-  :limit="1"
-  id='photo'>
-    <el-button slot="trigger" size="small" type="primary">更换头像</el-button>
-    <!--el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传</el-button-->
-         </el-upload>
+<photoUpload @getPhoto='addPhoto' id='photo'>
+</photoUpload>
 
 <div id="div1">
   用户昵称:
@@ -111,10 +102,15 @@
 <script>
 import axios from 'axios'
 import { store } from '../store/store'
+import photoUpload from '../components/photoUpload/photoUpload.vue'
 axios.defaults.withCredentials=true
 axios.defaults.crossDomain=true
   export default {
+        inject:['reload'],
     name: 'selfinfo',
+    components :{
+      photoUpload
+    },
     data() {
       return {
           name:"mihoyo",
@@ -130,7 +126,7 @@ axios.defaults.crossDomain=true
           inputGender:"",
           inputpassword:"",
           inputMobile:"",
-          base64Photo:"",
+          base64PhotoList:[],
       }
     },
     methods: {
@@ -140,37 +136,15 @@ axios.defaults.crossDomain=true
       handleDelete(index, row) {
         console.log(index, row)
       },
-onUploadChange(file)
-  {
-
-    let self =this;
-    const isIMAGE = (file.raw.type === 'image/jpeg' || file.raw.type === 'image/png');
-    const isLt1M = file.size / 1024 / 1024 < 10;
-
-    if (!isIMAGE) {
-      this.$message.error('只能上传jpg/png图片!');
-      return false;
-    }
-    if (!isLt1M) {
-      this.$message.error('上传文件大小不能超过 10MB!');
-      return false;
-    }
-    var reader = new FileReader();
-    reader.readAsDataURL(file.raw);
-    reader.onload = function(e){
-
-        // this.$options.methods.storeBase64(this.result)
-        self.base64Photo=this.result
-
-
-    }
-
+       addPhoto(photo){
+    this.base64PhotoList.push(photo)
   },
+
   submit(){
       axios.defaults.headers.common["satoken"] = store.state.token;
-      console.log(this.base64Photo)
-      axios.post(store.state.database+'/user/addUserIcon',this.base64Photo).then(response=>{
+      axios.post(store.state.database+'/user/addUserIcon',this.base64PhotoList).then(response=>{
         console.log(response)
+        this.reload()
       })
   }
     },
@@ -292,5 +266,6 @@ transform: translateX(-40%)
   position: absolute;
  left: 44%;
  margin-top: 150px;
+ transform: translateX(-30%)
 }
 </style>
