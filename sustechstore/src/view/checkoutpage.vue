@@ -92,6 +92,11 @@ export default {
     this.step.active = parseInt(to.query.status);
     next();
   },
+  watch:{
+    '$route.query': function (){
+      console.log("main",this.$route.query);
+    }
+  },
   components: {Chatwindow, Payresult, Payment, Submitorder, Searchnavigator}
 }
 </script>

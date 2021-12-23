@@ -17,12 +17,16 @@
       </el-tab-pane>
       <el-tab-pane label="Alipay" name="ap">No support</el-tab-pane>
     </el-tabs>
+
+
+    <el-button @click="getInfo"></el-button>
   </div>
 </template>
 
 <script>
 import Countdown from "./countdown";
 import axios from "axios";
+import {store} from "../../store/store";
 
 export default {
   name: "payment",
@@ -46,12 +50,20 @@ export default {
       } else {
         this.loading = true;
         let nextstatus = parseInt(this.$route.query.status) + 1;
-        let noworderid = this.$route.params.id;
-        setTimeout(() => {
-          console.log("wait..");
-          this.$router.push({path: '/checkout/' + noworderid + '/' + nextstatus, query: {status: nextstatus}});
-          this.loading = false;
-        }, 1000)
+        let noworderid = this.$route.query.orderid;
+        axios.put(store.state.database + "order/payById/" + noworderid).then(response => {
+          if (response.status === 200) {
+            this.$router.push({
+              path: '/checkout/' + this.$route.params.id + '/' + nextstatus,
+              query: {status: nextstatus, orderid: noworderid}
+            });
+            this.loading = false;
+          } else {
+            this.$router.push({name: 'shoppningcart'});
+            alert("Error happens!");
+          }
+
+        })
       }
     },
     createQrcode() {
@@ -63,27 +75,24 @@ export default {
         // colorLight: '#ffffff',
 
       });
+    },
+    getInfo() {
+      let balanceurl = store.state.database + "user/userInfo";
+      axios.get(balanceurl).then(response => {
+        this.balance = response.data.balance;
+      })
+      // let priceurl = store.state.database+"user/userInfo";
+      // axios.get(balanceurl).then(response=>{
+      //   this.balance = response.data.balance;
+      // })
     }
   },
-  watch: {
-    $route(to){
-      alert("in payment")
-      if(to.name==="payment"){
-        alert("into")
-        let getbalanceurl = store.state.database +"user/userInfo";
-        // axios.get(getbalanceurl).then(response=>{
-        //   this.balance=response.data.balance;
-        //   console.log(response.data.balance);
-        // })
-        alert("out")
-        // let getorderurl = store.state.database+"";
-        // axios.get(getorderurl).then(response=>{
-        //
-        // })
-        next();
-      }
-    }
-  },
+  // watch: {
+  //   '$route.path': function (newVal, oldVal) {
+  //     alert("in");
+  //     console.log(this.$route.query)
+  //   }
+  // },
   components: {Countdown}
 }
 </script>
