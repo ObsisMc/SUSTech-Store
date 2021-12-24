@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import axios from "axios";
+import {store} from "../../store/store";
 export default {
   name: "buyer_confirm",
   data() {
@@ -40,6 +42,10 @@ export default {
           query: {status: nextstatus}
         });
         this.loading = false;
+        this.$message({
+          message: "Confirm receipt successfully",
+          type: "success"
+        })
       })
     }
   }

@@ -35,7 +35,7 @@ export default {
       paymode: 0,
       price: 1000.5,
       activeName: 'vc',
-      balance: 100,
+      balance: 10000,
       qrto: 'https://www.baidu.com/',
       loading: false
     }
@@ -62,7 +62,6 @@ export default {
             this.$router.push({name: 'shoppningcart'});
             alert("Error happens!");
           }
-
         })
       }
     },

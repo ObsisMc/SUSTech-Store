@@ -93,7 +93,7 @@ export default {
     next();
   },
   watch:{
-    '$route.query': function (){
+    $route(to,from,next){
       console.log("main",this.$route.query);
     }
   },
