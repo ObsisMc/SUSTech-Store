@@ -8,7 +8,7 @@
                   :key="o2">
             <errandproduct :imgurl="goods[(o1-1)*col + o2 - 1].image"
                            :id="goods[(o1-1)*col + o2 - 1].id"
-                           :icon="goods[(o1 - 1) * col + o2 - 1].image"
+                           :icon="goods[(o1 - 1) * col + o2 - 1].ownerIcon"
                            :rating="4"
                            :saved="goods[(o1 - 1) * col + o2 - 1].saved"
                            :destination="goods[(o1 - 1) * col + o2 - 1].destination"
@@ -23,7 +23,9 @@
               <template v-slot:tips>
                 {{ goods[(o1 - 1) * col + o2 - 1].price }}
               </template>
-
+              <template v-slot:name>
+                {{ goods[(o1 - 1) * col + o2 - 1].name }}
+              </template>
             </errandproduct>
           </el-col>
         </el-row>
@@ -79,7 +81,7 @@ export default {
     },
     getProductsByCate(idx) {
       //pass
-      let url = store.state.database + 'errand/list/' + (idx-1);
+      let url = store.state.database + 'errand/list/' + (idx - 1);
       axios.get(url).then(response => {
         this.goods = response.data;
       })

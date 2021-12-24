@@ -5,7 +5,7 @@
         <i class="el-icon-s-flag" :class="computedId" style="float: right;"></i>
       </el-row>
       <el-row style="text-align: left;">
-        <slot name="description"></slot>
+        <slot name="name"></slot>
       </el-row>
       <el-row style="text-align: right; margin-top: 10px;">
         <el-avatar :size="20"
