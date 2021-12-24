@@ -63,8 +63,12 @@
       <el-form-item label="Detail Address" prop="detailaddress">
         <el-select v-if="ruleForm.region==='SUSTECH'" v-model="ruleForm.detailaddress"
                    placeholder="Select detail address">
-          <el-option label="The second dorm" :value="this.ruleForm.schoolregin.dorm2"></el-option>
-          <el-option label="Lake dorm" :value="this.ruleForm.schoolregin.lakedorm"></el-option>
+          <el-option :label="this.ruleForm.schoolregin.dorm2" :value="this.ruleForm.schoolregin.dorm2"></el-option>
+          <el-option :label="this.ruleForm.schoolregin.lakedorm" :value="this.ruleForm.schoolregin.lakedorm"></el-option>
+          <el-option :label="this.ruleForm.schoolregin.xingdorm" :value="this.ruleForm.schoolregin.xingdorm"></el-option>
+          <el-option :label="this.ruleForm.schoolregin.lidorm" :value="this.ruleForm.schoolregin.lidorm"></el-option>
+          <el-option :label="this.ruleForm.schoolregin.librarydan" :value="this.ruleForm.schoolregin.librarydan"></el-option>
+          <el-option :label="this.ruleForm.schoolregin.engineerbuliding" :value="this.ruleForm.schoolregin.engineerbuliding"></el-option>
         </el-select>
         <el-input v-if="ruleForm.region==='others'" v-model="ruleForm.detailaddress"
                   placeholder="Enter detail address"
@@ -100,8 +104,13 @@ export default {
         goodtype: 0,
         detailaddress: '',
         schoolregin: {
-          dorm2: "南方科技大学二期宿舍",
-          lakedorm: "南方科技大学书院5栋"
+          dorm2: "南方科技大学二期宿舍11栋",
+          lakedorm: "南方科技大学书院5栋",
+          xingdorm: "南方科技大学欣园宿舍",
+          lidorm: "南方科技大学荔园4栋",
+          librarydan: "南方科技大学一丹图书馆",
+          teachingbuliding: "南方科技大学第一教学楼",
+          engineerbuliding: "南方科技大学工学院"
         },
         region: 'SUSTECH',
         paymode: false,
@@ -132,7 +141,7 @@ export default {
         if (valid) {
           this.loading = true;
           let nextstatus = parseInt(this.$route.query.status) + 1;
-          axios.post(store.state.database + 'order/add/' + this.goods.id + '/' + this.ruleForm.region).then(response => {
+          axios.post(store.state.database + 'order/add/' + this.goods.id + '/' + this.ruleForm.detailaddress).then(response => {
             if (response.status === 200) {
               this.$router.push({
                 path: '/checkout/' + this.goods.id + '/' + nextstatus,
