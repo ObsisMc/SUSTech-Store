@@ -11,7 +11,10 @@
       </el-col>
       <el-col :span="11">
         <el-row>
-          <discription :rating="rating" @toOrder="toOrder" @addToCart="addToCart">
+          <discription :rating="rating"
+                       :ownerid = "good.ownerId"
+                       @toOrder="toOrder"
+                       @addToCart="addToCart">
             <template v-slot:name>
               {{ good.name }}
             </template>
@@ -87,6 +90,7 @@ export default {
       })
     },
     toOrder() {
+
       this.$router.push({
         path: '/checkout/' + this.good.id + '/' + this.orderstatus, query: {status: this.orderstatus}
       });
