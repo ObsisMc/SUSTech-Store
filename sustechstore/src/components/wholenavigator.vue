@@ -20,8 +20,8 @@
         <el-button icon="el-icon-s-custom" type="warning" size="small" style="cursor: pointer;" circle
                    @click="toSelfPage"></el-button>
       </el-col>
-      <el-col :span="1" class="menuitemright">
-        <i class="el-icon-star-off menuitem" style="font-size: 25px; cursor: pointer; " @click="toCart"></i>
+      <el-col :span="1" class="menuitemright" v-if="activeIndex==='1'">
+        <i class="el-icon-star-off menuitem" style="font-size: 25px; cursor: pointer; " @click="toCart" ></i>
       </el-col>
       <el-col :span="1" class="menuitemright" v-if="activeIndex==='1'">
         <i class="el-icon-search" style="font-size: 25px; cursor: pointer;" @click="toSearch"></i>

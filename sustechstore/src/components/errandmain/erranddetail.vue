@@ -142,7 +142,7 @@ export default {
     },
     toOrder() {
       this.$router.push({
-        path: '/checkout/' + this.id + '/' + "5", query: {status: 0}
+        name:"checkoutpage", query: {status: 0}, params:{id:this.id, category: 1}
       });
     },
     toUser() {
