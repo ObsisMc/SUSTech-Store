@@ -247,51 +247,56 @@ export default {
       this.$emit('close', this.fleg)
     },
     getChatHistory(){
+      console.log(new Date().toLocaleTimeString())
       axios.defaults.headers.common["satoken"] = store.state.token;
-      axios.get(store.state.database+'/userChat/findAll/'+this.otherid).then(response=>{
+      axios.get(store.state.database+'/userChat/findAll/'+this.myid+"/"+this.otherid).then(response=>{
         console.log(response)
+        for (let i=0; i<response.data.length;i++){
+          if (response.data[i].sellId===this.otherid){
+            let c = {
+              "name": this.myname,
+              /*   "url": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",*/
+              "url": this.userPhoto,
+              "content": response.data[i].lineText,
+              "show": true,
+              "time": response.data[i].createAt.replace('T',' '),
 
-      })
+            };
+            this.contentDiv.push(c);}
+          else {
+            let d ={
+              "name": this.othername,
+              /*   "url": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",*/
+              "url": this.userPhoto,
+              "content": response.data[i].lineText,
+              "show": false,
+              "time": response.data[i].createAt.replace('T',' '),
+            };
+            this.contentDiv.push(d)
+          }
+        }
+      });
+
+  },
+    timer() {
+      return setTimeout(()=>{
+        this.getChatHistory()
+      },5000)
     }
 
   },
   mounted() {
-  console.log(new Date().toLocaleTimeString())
-    axios.defaults.headers.common["satoken"] = store.state.token;
-    axios.get(store.state.database+'/userChat/findAll/'+this.myid+"/"+this.otherid).then(response=>{
-      console.log(response)
-
-      for (let i=0; i<response.data.length;i++){
-        if (response.data[i].sellId===this.otherid){
-          let c = {
-            "name": this.myname,
-            /*   "url": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",*/
-            "url": this.userPhoto,
-            "content": response.data[i].lineText,
-            "show": true,
-            "time": response.data[i].createAt.replace('T',' '),
-
-          };
-          this.contentDiv.push(c);}
-      else {
-        let d ={
-          "name": this.othername,
-          /*   "url": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",*/
-          "url": this.userPhoto,
-          "content": response.data[i].lineText,
-          "show": false,
-          "time": response.data[i].createAt.replace('T',' '),
-        };
-        this.contentDiv.push(d)
-        }
-      }
-    });
-
-    this.scrollToBottom()
+    this.getChatHistory();
+    this.scrollToBottom();
   },
   updated() {
     this.scrollToBottom()
   },
+  watch: {
+    contentDiv() {
+      this.timer()
+    }
+  }
 
 }
 
