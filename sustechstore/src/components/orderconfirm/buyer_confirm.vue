@@ -37,15 +37,12 @@ export default {
       let nextstatus = parseInt(this.$route.query.status) + 1;
       let noworderid = this.$route.query.orderid;
       axios.put(store.state.database + "order/close/" + noworderid).then(response => {
-        this.$router.push({
-          path: '/checkout/' + this.$route.params.id + '/' + nextstatus,
-          query: {status: nextstatus}
-        });
         this.loading = false;
         this.$message({
           message: "Confirm receipt successfully",
           type: "success"
-        })
+        });
+        this.$emit("nextStatus");
       })
     }
   }

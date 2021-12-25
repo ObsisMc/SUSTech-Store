@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row>
-      <span style="font-size: 30px;">Account payable: ¥ {{ price }}</span>
+      <span style="font-size: 30px;">Account payable: ¥ {{ cost }}</span>
     </el-row>
     <countdown deadline="2021-12-11 10:00:00" :showDays="false"></countdown>
     <el-tabs v-model="activeName" @tab-click="handleClick" v-loading="loading"
@@ -18,8 +18,6 @@
       <el-tab-pane label="Alipay" name="ap">No support</el-tab-pane>
     </el-tabs>
 
-
-    <el-button @click="getInfo"></el-button>
   </div>
 </template>
 
@@ -33,9 +31,10 @@ export default {
   data() {
     return {
       paymode: 0,
-      price: 1000.5,
+      cost: 1000.5,
+      endtime: '',
       activeName: 'vc',
-      balance: 10000,
+      balance: 0,
       qrto: 'https://www.baidu.com/',
       loading: false
     }
@@ -49,18 +48,21 @@ export default {
         alert("No enough balance.");
       } else {
         this.loading = true;
-        let nextstatus = parseInt(this.$route.query.status) + 1;
         let noworderid = this.$route.query.orderid;
         axios.put(store.state.database + "order/payById/" + noworderid).then(response => {
           if (response.status === 200) {
-            this.$router.push({
-              path: '/checkout/' + this.$route.params.id + '/' + nextstatus,
-              query: {status: nextstatus, orderid: noworderid}
-            });
             this.loading = false;
+            this.$message({
+              message: "Pay successfully",
+              type: "success"
+            })
+            this.$emit("nextStatus");
           } else {
             this.$router.push({name: 'shoppningcart'});
-            alert("Error happens!");
+            this.$message({
+              message: "Fail to submit order",
+              type: "error"
+            })
           }
         })
       }
@@ -80,18 +82,23 @@ export default {
       axios.get(balanceurl).then(response => {
         this.balance = response.data.balance;
       })
-      // let priceurl = store.state.database+"user/userInfo";
-      // axios.get(balanceurl).then(response=>{
-      //   this.balance = response.data.balance;
-      // })
+    },
+    getOrder() {
+      axios.get(store.state.database + "order/getOrdersVOByOrderId/" + this.$route.query.orderid).then(response => {
+        this.cost = response.data.cost;
+        let time = response.data.createTime.split("T")
+        this.endtime = time[0] + " " + time[1];
+        alert(this.endtime);
+      })
+    },
+    format() {
+      alert(this.endtime);
     }
   },
-  // watch: {
-  //   '$route.path': function (newVal, oldVal) {
-  //     alert("in");
-  //     console.log(this.$route.query)
-  //   }
-  // },
+  mounted() {
+    this.getInfo();
+    this.getOrder();
+  },
   components: {Countdown}
 }
 </script>

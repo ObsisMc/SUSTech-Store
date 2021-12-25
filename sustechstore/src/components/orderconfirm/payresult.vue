@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     returncart() {
-      this.$router.push('/shoppingcart')
+      this.$emit("nextStatus");
     }
   }
 }

@@ -23,10 +23,10 @@
     <el-row>
       <el-col :span="2" style="border:1px solid transparent;"></el-col>
       <el-col :span="20">
-        <keep-alive  v-if="!$route.meta.noKeepAlive">
-        <router-view></router-view>
-        </keep-alive>
-        <router-view v-if="$route.meta.noKeepAlive"></router-view>
+        <transition name="fade" mode="out-in">
+          <component @nextStatus="nextStatus" :is="subrouter" >
+          </component>
+        </transition>
       </el-col>
       <el-col :span="2" style="border:1px solid transparent;">
         <el-badge :value="12">
@@ -47,28 +47,26 @@
   </div>
 
 
-
 </template>
 
 <script>
 import Searchnavigator from "../components/wholenavigator";
-import Submitorder from "../components/orderconfirm/submitorder";
-import Payment from "../components/orderconfirm/payment";
-import Payresult from "../components/orderconfirm/payresult";
+import Chatwindow from "../components/chatroom/chatwindow";
 import axios from "axios";
 import {store} from "../store/store";
-import Chatwindow from "../components/chatroom/chatwindow";
+
 
 export default {
   name: "checkoutpage",
   data() {
     return {
-      rootpath: '',
+      cate: 0,
       step: {
         active: 0
       },
-      chatVisible: false
-
+      chatVisible: false,
+      subrouter: '',
+      balance: 0
     }
   },
   methods: {
@@ -81,23 +79,88 @@ export default {
       }
     },
     openchat() {
-      this.chatVisible=true;
+      this.chatVisible = true;
+    },
+    nextStatus() {
+      if (this.cate === 0) {
+        this.step.active += 1
+        switch (this.step.active) {
+          case 0:
+            this.subrouter = "submitorder";
+            break;
+          case 1:
+            this.subrouter = "payment";
+            break;
+          case 2:
+            this.subrouter = "merchant_confirm";
+            break;
+          case 3:
+            this.subrouter = "buyer_confirm";
+            break;
+          case 4:
+            this.subrouter = "payresult";
+            break;
+          case 5:
+            this.$router.push({name:"shoppingcart"})
+        }
+      } else if (this.cate === 1) {
+
+      }
     }
   },
   mounted() {
+    axios.defaults.headers.common['satoken'] = store.state.token;
+    this.cate = this.$route.params.category;
     this.step.active = parseInt(this.$route.query.status);
-    // axios.defaults.headers.common['satoken'] = store.state.token;
-  },
-  beforeRouteUpdate(to, from, next) {
-    this.step.active = parseInt(to.query.status);
-    next();
-  },
-  watch:{
-    $route(to,from,next){
-      console.log("main",this.$route.query);
+    if (this.cate === 0) {
+      switch (this.step.active) {
+        case 0:
+          this.subrouter = "submitorder";
+          break;
+        case 1:
+          this.subrouter = "payment";
+          break;
+        case 2:
+          this.subrouter = "merchant_confirm";
+          break;
+        case 3:
+          this.subrouter = "buyer_confirm";
+          break;
+        case 4:
+          this.subrouter = "payresult";
+          break;
+      }
+    } else if (this.cate === 1) {
     }
   },
-  components: {Chatwindow, Payresult, Payment, Submitorder, Searchnavigator}
+  beforeRouteUpdate(to, from, next) {
+    next();
+  },
+  components: {
+    Chatwindow,
+    Payresult: resolve => {
+      require(["../components/orderconfirm/payresult"], resolve)
+    },
+    Payment: resolve => {
+      require(["../components/orderconfirm/payment"], resolve)
+    },
+    Submitorder: resolve => {
+      require(["../components/orderconfirm/submitorder"], resolve)
+    },
+    Searchnavigator,
+    buyer_confirm: resolve => {
+      require(["../components/orderconfirm/buyer_confirm"], resolve)
+    },
+    merchant_confirm: resolve => {
+      require(["../components/orderconfirm/merchant_confirm"], resolve)
+    },
+    errandpayment: resolve => {
+      require(["../components/orderconfirm/errandpayment"], resolve)
+    },
+    errandsubmit: resolve => {
+      require(["../components/orderconfirm/errandsubmit"], resolve)
+    }
+  }
 }
 </script>
 

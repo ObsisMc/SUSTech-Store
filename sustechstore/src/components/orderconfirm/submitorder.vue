@@ -140,22 +140,23 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.loading = true;
-          let nextstatus = parseInt(this.$route.query.status) + 1;
           axios.post(store.state.database + 'order/add/' + this.goods.id + '/' + this.ruleForm.detailaddress).then(response => {
             if (response.status === 200) {
-              this.$router.push({
-                path: '/checkout/' + this.goods.id + '/' + nextstatus,
-                query: {status: nextstatus, orderid: response.data}
-              });
               this.loading = false;
+              this.$route.query.orderid = response.data;
+              this.$message({
+                message: "Submit order successfully",
+                type: "success"
+              });
+              this.$emit("nextStatus");
             } else {
               this.$router.push({name: 'shoppningcart'});
-              alert("Error happens!");
+              this.$message({
+                message: "Fail to submit order",
+                type: "error"
+              })
             }
           })
-          // this.$router.push({
-          //   path: '/checkout/' + this.goods.id + '/' + nextstatus, query: {status: nextstatus}
-          // });
         } else {
           console.log('error submit!!');
           return false;

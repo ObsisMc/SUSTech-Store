@@ -30,17 +30,11 @@ export default {
   methods: {
     handlePay() {
       this.loading = true;
-      let nextstatus = parseInt(this.$route.query.status) + 1;
       let noworderid = this.$route.query.orderid;
       console.log("wait..");
       axios.put(store.state.database + "order/confirmById/" + noworderid).then(response => {
-        this.$router.push(
-          {
-            path: '/checkout/' + this.$route.params.id + '/' + nextstatus,
-            query: {status: nextstatus, orderid: noworderid}
-          });
         this.loading = false;
-        alert("ok")
+        this.$emit("nextStatus");
       })
     }
   }
