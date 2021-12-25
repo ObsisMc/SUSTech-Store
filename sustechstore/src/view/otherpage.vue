@@ -20,7 +20,7 @@
 
     <div id="back">
       <el-dialog title="聊天" :visible.sync="dialog">
-      <chatwindow>
+      <chatwindow :otherid="id" :myid="myid" :othername="nickname" :myname="myname">
       </chatwindow>
    </el-dialog>
 
@@ -43,23 +43,14 @@
       </vue-particles>
 
       <el-avatar
-        src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+        :src="img"
         :size="150"
       ></el-avatar>
-
+      <h2 id="name">{{ nickname }}</h2>
       <h4 id="xinyu">信誉等级:
       </h4>
-      <el-rate v-model="value" :show-text=true :disabled=true text-color="#F56C6C" v-bind="{texts:texts}"></el-rate>
-      <el-input
-        v-bind="{ placeholder: intro, disabled: disableInput }"
-        v-model="textarea"
-        type="text"
-        maxlength="40"
-        :rows="3"
-        show-word-limit
-        label="个人简介"
-      >
-      </el-input>
+      <el-rate v-model="evaluate" :show-text=true :disabled=true text-color="#F56C6C" v-bind="{texts:texts}"></el-rate>
+
 
 
     </div>
@@ -84,38 +75,55 @@ import emotion from "../components/chatroom/emotion.vue";
 import "../assets/style/talk.css";
 import "../jsfolder/iconfont.js";
 import chatwindow from '../components/chatroom/chatwindow.vue'
-
+import axios from "axios";
+axios.defaults.withCredentials=true
+axios.defaults.crossDomain=true
+import { store } from '../store/store'
 export default {
+  inject:['reload'],
   components: {
     emotion, chatwindow
   },
+    created(){
+   this.id= this.$route.params.id
+      axios.defaults.headers.common['satoken'] = store.state.token;
+      axios.get(store.state.database+'user/userInfo').then(response=>{
+        this.myname =response.data.nickName
+        this.myid=response.data.uid
 
-   /* created() {
-    setTimeout(() => {
-      window.L2Dwidget.init({
-        pluginRootPath: 'static/live2d/',
-        pluginJsPath: '/',
-        pluginModelPath: 'yuri',
-        tagMode: false,
-        debug: false,
-        model: {jsonPath: 'static/live2d/yuri/model.json'},
-        display: {position: 'left', width: 250, height: 400},
-        mobile: {show: true},
-        log: false
+
       })
-    }, 1000)
-  },*/
+    },
+
+  beforeMount() {
+    console.log(this.id)
+  axios.get(store.state.database+'user/findById/'+this.id).then(response=>{
+    console.log(response)
+    this.evaluate=response.data.credit
+    this.img=response.data.icon
+    this.nickname=response.data.nickName
+   console.log(this.img)
+
+  })
+
+},
   name: "otherpage",
   data() {
     return {
-      intro: "这是一坨简介，啦啦啦啦啦啦",
       textarea: null,
       disableInput: true,
-      value: 4,
+      evaluate: 4,
       texts: ['极差', '差', '一般', '良好', '优秀'],
       money: 100,
       level: 5,
       activeIndex: '1',
+      id :1,
+      img:'',
+      nickname:'null',
+      myid: 1,
+      myname: 'null',
+
+
   dialog: false,
 
 }},
@@ -131,7 +139,7 @@ methods:{
 }
 </script>
 
-<style>
+<style scoped>
 .el-avatar {
   position: absolute;
   left: 710px;
@@ -167,20 +175,13 @@ methods:{
   border: 10px;
   background-size: cover;
 }
-
-#changePhoto {
+#name {
   position: absolute;
-  top: 300px;
+  top: 280px;
   color: gray;
-  left: 710px;
+  left: 50%;
+  transform: translateX(-30%);
 }
-
-#changeInfo {
-  position: absolute;
-  top: 410px;
-  left: 1200px;
-}
-
 .el-rate {
   position: absolute;
   top: 370px;

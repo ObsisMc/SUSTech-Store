@@ -52,8 +52,7 @@
     </div>
 
 
-    <div class=" talk-message
-                ">
+    <div class=" talk-message ">
 
       <div class="talk-message-face">
         <svg class="icon" aria-hidden="true" @click="isShow">
@@ -84,7 +83,10 @@
 import emotion from './emotion.vue';
 import './iconfont.js'
 import "./talk.css"
-
+import axios from "axios";
+axios.defaults.withCredentials=true
+axios.defaults.crossDomain=true
+import { store } from '../../store/store.js'
 export default {
   name: "chatwindow",
   components: {
@@ -108,18 +110,50 @@ export default {
       textarea1: "",
       emotionIsShow: false, // 表情面板控制出现
       divIptEmotion: [], // 接收表情组件传过来的数据
-      a: [],
+
       flag: true,
       show: false,
       closeChat: this.close,
       username: "zrh",
       othername: "???",
       userPhoto: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-      otherPhoto: "https://img1.baidu.com/it/u=2805547224,266493745&fm=26&fmt=auto"
-
+      otherPhoto: "https://img1.baidu.com/it/u=2805547224,266493745&fm=26&fmt=auto",
+      cotherid:1,
+      cmyid: 1,
+      cothername:'null',
+      cmyname:'null',
     }
   },
-
+  props: ['otherid','myid','othername','myname'],
+  /*otherid:{
+    handler:(val,oldval) => {
+      this.cotherid = val;
+    },
+    immediate:true,//关键
+    deep:true
+  },
+  myid:{
+    handler:(val,oldval) => {
+      this.cmyid = val;
+    },
+    immediate:true,//关键
+    deep:true
+  },
+  othername:{
+    handler:(val,oldval) => {
+      this.cohtername = val;
+    },
+    immediate:true,//关键
+    deep:true
+  },
+  myname:{
+    handler:(val,oldval) => {
+      this.cmyname = val;
+    },
+    immediate:true,//关键
+    deep:true
+  },
+*/
   methods: {
 
     scrollToBottom() {
@@ -150,6 +184,8 @@ export default {
       this.textarea1 += img;
     },
     submit() {
+
+      axios.defaults.headers.common["satoken"] = store.state.token;
       let a = this.textarea;
       let pre = 0;
       let last = 0;
@@ -178,37 +214,85 @@ export default {
         flag = false;
       }
       let c = {
-        "name": this.username,
+        "name": this.myname,
         /*   "url": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",*/
         "url": this.userPhoto,
         "content": a,
         "show": true,
         "time": new Date().toLocaleTimeString()
       };
-      let d = {
+
+      let chat ={
+        "lineText":a,
+         "sellId":this.otherid,
+      }
+      axios.post(store.state.database+'/userChat/addChat/'+this.otherid, chat).then(response=>{
+        console.log(response)
+      })
+
+     /*    let d = {
         "name": this.othername,
-        /*      "url": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",*/
-        "url": this.otherPhoto,
+           "url": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
         "content": "zrhyyds啊啊啊啊啊啊啊啊啊啊",
         "show": false,
         "time": new Date().toLocaleTimeString()
-      };
+      };*/
       this.textarea = "";
       this.textarea1 = "";
       this.contentDiv.push(c);
-      this.contentDiv.push(d);
+  //    this.contentDiv.push(d);
+
     },
     exit() {
       this.$emit('close', this.fleg)
+    },
+    getChatHistory(){
+      axios.defaults.headers.common["satoken"] = store.state.token;
+      axios.get(store.state.database+'/userChat/findAll/'+this.otherid).then(response=>{
+        console.log(response)
+
+      })
     }
 
   },
   mounted() {
+  console.log(new Date().toLocaleTimeString())
+    axios.defaults.headers.common["satoken"] = store.state.token;
+    axios.get(store.state.database+'/userChat/findAll/'+this.myid+"/"+this.otherid).then(response=>{
+      console.log(response)
+
+      for (let i=0; i<response.data.length;i++){
+        if (response.data[i].sellId===this.otherid){
+          let c = {
+            "name": this.myname,
+            /*   "url": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",*/
+            "url": this.userPhoto,
+            "content": response.data[i].lineText,
+            "show": true,
+            "time": response.data[i].createAt.replace('T',' '),
+
+          };
+          this.contentDiv.push(c);}
+      else {
+        let d ={
+          "name": this.othername,
+          /*   "url": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",*/
+          "url": this.userPhoto,
+          "content": response.data[i].lineText,
+          "show": false,
+          "time": response.data[i].createAt.replace('T',' '),
+        };
+        this.contentDiv.push(d)
+        }
+      }
+    });
+
     this.scrollToBottom()
   },
   updated() {
     this.scrollToBottom()
   },
+
 }
 
 </script>
