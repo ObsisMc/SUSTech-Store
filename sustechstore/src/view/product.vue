@@ -28,9 +28,11 @@
         </el-row>
         <el-divider></el-divider>
         <el-row>
-          <userinfo :rating="rating" :ownerid="good.ownerId">
+          <userinfo :rating="rating"
+                    :ownerid="good.ownerId"
+                    :icon="good.icon">
             <template v-slot:owner>
-              unamed
+              {{good.nickName}}
             </template>
           </userinfo>
         </el-row>

@@ -3,7 +3,7 @@
     <el-row>
       <div @click="toOthers" style="cursor: pointer;">
         <el-avatar class="roughdetail"
-                   src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+                   :src="icon"></el-avatar>
       </div>
       <span class="roughdetail" style="margin-left: 10px;">
             <span class="roughdetail" style="margin-top: 10px;">
@@ -44,7 +44,7 @@ import Chatwindow from "../chatroom/chatwindow";
 export default {
   name: "userinfo",
   components: {Chatwindow},
-  props: ["rating","ownerid"],
+  props: ["rating","ownerid",'icon'],
   data() {
     return {
       ratingobj: {
