@@ -228,6 +228,7 @@ export default {
       }
       axios.post(store.state.database+'/userChat/addChat/'+this.otherid, chat).then(response=>{
         console.log(response)
+      //  this.getChatHistory();
       })
 
      /*    let d = {
@@ -239,7 +240,7 @@ export default {
       };*/
       this.textarea = "";
       this.textarea1 = "";
-      this.contentDiv.push(c);
+   //   this.contentDiv.push(c);
   //    this.contentDiv.push(d);
 
     },
@@ -247,6 +248,7 @@ export default {
       this.$emit('close', this.fleg)
     },
     getChatHistory(){
+      let tempDiv =[]
       console.log(new Date().toLocaleTimeString())
       axios.defaults.headers.common["satoken"] = store.state.token;
       axios.get(store.state.database+'/userChat/findAll/'+this.myid+"/"+this.otherid).then(response=>{
@@ -262,7 +264,8 @@ export default {
               "time": response.data[i].createAt.replace('T',' '),
 
             };
-            this.contentDiv.push(c);}
+           tempDiv.push(c)
+           }
           else {
             let d ={
               "name": this.othername,
@@ -272,25 +275,37 @@ export default {
               "show": false,
               "time": response.data[i].createAt.replace('T',' '),
             };
-            this.contentDiv.push(d)
+          tempDiv.push(d)
           }
         }
-      });
 
+      let nowLength=this.contentDiv.length;
+      if (nowLength!==tempDiv.length){
+      for (let j=nowLength;j<tempDiv.length;j++){
+        this.contentDiv.push(tempDiv[j])
+      }}})
+
+
+      console.log(this.contentDiv.length)
   },
     timer() {
-      return setTimeout(()=>{
+      return setInterval(()=>{
+        console.log("time")
         this.getChatHistory()
-      },5000)
+      },2000)
     }
 
   },
-  mounted() {
+  created() {
     this.getChatHistory();
+    this.timer();
     this.scrollToBottom();
   },
   updated() {
     this.scrollToBottom()
+  },
+  destroyed() {
+    clearTimeout(this.timer)
   },
   watch: {
     contentDiv() {
