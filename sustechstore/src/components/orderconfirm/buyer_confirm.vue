@@ -34,7 +34,6 @@ export default {
   methods: {
     handlePay() {
       this.loading = true;
-      let nextstatus = parseInt(this.$route.query.status) + 1;
       let noworderid = this.$route.query.orderid;
       axios.put(store.state.database + "order/close/" + noworderid).then(response => {
         this.loading = false;

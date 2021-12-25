@@ -70,6 +70,9 @@
 </template>
 
 <script>
+import axios from "axios";
+import {store} from "../../store/store";
+
 export default {
   name: "errandsubmit",
   data() {
@@ -103,12 +106,18 @@ export default {
   },
   methods: {
     submit() {
-      let nextstatus = parseInt(this.$route.query.status) + 3;
-      this.$router.push({
-        path: '/checkout/' + this.task.id + '/' + "3",
-        query: {status: nextstatus}
+      axios.put(store.state.database +"errand/take/"+this.id).then(response=>{
+        if(response.status===200){
+          this.$route.query.orderid = response.data;
+
+          this.$emit("nextStatus");
+        }
       })
+
     }
+  },
+  mounted(){
+
   }
 }
 </script>

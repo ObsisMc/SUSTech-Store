@@ -88,7 +88,6 @@ export default {
         this.cost = response.data.cost;
         let time = response.data.expireTime.split("T")
         this.expireTime = time[0] + " " + time[1];
-        alert(this.expireTime);
       })
     },
     format() {

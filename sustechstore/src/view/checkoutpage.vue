@@ -10,11 +10,16 @@
         <span style="float: left;line-height: 100px; font-size: 40px;">Checkout</span>
       </el-col>
       <el-col :span="12">
-        <el-steps :active="step.active" finish-status="success" direction="horizontal" align-center>
+        <el-steps :active="step.active" finish-status="success" v-if="cate===0" direction="horizontal" align-center>
           <el-step title="confirm order"></el-step>
           <el-step title="payment"></el-step>
           <el-step title="merchant affirm"></el-step>
           <el-step title="customer affirm"></el-step>
+          <el-step title="trade result"></el-step>
+        </el-steps>
+        <el-steps :active="step.active" finish-status="success" v-if="cate===1" direction="horizontal" align-center>
+          <el-step title="confirm order"></el-step>
+          <el-step title="merchant affirm"></el-step>
           <el-step title="trade result"></el-step>
         </el-steps>
       </el-col>
@@ -24,7 +29,7 @@
       <el-col :span="2" style="border:1px solid transparent;"></el-col>
       <el-col :span="20">
         <transition name="fade" mode="out-in">
-          <component @nextStatus="nextStatus" :is="subrouter" >
+          <component @nextStatus="nextStatus" :is="subrouter">
           </component>
         </transition>
       </el-col>
@@ -101,7 +106,7 @@ export default {
             this.subrouter = "payresult";
             break;
           case 5:
-            this.$router.push({name:"shoppingcart"})
+            this.$router.push({name: "shoppingcart"})
         }
       } else if (this.cate === 1) {
 
@@ -131,6 +136,17 @@ export default {
           break;
       }
     } else if (this.cate === 1) {
+      switch (this.step.active) {
+        case 0:
+          this.subrouter = "errandsubmit";
+          break;
+        case 1:
+          this.subrouter = "merchant_confirm";
+          break;
+        case 2:
+          this.subrouter = "payresult";
+          break;
+      }
     }
   },
   beforeRouteUpdate(to, from, next) {
