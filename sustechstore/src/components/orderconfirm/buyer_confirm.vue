@@ -1,6 +1,6 @@
 <template>
   <div>
-<!--    <el-button type="text" @click="centerDialogVisible = true">点击打开 Dialog</el-button>-->
+    <!--    <el-button type="text" @click="centerDialogVisible = true">点击打开 Dialog</el-button>-->
 
     <el-button type="primary" @click="centerDialogVisible = true">确认收货<i class="el-icon-s-claim"></i></el-button>
     <el-dialog
@@ -14,7 +14,7 @@
     <el-button type="primary" @click="handlePay()">
 <!--      <el-row @click="handlePay()">-->
         确定
-<!--      </el-row>-->
+      <!--      </el-row>-->
     </el-button>
   </span>
     </el-dialog>
@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import axios from "axios";
+import {store} from "../../store/store";
 export default {
   name: "buyer_confirm",
   data() {
@@ -29,17 +31,19 @@ export default {
       centerDialogVisible: false
     };
   },
-  methods:{
+  methods: {
     handlePay() {
-        this.loading = true;
-        let nextstatus = parseInt(this.$route.query.status) + 1;
-        let noworderid = this.$route.params.id;
-        setTimeout(() => {
-          console.log("wait..");
-          this.$router.push({path: '/checkout/' + noworderid + '/' + nextstatus, query: {status: nextstatus}});
-          this.loading = false;
-        }, 1000)
-
+      this.loading = true;
+      let nextstatus = parseInt(this.$route.query.status) + 1;
+      let noworderid = this.$route.query.orderid;
+      axios.put(store.state.database + "order/close/" + noworderid).then(response => {
+        this.loading = false;
+        this.$message({
+          message: "Confirm receipt successfully",
+          type: "success"
+        });
+        this.$emit("nextStatus");
+      })
     }
   }
 }
