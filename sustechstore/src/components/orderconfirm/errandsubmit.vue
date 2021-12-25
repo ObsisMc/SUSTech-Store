@@ -103,9 +103,9 @@ export default {
   },
   methods: {
     submit() {
-      let nextstatus = parseInt(this.$route.query.status) + 1;
+      let nextstatus = parseInt(this.$route.query.status) + 3;
       this.$router.push({
-        path: '/checkout/' + this.task.id + '/' + "4",
+        path: '/checkout/' + this.task.id + '/' + "3",
         query: {status: nextstatus}
       })
     }
