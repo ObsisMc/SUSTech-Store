@@ -13,7 +13,9 @@
       <el-button size="small" type="primary">点击上传</el-button>
       <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
     </el-upload>
-    <chatwindow></chatwindow>
+    <!--    <chatwindow></chatwindow>-->
+    <component :is="cpnt"></component>
+    <el-button @click="changecpnt"></el-button>
 
   </div>
 
@@ -33,10 +35,11 @@ import mymap from "./baiduMap/baiduMap";
 import FlipCountdown from 'vue2-flip-countdown';
 import {store} from "../store/store";
 import Chatwindow from "./chatroom/chatwindow";
+import buyer_confirm from "./orderconfirm/buyer_confirm";
 
 export default {
   name: "test",
-  components: {Chatwindow},
+  components: {Chatwindow, buyer_confirm},
   data() {
     return {
       fileList: [{
@@ -46,7 +49,8 @@ export default {
         name: 'food2.jpeg',
         url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
       }],
-      action: store.state.database + "/productImage/postImage"
+      action: store.state.database + "/productImage/postImage",
+      cpnt: ''
     };
   },
   methods: {
@@ -62,6 +66,16 @@ export default {
     },
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);
+    },
+    changecpnt() {
+      if (this.cpnt === '') {
+        this.cpnt = "chatwindow";
+      } else if (this.cpnt === "chatwindow") {
+        this.cpnt = "buyer_confirm";
+      } else {
+        this.cpnt = '';
+      }
+
     }
   },
   mounted() {

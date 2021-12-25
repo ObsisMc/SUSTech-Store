@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import Erranddetail from "./erranddetail";
+import Erranddetail from "../errandmain/erranddetail";
 
 export default {
   name: "taskitem",

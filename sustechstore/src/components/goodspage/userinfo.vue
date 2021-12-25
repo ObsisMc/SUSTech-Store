@@ -40,6 +40,8 @@
 
 <script>
 import Chatwindow from "../chatroom/chatwindow";
+import axios from "axios";
+import {store} from "../../store/store";
 
 export default {
   name: "userinfo",
@@ -58,7 +60,16 @@ export default {
       this.chatVisible = true;
     },
     toOthers() {
-      this.$router.push({name: "otherpage", params: {id: this.ownerid}})
+      axios.get(store.state.database + 'user/userInfo').then(response => {
+        if (response.status === 200) {
+          if(response.data.uid === this.ownerid){
+            this.$router.push({name: "selfpage"})
+          }else{
+            this.$router.push({name: "otherpage", params: {id: this.ownerid}})
+          }
+        }
+      });
+
     }
   }
 }
