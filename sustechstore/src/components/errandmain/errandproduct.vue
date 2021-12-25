@@ -16,17 +16,6 @@
       </el-row>
     </el-card>
 
-
-    <el-dialog
-      title="Chat"
-      :visible.sync="chatVisible"
-      width="50%">
-      <chatwindow></chatwindow>
-
-      <span slot="footer" class="dialog-footer">
-  </span>
-    </el-dialog>
-
     <el-drawer
       :visible.sync="drawer"
       :direction="direction"

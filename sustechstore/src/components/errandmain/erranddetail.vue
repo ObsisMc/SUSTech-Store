@@ -1,5 +1,14 @@
 <template>
   <div>
+    <el-dialog
+      title="Chat"
+      :visible.sync="chatVisible"
+      width="50%">
+      <chatwindow></chatwindow>
+
+      <span slot="footer" class="dialog-footer">
+  </span>
+    </el-dialog>
     <el-row>
       <el-col :span="4" class="support"></el-col>
       <el-col :span="16">
@@ -90,6 +99,7 @@
 
 <script>
 import mymap from "@/components/baiduMap/baiduMapWithAddress";
+import chatwindow from "../chatroom/chatwindow";
 import {store} from "../../store/store";
 import axios from "axios";
 
@@ -98,6 +108,7 @@ export default {
   props: ["id"],
   data() {
     return {
+      chatVisible: false,
       ratingobj: {
         rating: 4,
         colors: ['#99A9BF', '#F7BA2A', '#FF9900']
@@ -126,21 +137,18 @@ export default {
     }
   },
   methods: {
-    toUser() {
-      this.$router.push({
-        path: "/otherpage"
-      })
-    },
     openchat() {
-      console.log("openchat")
+      this.chatVisible = true;
     },
     toOrder() {
       this.$router.push({
         path: '/checkout/' + this.id + '/' + "5", query: {status: 0}
       });
     },
-    test() {
-      console.log(good);
+    toUser() {
+      this.$router.push({
+        path: "/otherpage"
+      })
     }
   },
   mounted() {
@@ -153,6 +161,7 @@ export default {
     });
   },
   components: {
+    chatwindow,
     mymap: resolve => {
       require(['@/components/baiduMap/baiduMapWithAddress'], resolve)
     }
