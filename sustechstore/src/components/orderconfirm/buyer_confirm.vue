@@ -24,6 +24,7 @@
 <script>
 import axios from "axios";
 import {store} from "../../store/store";
+
 export default {
   name: "buyer_confirm",
   data() {
@@ -35,14 +36,26 @@ export default {
     handlePay() {
       this.loading = true;
       let noworderid = this.$route.query.orderid;
-      axios.put(store.state.database + "order/close/" + noworderid).then(response => {
-        this.loading = false;
-        this.$message({
-          message: "Confirm receipt successfully",
-          type: "success"
-        });
-        this.$emit("nextStatus");
-      })
+      if (this.$route.query.category === 0) {
+        axios.put(store.state.database + "order/close/" + noworderid).then(response => {
+          this.loading = false;
+          this.$message({
+            message: "Confirm receipt successfully",
+            type: "success"
+          });
+          this.$emit("nextStatus");
+        })
+      } else if (this.$route.query.category === 1) {
+        axios.put(store.state.database +"errand/confirm/"+noworderid).then(response=>{
+          this.loading = false;
+          this.$message({
+            message: "Confirm receipt successfully",
+            type: "success"
+          });
+          this.$emit("nextStatus");
+        })
+      }
+
     }
   }
 }

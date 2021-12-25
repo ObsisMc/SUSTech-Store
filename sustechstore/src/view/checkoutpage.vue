@@ -57,6 +57,7 @@
 <script>
 import Searchnavigator from "../components/wholenavigator";
 import Chatwindow from "../components/chatroom/chatwindow";
+import errandmainpage from "./errandmainpage";
 import axios from "axios";
 import {store} from "../store/store";
 
@@ -87,8 +88,8 @@ export default {
       this.chatVisible = true;
     },
     nextStatus() {
+      this.step.active += 1
       if (this.cate === 0) {
-        this.step.active += 1
         switch (this.step.active) {
           case 0:
             this.subrouter = "submitorder";
@@ -109,7 +110,19 @@ export default {
             this.$router.push({name: "shoppingcart"})
         }
       } else if (this.cate === 1) {
-
+        switch (this.step.active) {
+          case 0:
+            this.subrouter = "errandsubmit";
+            break;
+          case 1:
+            this.subrouter = "buyer_confirm";
+            break;
+          case 2:
+            this.subrouter = "payresult";
+            break;
+          case 3:
+            this.$router.push({name: "errandmain"})
+        }
       }
     }
   },
@@ -141,7 +154,7 @@ export default {
           this.subrouter = "errandsubmit";
           break;
         case 1:
-          this.subrouter = "merchant_confirm";
+          this.subrouter = "buyer_confirm";
           break;
         case 2:
           this.subrouter = "payresult";

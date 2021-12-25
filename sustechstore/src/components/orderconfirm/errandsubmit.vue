@@ -14,14 +14,14 @@
         <el-row>
           <el-col :span="3">
             <div>
-              <el-avatar :size="60" :src="task.icon" style="cursor: pointer;"></el-avatar>
+              <el-avatar :size="60" :src="task.ownerIcon" style="cursor: pointer;"></el-avatar>
             </div>
           </el-col>
           <el-col :span="18">
             <div style="float: left;">
               <el-row>
                   <span style="font-weight: bold;font-size: 20px; float: left;">
-                    {{ task.nickName }}
+                    {{ task.ownerNickname }}
                   </span>
               </el-row>
             </div>
@@ -79,16 +79,16 @@ export default {
     return {
       task: {
         description: "nothing is here",
-        icon: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-        id: 733,
+        ownerIcon: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+        id: 2,
         image: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
         name: "ham",
-        nickName: "unamed",
-        ownerId: 0,
-        price: 200,
-        productId: 734,
-        saved: false,
-        tips: 10
+        ownerNickname: "unamed",
+        origin: -1,
+        price: -1,
+        tips: 0,
+        destination: -1
+
       },
       endslocation: [
         {
@@ -106,18 +106,20 @@ export default {
   },
   methods: {
     submit() {
-      axios.put(store.state.database +"errand/take/"+this.id).then(response=>{
-        if(response.status===200){
-          this.$route.query.orderid = response.data;
-
+      axios.put(store.state.database + "errand/take/" + this.task.id).then(response => {
+        if (response.status === 200) {
+          this.$route.query.orderid = this.task.id;
+          this.$route.query.category = 1;
           this.$emit("nextStatus");
         }
       })
-
     }
   },
-  mounted(){
-
+  mounted() {
+    let goodsurl = store.state.database + 'errand/findErrandVOById/' + this.task.id;
+    axios.get(goodsurl).then(response => {
+      this.task = response.data;
+    })
   }
 }
 </script>
