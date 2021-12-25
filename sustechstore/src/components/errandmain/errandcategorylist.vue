@@ -6,25 +6,14 @@
           <el-col :span="24/col"
                   v-for="o2 in o1*col>goods.length?goods.length-(o1-1)*col:col"
                   :key="o2">
-            <errandproduct :imgurl="goods[(o1-1)*col + o2 - 1].image"
-                           :id="goods[(o1-1)*col + o2 - 1].id"
+            <errandproduct :id="goods[(o1-1)*col + o2 - 1].id"
                            :icon="goods[(o1 - 1) * col + o2 - 1].ownerIcon"
-                           :rating="4"
-                           :saved="goods[(o1 - 1) * col + o2 - 1].saved"
-                           :destination="goods[(o1 - 1) * col + o2 - 1].destination"
-                           :origin="goods[(o1 - 1) * col + o2 - 1].origin"
                            @changeFlag="changeFlag">
-              <template v-slot:description>
-                {{ goods[(o1 - 1) * col + o2 - 1].description }}
+              <template v-slot:name>
+                {{goods[(o1 - 1) * col + o2 - 1].name}}
               </template>
               <template v-slot:nickName>
-                {{ goods[(o1 - 1) * col + o2 - 1].ownerNickname }}
-              </template>
-              <template v-slot:tips>
-                {{ goods[(o1 - 1) * col + o2 - 1].price }}
-              </template>
-              <template v-slot:name>
-                {{ goods[(o1 - 1) * col + o2 - 1].name }}
+                {{goods[(o1 - 1) * col + o2 - 1].ownerNickname}}
               </template>
             </errandproduct>
           </el-col>

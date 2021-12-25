@@ -101,15 +101,6 @@ const router = new Router({
       name: 'checkoutpage',
       component: checkoutpage,
       meta: {requiresAuth: true}
-      // children: [
-      //   {path: '0', component: submitorder,name:"submitorder", meta: {requiresAuth: true}},
-      //   {path: '1', component: payment,name:"payment", meta: {requiresAuth: true}},
-      //   {path: '2', component: merchant_confirm,name:"merchant_confirm", meta: {requiresAuth: true}},
-      //   {path: '3', component: buyer_confirm,name:"buyer_confirm", meta: {requiresAuth: true}},
-      //   {path: '4', component: payresult,name:"payresult", meta: {requiresAuth: true}},
-      //   {path: '5', component: errandsubmit,name:"errandsubmit", meta: {requiresAuth: true}},
-      //   {path: '6', component: errandpayment,name:"errandpayment", meta: {requiresAuth: true}}
-      // ]
     },
     {
       path: '/payresult',

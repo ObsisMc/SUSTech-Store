@@ -3,7 +3,7 @@
     <el-row>
       <span style="font-size: 30px;">Account payable: ¥ {{ cost }}</span>
     </el-row>
-    <countdown deadline="2021-12-11 10:00:00" :showDays="false"></countdown>
+    <countdown :deadline="expireTime" :showDays="false"></countdown>
     <el-tabs v-model="activeName" @tab-click="handleClick" v-loading="loading"
              element-loading-text="payment processing...">
       <el-tab-pane label="Virtual coin" name="vc">
@@ -32,7 +32,7 @@ export default {
     return {
       paymode: 0,
       cost: 1000.5,
-      endtime: '',
+      expireTime: '2021-12-26 10:00:00',
       activeName: 'vc',
       balance: 0,
       qrto: 'https://www.baidu.com/',
@@ -86,9 +86,9 @@ export default {
     getOrder() {
       axios.get(store.state.database + "order/getOrdersVOByOrderId/" + this.$route.query.orderid).then(response => {
         this.cost = response.data.cost;
-        let time = response.data.createTime.split("T")
-        this.endtime = time[0] + " " + time[1];
-        alert(this.endtime);
+        let time = response.data.expireTime.split("T")
+        this.expireTime = time[0] + " " + time[1];
+        alert(this.expireTime);
       })
     },
     format() {
