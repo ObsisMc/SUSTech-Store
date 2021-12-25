@@ -1,16 +1,17 @@
 .name_right {
-   margin-left: 600px;
+   margin-left: 610px;
 
 }
 .name_left {
     margin-left: 10px;
+
 }
 
 .content_right {
 
     word-wrap: break-word;
     width: 50%;
-   margin-left: 250px;
+   margin-left: 300px;
 
     font-size: 10px;
     text-align: right;
@@ -27,13 +28,13 @@
 }
 
 .url_right {
-    margin-left: 10px;
-    display: none;
+    margin-left: 25px;
+
 }
 
 .url-left {
     margin-left: 15px;
-    display: none;
+
 
 }
 
@@ -101,7 +102,7 @@
 
 .talk {
     border: 1px solid #DCE1E6;
-    width: 650px;
+    width: 730px;
     height: 450px;
     margin: 0 auto;
 }
@@ -120,6 +121,7 @@
 .talk-content {
     overflow-y: auto;
     height: 350px;
+  width: 700px;
 }
 
 .talk-message {
