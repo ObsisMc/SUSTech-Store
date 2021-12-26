@@ -99,9 +99,10 @@ export default {
       if (target === '') {
         this.getAllGoods();
       } else {
-        axios.get(store.state.database + "product/search/" + target).then(response => {
-          this.goods.good = response.data;
-        })
+        // axios.get(store.state.database + "product/search/" + target).then(response => {
+        //   this.goods.good = response.data;
+        // })
+        this.goods.good = target.data;
       }
     },
     load() {
