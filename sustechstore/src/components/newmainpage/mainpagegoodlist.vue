@@ -96,13 +96,15 @@ export default {
       })
     },
     getSearchTarget(target) {
-      if (target === '') {
+      if (target === 0) {
         this.getAllGoods();
       } else {
-        // axios.get(store.state.database + "product/search/" + target).then(response => {
-        //   this.goods.good = response.data;
-        // })
-        this.goods.good = target.data;
+        let goodsurl = store.state.database + "/product/list/1/" + target;
+        axios.get(goodsurl).then(response=>{
+          console.log(response)
+          this.goods.good = response.data;
+        })
+
       }
     },
     load() {

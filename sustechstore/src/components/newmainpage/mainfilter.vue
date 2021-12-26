@@ -169,8 +169,7 @@ export default {
       this.$emit('getSearchTarget',this.filter.search.searchtarget);
     },
     loadId(val){
-      this.id = val
-      this.$emit("listenToChildId",this.id)
+      this.$emit("getSearchTarget",val)
     },
     cleanRole() {
       this.filter.role.value = 'General';
@@ -185,7 +184,17 @@ export default {
       this.filter.price.value = 'All';
     },
     changeSelect(){
-      this.load(1);
+      if(this.simplefilter.selected === "All"){
+        this.loadId(0)
+      }else if(this.simplefilter.selected === "Study"){
+        this.loadId(1);
+      }else if(this.simplefilter.selected === "Food"){
+        this.loadId(2);
+      }else if(this.simplefilter.selected === "Electronic"){
+        this.loadId(3);
+      }else if(this.simplefilter.selected === "Living"){
+        this.loadId(4);
+      }
     }
   }
 }
