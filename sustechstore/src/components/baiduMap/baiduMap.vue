@@ -52,6 +52,7 @@ methods:{
           if(res.surroundingPois.length!==0){
             this.address+=res.surroundingPois[0].title
           }
+          this.$emit("mapAddress",this.address)
       })
     },
     changeAnchor(lng ,lnt){
