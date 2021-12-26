@@ -101,6 +101,7 @@ export default {
   name: "mainfilter",
   data() {
     return {
+      id: 0,
       sortselect: {
         value: 'New',
         option: [
@@ -166,8 +167,11 @@ export default {
     getSearchTarget() {
       this.filter.search.searchtarget = this.filter.search.searchinput;
       this.$emit('getSearchTarget',this.filter.search.searchtarget);
-    }
-    ,
+    },
+    loadId(val){
+      this.id = val
+      this.$emit("listenToChildId",this.id)
+    },
     cleanRole() {
       this.filter.role.value = 'General';
     },
@@ -181,7 +185,7 @@ export default {
       this.filter.price.value = 'All';
     },
     changeSelect(){
-
+      this.load(1);
     }
   }
 }

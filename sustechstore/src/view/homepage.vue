@@ -7,7 +7,7 @@
       <el-aside width="50px">
       </el-aside>
       <el-main>
-        <mainfilter @getSearchTarget="getSearchTarget"></mainfilter>
+        <mainfilter @getSearchTarget="getSearchTarget" v-on:listenToChildId="showMessageFromChild"></mainfilter>
         <br/>
         <mainpagegoodlist style="margin: 10px 20px;" ref="mybody"></mainpagegoodlist>
       </el-main>
@@ -35,10 +35,20 @@ export default {
   methods: {
     getSearchTarget(target) {
       this.$refs.mybody.getSearchTarget(target);
+      console.log(target)
+    },
+    showMessageFromChild(data){
+      // console.log(data)
+      let goodsurl = store.state.database + "/product/list/1/" + data;
+      axios.get(goodsurl).then(response=>{
+        console.log(response)
+        this.getSearchTarget(response)
+      })
     }
   },
   mounted(){
     axios.defaults.headers.common['satoken'] = store.state.token;
+    // let goodid = store.state.database + "product/" +   +
   }
 }
 </script>
