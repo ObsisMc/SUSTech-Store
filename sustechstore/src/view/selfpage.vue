@@ -299,8 +299,8 @@
           </el-select>
         </el-form-item>
         <el-form-item label="">
-          <photoUpload @getPhoto='addPhoto'>
-          </photoUpload>
+          <!--photoUpload @getPhoto='addPhoto'>
+          </photoUpload-->
         </el-form-item>
         <el-form-item label="目的地">
           <mymap @mapAddress="getMapAddress"> </mymap>
@@ -388,7 +388,7 @@ export default {
       formPao:{
         name: '',
         origin:'',
-        destination:'',
+        destination:'南方科技大学',
         descri:'',
           price:0,
         paoproductPhoto:[],
@@ -465,6 +465,7 @@ export default {
         ownerId: this.userId,
         price: this.formSell.price,
         updateTime: "",
+        type: "SELL"
       };
     this.clearPhoto();
       axios.post(store.state.database + "/product/add",to).then((response) => {
@@ -488,7 +489,7 @@ export default {
         description: this.formPao.descri,
         destination: this.formPao.destination,
         id :0,
-        image: this.base64PhotoList[0],
+        image: '',
         name : this.formPao.name,
         origin: this.formPao.origin,
         ownerId: this.userId,
