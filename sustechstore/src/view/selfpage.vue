@@ -78,13 +78,20 @@
       </el-table>
     </el-dialog>
 
-    <el-dialog title="卖出订单" :visible.sync="SellOrderVisible">
-      <el-table :data="formSellOrder">
-        <el-table-column property="name" label="商品名称"></el-table-column>
+    <el-dialog title="卖出订单" :visible.sync="SellOrderVisible" >
+      <el-table :data="formSellOrder" @row-click="gotoOrder">
+        <el-table-column property="name" label="商品名称" ></el-table-column>
         <el-table-column property="price" label="交易金额"></el-table-column>
         <el-table-column property="time" label="交易时间"></el-table-column>
         <el-table-column property="owner" label="交易方"></el-table-column>
         <el-table-column property="status" label="订单状态"></el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button v-if="scope.row.status==='已支付'"
+              size="mini"
+              @click.native.stop="fahuo(scope.$index, scope.row)">确认发货</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </el-dialog>
 
@@ -340,7 +347,7 @@ export default {
   components: {
     mymap,photoUpload
   },
-
+  inject:['reload'],
   data() {
     return {
       intro: "这是一坨简介，啦啦啦啦啦啦",
@@ -563,31 +570,34 @@ export default {
         console.log(response);
         for (let i = 0; i < response.data.length; i++) {
           let st = null;
-          switch (response.data[i].status) {
-            case 0:
-              st = "已添加";
-              break;
-            case 1:
-              st = "已支付";
-              break;
-            case 2:
-              st = "已确认";
-              break;
-            case 3:
-              st = "已收货";
-              break;
+          if (response.data[i].status==='OPENED'){
+              st ="已下单";
+          }
+          else if (response.data[i].status==='PAYED'){
+            st ="已支付";
+          }
+          else if (response.data[i].status==='SHIPPED'){
+            st ='已发货';
+          }
+          else if (response.data[i].status==='CONFIRMED'){
+            st ='已确认';
+          }
+          else if (response.data[i].status==='CLOSED'){
+            st ="已关闭";
           }
           let temp = {
+            id : response.data[i].id,
             name: response.data[i].productName,
             owner: response.data[i].buyerNickName,
             time: response.data[i].createTime,
             price: response.data[i].cost,
             status: st,
+            truestatus: response.data[i].status,
           };
           ans.push(temp);
         }
       });
-      console.log(ans);
+
       return ans;
     },
 
@@ -600,6 +610,26 @@ export default {
     getMapAddress(address){
         this.formPao.destination=address;
 
+    },
+    gotoOrder(row, event, column){
+      console.log(row, column);
+      this.$router.push({
+        name:'checkoutpage',
+        query: { status: row.truestatus},
+        params:{id:row.id, category:0}
+      });
+    },
+    fahuo(index, row){
+      axios.defaults.headers.common["satoken"] = store.state.token;
+      axios.put(store.state.database+"/order/confirmById/"+row.id).then(response=>{
+        if (response.data){
+          this.$message({
+            message: "successful!",
+            type: "success",
+          });
+        }
+        this.reload()
+      })
     }
   },
 
