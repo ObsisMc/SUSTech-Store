@@ -77,7 +77,7 @@ export default {
         col: 4
       },
       pagen: 1,
-      pagesize: 4,
+      pagesize: 16,
       loading: false,
       nomore: false
     }
@@ -87,6 +87,9 @@ export default {
   },
   methods: {
     getAllGoods() {
+      this.pagen = 1;
+      this.loading = false;
+      this.nomore = false;
       let goodsurl = store.state.database + 'product/findProductVOPage/' + (this.pagen++) +
         '/' + this.pagesize;
       let myurl = "@/../static/goods.json";
@@ -100,7 +103,7 @@ export default {
         this.getAllGoods();
       } else {
         let goodsurl = store.state.database + "/product/list/1/" + target;
-        axios.get(goodsurl).then(response=>{
+        axios.get(goodsurl).then(response => {
           console.log(response)
           this.goods.good = response.data;
         })
@@ -117,7 +120,7 @@ export default {
         if (newgoods.length === 0) {
           this.nomore = true;
         } else {
-          for (let i = 0; i < this.pagesize; i++) {
+          for (let i = 0; i < newgoods.length; i++) {
             this.goods.good.push(newgoods[i]);
           }
           this.loading = false;
