@@ -230,9 +230,9 @@
           <el-select v-model="selectedBuy" placeholder="请选择">
             <el-option
               v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              :key="item.label"
+              :label="item.value"
+              :value="item.label"
             >
             </el-option>
           </el-select>
@@ -250,7 +250,62 @@
       </div>
     </el-dialog>
     <el-dialog title="发布跑腿" :visible.sync="dialogFormVisiblePao">
-      <mymap> </mymap>
+      <el-form :model="formPao">
+        <el-form-item label="跑腿名称" :label-width="formSellLabelWidth">
+          <el-input
+            v-model="formPao.name"
+            autocomplete="off"
+            maxlength="20"
+            show-word-limit
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="跑腿描述" :label-width="formSellLabelWidth">
+          <el-input
+            v-model="formPao.descri"
+            autocomplete="off"
+            maxlength="60"
+            show-word-limit
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="价格" :label-width="formSellLabelWidth">
+          <el-input
+            v-model="formPao.price"
+            autocomplete="off"
+            type="number"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="我的位置" :label-width="formSellLabelWidth">
+          <el-input
+            v-model="formPao.origin"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="类型" :label-width="formSellLabelWidth">
+          <el-select v-model="selectedPao" placeholder="请选择">
+            <el-option
+              v-for="item in paoOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.label"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="">
+          <photoUpload @getPhoto='addPhoto'>
+          </photoUpload>
+        </el-form-item>
+        <el-form-item label="目的地">
+          <mymap @mapAddress="getMapAddress"> </mymap>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisiblePao = false, clearPhoto">取 消</el-button>
+        <el-button type="primary" @click="dialogFormVisiblePao = false, Pao()"
+        >确 定</el-button
+        >
+      </div>
+
     </el-dialog>
   </div>
 </template>
@@ -322,6 +377,17 @@ export default {
         price: null,
 
       },
+      //跑腿页面
+      formPao:{
+        name: '',
+        origin:'',
+        destination:'',
+        descri:'',
+          price:0,
+        paoproductPhoto:[],
+
+
+      },
       dialogFormVisibleBuy: false,
       //常用地址
       locations: [],
@@ -335,6 +401,7 @@ export default {
       formSellOrder: [],
       selectedBuy: null,
       selectedSell: null,
+      selectedPao: null,
       options: [
         {
           label: "Study",
@@ -353,6 +420,20 @@ export default {
           value: 4,
         },
       ],
+      paoOptions:[
+        {
+          label:'FETCH',
+          value :1,
+        },
+        {
+           label: 'SEND',
+          value: 2,
+        },
+        {
+          label: 'DO',
+          value: 3
+        }
+      ],
       dialogFormVisiblePao: false,
     };
   },
@@ -362,7 +443,7 @@ export default {
     addLocation() {},
 
     Sell() {
-      console.log(this.base64PhotoList)
+
       axios.defaults.headers.common["satoken"] = store.state.token;
 
       let to = {
@@ -391,6 +472,38 @@ export default {
         }
 
       });
+    },
+    Pao(){
+      axios.defaults.headers.common["satoken"] = store.state.token;
+      let to ={
+        buyerId:0,
+        createTime: "",
+        description: this.formPao.descri,
+        destination: this.formPao.destination,
+        id :0,
+        image: this.base64PhotoList[0],
+        name : this.formPao.name,
+        origin: this.formPao.origin,
+        ownerId: this.userId,
+        status : 'OPENED',
+        type: this.selectedPao,
+        updateTime: "",
+        price: this.formPao.price,
+
+      }
+      this.clearPhoto();
+      console.log(to)
+      axios.post(store.state.database+'/errand/add',to).then(response=>{
+        if (response.data){
+          this.$message({
+            message: "sucessful!",
+            type: "success",
+          });
+        }
+        else {
+          this.$message.error("ERROR !");
+        }
+      })
     },
     getLocation() {
       let ans = [];
@@ -483,7 +596,11 @@ export default {
   },
   addPhoto(photo){
     this.base64PhotoList.push(photo)
-  }
+  },
+    getMapAddress(address){
+        this.formPao.destination=address;
+
+    }
   },
 
   mounted() {
