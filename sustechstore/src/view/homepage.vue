@@ -39,6 +39,7 @@ export default {
   },
   mounted(){
     axios.defaults.headers.common['satoken'] = store.state.token;
+    // let goodid = store.state.database + "product/" +   +
   }
 }
 </script>

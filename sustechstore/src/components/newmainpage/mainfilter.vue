@@ -12,8 +12,8 @@
         </el-select>
       </el-col>
       <el-col :span="16">
-        <el-radio-group v-model="simplefilter.selected" style="">
-          <el-radio-button label="All"></el-radio-button>
+        <el-radio-group v-model="simplefilter.selected" @change="changeSelect">
+          <el-radio-button label="All" ></el-radio-button>
           <el-radio-button label="Study"></el-radio-button>
           <el-radio-button label="Food"></el-radio-button>
           <el-radio-button label="Electronic"></el-radio-button>
@@ -101,6 +101,7 @@ export default {
   name: "mainfilter",
   data() {
     return {
+      id: 0,
       sortselect: {
         value: 'New',
         option: [
@@ -166,8 +167,10 @@ export default {
     getSearchTarget() {
       this.filter.search.searchtarget = this.filter.search.searchinput;
       this.$emit('getSearchTarget',this.filter.search.searchtarget);
-    }
-    ,
+    },
+    loadId(val){
+      this.$emit("getSearchTarget",val)
+    },
     cleanRole() {
       this.filter.role.value = 'General';
     },
@@ -179,6 +182,19 @@ export default {
     },
     cleanPrice() {
       this.filter.price.value = 'All';
+    },
+    changeSelect(){
+      if(this.simplefilter.selected === "All"){
+        this.loadId(0)
+      }else if(this.simplefilter.selected === "Study"){
+        this.loadId(1);
+      }else if(this.simplefilter.selected === "Food"){
+        this.loadId(2);
+      }else if(this.simplefilter.selected === "Electronic"){
+        this.loadId(3);
+      }else if(this.simplefilter.selected === "Living"){
+        this.loadId(4);
+      }
     }
   }
 }
