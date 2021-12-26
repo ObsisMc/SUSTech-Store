@@ -614,11 +614,17 @@ export default {
     },
     gotoOrder(row, event, column){
       console.log(row, column);
-      this.$router.push({
-        name:'checkoutpage',
-        query: { status: row.truestatus},
-        params:{id:row.id, category:0}
-      });
+      var goodid=0;
+      axios.get(store.state.database+'/order/getOrdersVOByOrderId/'+row.id).then(response=>{
+
+        goodid=response.data.productId;
+        this.$router.push({
+          name:'checkoutpage',
+          query: { status: row.truestatus},
+          params:{id:goodid, category:0}
+        });
+      })
+
     },
     fahuo(index, row){
       axios.defaults.headers.common["satoken"] = store.state.token;
