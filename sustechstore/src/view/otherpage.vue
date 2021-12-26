@@ -19,8 +19,8 @@
     </el-menu>
 
     <div id="back">
-      <el-dialog title="聊天" :visible.sync="dialog">
-      <chatwindow :otherid="id" :myid="myid" :othername="nickname" :myname="myname">
+      <el-dialog title="聊天" :visible.sync="dialog" id="talk" >
+      <chatwindow :otherid="id" :myid="myid" :othername="nickname" :myname="myname" :myphoto="myimg" :otherphoto='img'>
       </chatwindow>
    </el-dialog>
 
@@ -90,7 +90,7 @@ export default {
       axios.get(store.state.database+'user/userInfo').then(response=>{
         this.myname =response.data.nickName
         this.myid=response.data.uid
-
+        this.myimg =response.data.icon
 
       })
     },
@@ -102,7 +102,6 @@ export default {
     this.evaluate=response.data.credit
     this.img=response.data.icon
     this.nickname=response.data.nickName
-   console.log(this.img)
 
   })
 
@@ -122,7 +121,7 @@ export default {
       nickname:'null',
       myid: 1,
       myname: 'null',
-
+      myimg:'',
 
   dialog: false,
 

@@ -22,18 +22,18 @@
         <div style="display: flex;">
 
           <div class="name_right" v-if="item.show">
-            <p style="font-size: 1px; "> {{ item.name }} </p>
+            <p style="font-size: 1px;  text-align: left; margin: 0" > {{ item.name }} </p>
           </div>
           <div class="url_right" v-if="item.show">
-            <el-avatar shape="circle" :size="30" :src="item.url"></el-avatar>
+            <el-avatar shape="circle" :size="30" :src="myphoto"></el-avatar>
           </div>
           <div class="url-left" v-if="!item.show">
-            <el-avatar shape="circle" :size="30" :src="item.url"></el-avatar>
+            <el-avatar shape="circle" :size="30" :src="otherphoto"></el-avatar>
           </div>
 
 
           <div class="name_left" v-if="!item.show">
-            <p style="font-size: 1px;"> {{ item.name }} </p>
+            <p style="font-size: 1px; "> {{ item.name }} </p>
           </div>
 
         </div>
@@ -115,45 +115,15 @@ export default {
       show: false,
       closeChat: this.close,
       username: "zrh",
-      othername: "???",
-      userPhoto: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-      otherPhoto: "https://img1.baidu.com/it/u=2805547224,266493745&fm=26&fmt=auto",
+
+
       cotherid:1,
       cmyid: 1,
       cothername:'null',
       cmyname:'null',
     }
   },
-  props: ['otherid','myid','othername','myname'],
-  /*otherid:{
-    handler:(val,oldval) => {
-      this.cotherid = val;
-    },
-    immediate:true,//关键
-    deep:true
-  },
-  myid:{
-    handler:(val,oldval) => {
-      this.cmyid = val;
-    },
-    immediate:true,//关键
-    deep:true
-  },
-  othername:{
-    handler:(val,oldval) => {
-      this.cohtername = val;
-    },
-    immediate:true,//关键
-    deep:true
-  },
-  myname:{
-    handler:(val,oldval) => {
-      this.cmyname = val;
-    },
-    immediate:true,//关键
-    deep:true
-  },
-*/
+  props: ['otherid','myid','othername','myname', 'otherphoto', 'myphoto'],
   methods: {
 
     scrollToBottom() {
@@ -216,7 +186,7 @@ export default {
       let c = {
         "name": this.myname,
         /*   "url": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",*/
-        "url": this.userPhoto,
+        "url": "https://img0.baidu.com/it/u=3953639057,245238928&fm=15&fmt=auto&gp=0.jpg",
         "content": a,
         "show": true,
         "time": new Date().toLocaleTimeString()
@@ -227,7 +197,7 @@ export default {
          "sellId":this.otherid,
       }
       axios.post(store.state.database+'/userChat/addChat/'+this.otherid, chat).then(response=>{
-        console.log(response)
+
       //  this.getChatHistory();
       })
 
@@ -249,16 +219,15 @@ export default {
     },
     getChatHistory(){
       let tempDiv =[]
-      console.log(new Date().toLocaleTimeString())
+
       axios.defaults.headers.common["satoken"] = store.state.token;
       axios.get(store.state.database+'/userChat/findAll/'+this.myid+"/"+this.otherid).then(response=>{
-        console.log(response)
+
         for (let i=0; i<response.data.length;i++){
           if (response.data[i].sellId===this.otherid){
             let c = {
               "name": this.myname,
-              /*   "url": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",*/
-              "url": this.userPhoto,
+              "url":  "https://img0.baidu.com/it/u=3953639057,245238928&fm=15&fmt=auto&gp=0.jpg",
               "content": response.data[i].lineText,
               "show": true,
               "time": response.data[i].createAt.replace('T',' '),
@@ -270,7 +239,7 @@ export default {
             let d ={
               "name": this.othername,
               /*   "url": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",*/
-              "url": this.userPhoto,
+              "url":this.otherphoto,
               "content": response.data[i].lineText,
               "show": false,
               "time": response.data[i].createAt.replace('T',' '),
@@ -286,13 +255,13 @@ export default {
       }}})
 
 
-      console.log(this.contentDiv.length)
+
   },
     timer() {
       return setInterval(()=>{
-        console.log("time")
+
         this.getChatHistory()
-      },2000)
+      },1500)
     }
 
   },
@@ -314,5 +283,4 @@ export default {
   }
 
 }
-
 </script>
