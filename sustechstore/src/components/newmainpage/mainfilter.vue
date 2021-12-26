@@ -12,8 +12,8 @@
         </el-select>
       </el-col>
       <el-col :span="16">
-        <el-radio-group v-model="simplefilter.selected" style="">
-          <el-radio-button label="All"></el-radio-button>
+        <el-radio-group v-model="simplefilter.selected" @change="changeSelect">
+          <el-radio-button label="All" ></el-radio-button>
           <el-radio-button label="Study"></el-radio-button>
           <el-radio-button label="Food"></el-radio-button>
           <el-radio-button label="Electronic"></el-radio-button>
@@ -179,6 +179,9 @@ export default {
     },
     cleanPrice() {
       this.filter.price.value = 'All';
+    },
+    changeSelect(){
+
     }
   }
 }
