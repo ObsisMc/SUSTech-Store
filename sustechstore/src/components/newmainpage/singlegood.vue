@@ -36,7 +36,7 @@
             <i class="el-icon-info detail" slot="reference"></i>
             <el-row>
               <div @click="toOthers" style="float: left;">
-                <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                <el-avatar :src="icon"
                            size="medium" style="cursor: pointer;"></el-avatar>
               </div>
               <span class="roughdetail" style="margin-left: 10px;">
@@ -65,7 +65,7 @@ import axios from "axios";
 
 export default {
   name: "singlegood",
-  props: ['imgurl', 'msg', 'id'],
+  props: ['imgurl', 'msg', 'id','icon'],
   data() {
     return {
       test: "",
