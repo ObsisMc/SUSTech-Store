@@ -95,16 +95,26 @@ export default {
         let time = response.data.expireTime.split("T")
 
         this.expireTime = time[0] + " " + time[1];
-        this.expireTime = "2021-12-28 00:30:30";
       })
     },
     timeElapsed() {
       axios.delete(store.state.database + "order/deleteById/" + this.$route.query.orderid).then(response => {
-        this.$message({
-          message: "Order expired",
-          type: "error"
-        });
-        this.$router.push({name: "selfpage"})
+        if (this.uid === this.buyerId) {
+          this.$alert('该订单已过期，请重新下单', {
+            confirmButtonText: '确定',
+            callback: action => {
+              this.$router.push({name: "selfpage"})
+            }
+          });
+        } else {
+          this.$alert('该订单已过期', {
+            confirmButtonText: '确定',
+            callback: action => {
+              this.$router.push({name: "selfpage"})
+            }
+
+          });
+        }
       })
     }
   },

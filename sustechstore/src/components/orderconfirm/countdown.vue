@@ -117,13 +117,14 @@ export default {
     }
     this.interval = setInterval(() => {
       this.now = Math.trunc(new Date().getTime() / 1000);
+      if(this.date-this.now<=0){
+        this.$emit("timeElapsed");
+      }
     }, 1000);
   },
   mounted() {
-    if (this.diff !== 0) {
+    if (this.diff > 0) {
       this.show = true;
-    }else {
-      this.$emit("timeElapsed");
     }
 
   },
