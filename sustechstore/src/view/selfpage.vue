@@ -758,7 +758,7 @@ export default {
         goodid=response.data.productId;
         this.$router.push({
           name:'checkoutpage',
-          query: { status: row.truestatus+1, uid:this.userId},
+          query: { status: row.truestatus+1, uid:this.userId, orderid: row.id},
           params:{id:goodid, category:0}
         });
       })
@@ -768,7 +768,7 @@ export default {
       console.log(row, column);
         this.$router.push({
           name:'checkoutpage',
-          query: { status: row.truestatus+1, uid:this.userId},
+          query: { status: row.truestatus, uid:this.userId},
           params:{id: row.id, category:1}
       })
 

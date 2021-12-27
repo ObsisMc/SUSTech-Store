@@ -182,7 +182,7 @@ methods:{
   top: 280px;
   color: gray;
   left: 50%;
-  transform: translateX(-30%);
+  transform: translateX(-60%);
 }
 .el-rate {
   position: absolute;
