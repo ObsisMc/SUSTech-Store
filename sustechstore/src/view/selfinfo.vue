@@ -23,6 +23,25 @@
                   </el-button>
                   <el-button
                     type="primary"
+                    icon="el-icon-edit"
+                    size="medium"
+                    round
+                    @click="changePhoto"
+                  >
+                    修改头像
+                  </el-button>
+                  <el-button
+                    type="primary"
+                    icon="el-icon-check"
+                    size="medium"
+                    round
+                    @click="changePassword=false"
+
+                  >
+                    修改密码
+                  </el-button>
+                  <el-button
+                    type="primary"
                     icon="el-icon-check"
                     size="medium"
                     round
@@ -65,29 +84,36 @@
 <el-input
   :placeholder=email
   v-model=inputEmail
-  :disabled=changeInfo
+  :disabled="true"
 
   >
 </el-input></div>
 <div id="div3">
   性别:
- <el-radio :disabled=changeInfo v-model="radio" label="men">男</el-radio>
-  <el-radio :disabled=changeInfo v-model="radio" label="women">女</el-radio></div>
+ <el-radio :disabled="true" v-model="radio" label="men">男</el-radio>
+  <el-radio :disabled="true" v-model="radio" label="women">女</el-radio></div>
           </div>
           <div id="div4">
   密码:
 <el-input
-  :placeholder=password
+  :placeholder="password"
   v-model=inputpassword
-  :disabled=changeInfo
+  :disabled="changePassword"
    show-password
   ></el-input></div>
+              <div id="div7"  v-if="!changePassword">
+                确认密码:
+                <el-input
+                  v-model=checkpassword
+
+                  show-password
+                ></el-input></div>
   <div id="div6">
   手机:
 <el-input
   :placeholder=mobile
   v-model=inputMobile
-  :disabled=changeInfo
+  :disabled="true"
 
   >
 </el-input></div>
@@ -125,8 +151,12 @@ axios.defaults.crossDomain=true
           inputEmail:"",
           inputGender:"",
           inputpassword:"",
+       truepassword:"",
+        checkpassword:'',
           inputMobile:"",
           base64PhotoList:[],
+        changePassword: true,
+        newPassword:null,
       }
     },
     methods: {
@@ -139,25 +169,56 @@ axios.defaults.crossDomain=true
        addPhoto(photo){
     this.base64PhotoList.push(photo)
   },
+  changePhoto(){
+    axios.defaults.headers.common["satoken"] = store.state.token;
+    axios.post(store.state.database+'/user/addUserIcon',this.base64PhotoList).then(response=>{
+      console.log(response)
+      this.reload();
+
+    })
+  },
+      changePass(){
+       if (this.checkpassword!==this.inputpassword){
+         this.$message.error("unmatched password! !");
+       }
+       else {
+         axios.defaults.headers.common["satoken"] = store.state.token;
+         axios.post(store.state.database+'/user/changePassword/'+this.inputpassword).then(response=>{
+           this.$message({
+             message: "change password successfully!",
+             type: "success",
+           });
+
+         })
+       }
+      },
 
   submit(){
-      axios.defaults.headers.common["satoken"] = store.state.token;
-      axios.post(store.state.database+'/user/addUserIcon',this.base64PhotoList).then(response=>{
-        console.log(response)
-        this.reload()
-      })
+        if (!this.changePassword){
+        this.changePass();}
+    axios.post(store.state.database+'/user/changeNickname/'+this.inputName).then(response=>{
+      console.log(response)
+      this.$message({
+        message: "submit successfully!",
+        type: "success",
+      });
+      this.reload()
+    })
+
   }
     },
-    mounted(){
+    created(){
 
         axios.defaults.headers.common['satoken'] = store.state.token;
       axios.get(store.state.database+'user/userInfo').then(response=>{
         console.log(response)
         this.email=response.data.email;
         this.name =response.data.nickName
+        this.inputName=response.data.nickName
         this.mobile=response.data.mobile
         this.uid=response.data.uid
         this.ava=response.data.icon
+        this.truepassword=response.data.password
         if(response.data.uid){
             this.radio="men"
         }
@@ -253,8 +314,13 @@ margin-top: 180px;
 }
 #div6{
   position: absolute;
+  left: 10%;
+margin-top: 380px;
+}
+#div7{
+  position: absolute;
   left: 60%;
-margin-top: 280px;
+  margin-top: 280px;
 }
 #ava{
  position: absolute;
