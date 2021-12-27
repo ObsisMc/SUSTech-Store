@@ -122,7 +122,10 @@ export default {
   mounted() {
     if (this.diff !== 0) {
       this.show = true;
+    }else {
+      this.$emit("timeElapsed");
     }
+
   },
   computed: {
     seconds() {
@@ -156,7 +159,7 @@ export default {
       }
     },
     diff(value) {
-      if (value === 0) {
+      if (value <= 0) {
         this.$emit('timeElapsed');
         this.updateAllCards();
       }
