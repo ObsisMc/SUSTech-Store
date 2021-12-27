@@ -24,6 +24,16 @@
         >
         <el-menu-item
           index="1-3"
+          @click="(FaPaoOrderVisible = true), (formFaPaoOder=getFaPaoOrder())"
+        >我发布的跑腿</el-menu-item
+        >
+        <el-menu-item
+          index="1-4"
+          @click="(JiePaoOrderVisible = true), (formJiePaoOrder=getJiePaoOrder())"
+        >我接收的跑腿</el-menu-item
+        >
+        <el-menu-item
+          index="1-5"
           @click="(locationVisible = true), (locations = getLocation())"
           >我的交易地址</el-menu-item
         >
@@ -46,7 +56,7 @@
 
     <el-dialog title="交易地址" :visible.sync="locationVisible">
       <el-table :data="locations">
-        <el-table-column property="id" label="id"></el-table-column>
+
         <el-table-column property="address" label="地点"></el-table-column>
         <el-table-column fixed="right" label="操作" width="100px">
           <template slot-scope="scope">
@@ -92,6 +102,30 @@
               @click.native.stop="fahuo(scope.$index, scope.row)">确认发货</el-button>
           </template>
         </el-table-column>
+      </el-table>
+    </el-dialog>
+    <el-dialog title="我发布的跑腿" :visible.sync="FaPaoOrderVisible">
+      <el-table :data="formFaPaoOder"  @row-click="gotoPao">
+        <el-table-column property="name" label="跑腿名称"></el-table-column>
+        <el-table-column property="price" label="交易金额"></el-table-column>
+        <el-table-column property="origin" label="出发点"></el-table-column>
+        <el-table-column property="destination" label="目的地"></el-table-column>
+        <el-table-column property="time" label="交易时间"></el-table-column>
+        <el-table-column property="owner" label="交易方"></el-table-column>
+        <el-table-column property="type" label="跑腿类型"></el-table-column>
+        <el-table-column property="status" label="订单状态"></el-table-column>
+      </el-table>
+    </el-dialog>
+    <el-dialog title="我接受的跑腿" :visible.sync="JiePaoOrderVisible">
+      <el-table :data="formJiePaoOrder"  @row-click="gotoPao">
+        <el-table-column property="name" label="跑腿名称"></el-table-column>
+        <el-table-column property="price" label="交易金额"></el-table-column>
+        <el-table-column property="origin" label="出发点"></el-table-column>
+        <el-table-column property="destination" label="目的地"></el-table-column>
+        <el-table-column property="time" label="交易时间"></el-table-column>
+        <el-table-column property="owner" label="交易方"></el-table-column>
+        <el-table-column property="type" label="跑腿类型"></el-table-column>
+        <el-table-column property="status" label="订单状态"></el-table-column>
       </el-table>
     </el-dialog>
 
@@ -237,9 +271,9 @@
           <el-select v-model="selectedBuy" placeholder="请选择">
             <el-option
               v-for="item in options"
-              :key="item.label"
-              :label="item.value"
-              :value="item.label"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
             >
             </el-option>
           </el-select>
@@ -250,8 +284,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisibleBuy = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisibleBuy = false"
+        <el-button @click="dialogFormVisibleBuy = false, clearPhoto">取 消</el-button>
+        <el-button type="primary" @click="dialogFormVisibleBuy = false, Buy()"
           >确 定</el-button
         >
       </div>
@@ -406,6 +440,10 @@ export default {
       formBuyOrder: [],
       SellOrderVisible: false,
       formSellOrder: [],
+      JiePaoOrderVisible:false,
+      formJiePaoOrder :[],
+      FaPaoOrderVisible:false,
+      formFaPaoOder:[],
       selectedBuy: null,
       selectedSell: null,
       selectedPao: null,
@@ -468,6 +506,37 @@ export default {
         type: "SELL"
       };
     this.clearPhoto();
+      axios.post(store.state.database + "/product/add",to).then((response) => {
+        console.log(response);
+        if (response.data) {
+          this.$message({
+            message: "sucessful!",
+            type: "success",
+          });
+        } else {
+          this.$message.error("ERROR !");
+        }
+
+      });
+    },
+    Buy(){
+      axios.defaults.headers.common["satoken"] = store.state.token;
+      console.log('Buy')
+      let to = {
+        categoryleveloneId: this.selectedSell,
+        categorylevelthreeId: 0,
+        categoryleveltwoId: 0,
+        createTime: "",
+        description: this.formBuy.descri,
+        id: 0,
+        images: this.base64PhotoList,
+        name: this.formBuy.name,
+        ownerId: this.userId,
+        price: this.formBuy.price,
+        updateTime: "",
+        type: "BUY"
+      };
+      this.clearPhoto();
       axios.post(store.state.database + "/product/add",to).then((response) => {
         console.log(response);
         if (response.data) {
@@ -604,6 +673,72 @@ export default {
 
       return ans;
     },
+    getFaPaoOrder(){
+      let ans=[];
+      axios.defaults.headers.common["satoken"] = store.state.token;
+      axios.get(store.state.database+'/errand/listReleasedVO').then(response=>{
+        console.log(response);
+        for (let i = 0; i < response.data.length; i++) {
+          let st = null;
+          if (response.data[i].status==='OPENED'){
+            st =0;
+          }
+          else if (response.data[i].status==='RUNNING'){
+            st =1;
+          }
+          else if (response.data[i].status==='CLOSED'){
+            st =2;
+          }
+          let temp = {
+            id : response.data[i].id,
+            name: response.data[i].name,
+            descri :response.data[i].description,
+            owner: response.data[i].ownerNickname,
+            time: response.data[i].createTime,
+            price: response.data[i].price,
+            status: response.data[i].status,
+            truestatus:st ,
+            type: response.data[i].type,
+            origin: response.data[i].origin,
+            destination: response.data[i].destination,
+          };
+          ans.push(temp);
+        }
+      })
+   return ans },
+    getJiePaoOrder(){
+      let ans=[];
+      axios.defaults.headers.common["satoken"] = store.state.token;
+      axios.get(store.state.database+'/errand/listTakenVO').then(response=>{
+        console.log(response);
+        for (let i = 0; i < response.data.length; i++) {
+          let st = null;
+          if (response.data[i].status==='OPENED'){
+            st =0;
+          }
+          else if (response.data[i].status==='RUNNING'){
+            st =1;
+          }
+          else if (response.data[i].status==='CLOSED'){
+            st =2;
+          }
+          let temp = {
+            id : response.data[i].id,
+            name: response.data[i].name,
+            descri :response.data[i].description,
+            owner: response.data[i].ownerNickname,
+            time: response.data[i].createTime,
+            price: response.data[i].price,
+            status: response.data[i].status,
+            truestatus:st ,
+            type: response.data[i].type,
+            origin: response.data[i].origin,
+            destination: response.data[i].destination,
+          };
+          ans.push(temp);
+        }
+      })
+ return ans   },
 
   clearPhoto(){
    this.base64PhotoList=[]
@@ -623,9 +758,18 @@ export default {
         goodid=response.data.productId;
         this.$router.push({
           name:'checkoutpage',
-          query: { status: row.truestatus+1},
+          query: { status: row.truestatus+1, uid:this.userId},
           params:{id:goodid, category:0}
         });
+      })
+
+    },
+    gotoPao(row, event, column){
+      console.log(row, column);
+        this.$router.push({
+          name:'checkoutpage',
+          query: { status: row.truestatus+1, uid:this.userId},
+          params:{id: row.id, category:1}
       })
 
     },
