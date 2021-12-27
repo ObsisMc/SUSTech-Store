@@ -17,7 +17,7 @@
                     icon="el-icon-edit"
                     size="medium"
                     round
-                    @click="changeInfo=false"
+                    @click="changeInfo=!changeInfo"
                   >
                     修改信息
                   </el-button>
@@ -35,7 +35,7 @@
                     icon="el-icon-check"
                     size="medium"
                     round
-                    @click="changePassword=false"
+                    @click="changePassword=!changePassword"
 
                   >
                     修改密码
