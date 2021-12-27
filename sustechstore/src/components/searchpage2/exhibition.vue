@@ -23,9 +23,16 @@
                   trigger="hover"
                   :open-delay="200">
                   <i class="el-icon-info detail" slot="reference"></i>
-                  <i class="el-icon-user-solid" style="font-size:15px;"></i>
-                  <span style="font-weight: bold;font-size: 15px;"><slot name="username">unamed</slot></span>
-                  <el-divider style="margin:0;"></el-divider>
+                  <div style="float: left;">
+                    <el-avatar :src="icon"
+                               size="medium" style=""></el-avatar>
+                  </div>
+                  <span style="margin-left: 10px;">
+                <span class="nickname">
+                    <slot name="nickname"></slot>
+                </span>
+              </span>
+                  <div class="divider" style=""></div>
                   <slot name="intro">He or she is so lazy and there is nothing.</slot>
                 </el-popover>
                 <i class="el-icon-goods detail " @click="toGood"></i>
@@ -48,9 +55,16 @@
                 trigger="hover"
                 :open-delay="200">
                 <i class="el-icon-info detail" slot="reference"></i>
-                <i class="el-icon-user-solid" style="font-size:15px;"></i>
-                <span style="font-weight: bold;font-size: 15px;"><slot name="username">unamed</slot></span>
-                <el-divider style="margin:0;"></el-divider>
+                <div style="float: left;">
+                  <el-avatar :src="icon"
+                             size="medium" style=""></el-avatar>
+                </div>
+                  <span style="margin-left: 10px;">
+                <span class="nickname">
+                    <slot name="nickname"></slot>
+                </span>
+              </span>
+                <div class="divider"></div>
                 <slot name="intro">He or she is so lazy and there is nothing.</slot>
               </el-popover>
               <i class="el-icon-goods detail " @click="toGood"></i>
@@ -61,8 +75,6 @@
               {{ '列表内容 ' + o }}
             </div>
           </div>
-
-
         </el-card>
       </div>
     </el-row>
@@ -72,7 +84,7 @@
 <script>
 export default {
   name: 'exhibition',
-  props: ['imgurl', 'msg', 'id']
+  props: ['imgurl', 'msg', 'id', 'icon']
   ,
   data() {
     return {
@@ -81,7 +93,7 @@ export default {
   },
   methods: {
     toGood() {
-       this.$router.push({
+      this.$router.push({
         name: 'product',
         query: {id: this.id}
       });
@@ -166,6 +178,22 @@ export default {
 
 .textmsg::-webkit-scrollbar {
   width: 0 !important
+}
+
+.divider {
+  border: 0.5px solid silver;
+  width: 100%;
+  margin-bottom: 10px;
+  height: 0.5px;
+  margin-top: 25px;
+}
+
+.nickname {
+  font-weight: bold;
+  font-size: 15px;
+  float: left;
+  margin-top: 10px;
+  margin-left: 10px;
 }
 
 

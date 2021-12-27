@@ -192,7 +192,16 @@ export default {
           cateid.push(4);
         }
       }
-      this.$emit('getFilterGoods', {level:1, cate:cateid});
+      cateid = cateid.length === 0 ? 0 : cateid[0];
+      let creditLevel = this.ratingfilter.ratingvalid ? this.ratingfilter.rating : 0;
+      let maxPrice = this.pricefilter.confirmmax !== "∞" ? this.pricefilter.confirmmax : 0;
+      let minPrice = this.pricefilter.confirmmin;
+      this.$emit('getFilterGoods', {
+        cate: cateid,
+        creditLevel: creditLevel,
+        maxPrice: maxPrice,
+        minPrice: minPrice,
+      });
     },
     validchanusr() {
       if (this.usrfilter.hasselect === "") {
@@ -300,7 +309,7 @@ export default {
 .hoverscrollbar {
   overflow-y: auto;
   overflow-x: hidden;
-  height: 720px;
+  /*height: 720px;*/
 }
 
 .hoverscrollbar::-webkit-scrollbar {

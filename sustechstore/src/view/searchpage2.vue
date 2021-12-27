@@ -25,13 +25,19 @@ import {store} from "../store/store";
 
 export default {
   name: "searchpage2",
-  methods: {
-    getFilterGoods(cate) {
-      console.log(cate);
-      this.$refs.mybody.getFilterGoods(cate);
+  data() {
+    return {
+
     }
   },
-  mounted(){
+  methods: {
+    getFilterGoods(filter) {
+      console.log(filter);
+      this.$refs.mybody.getAllGoods(filter);
+    }
+
+  },
+  mounted() {
     axios.defaults.headers.common['satoken'] = store.state.token;
   },
   components: {searchnavigator, searchfilter, searchbody}

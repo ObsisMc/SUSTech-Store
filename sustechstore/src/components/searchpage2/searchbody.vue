@@ -9,14 +9,28 @@
       clearable>
     </el-input>
     <br/><br/><br/>
-    <span style="color:silver;float:left;">Search result for</span><span
-    style="float: left;">&nbsp"{{ search.searchtarget }}"</span>
+    <span style="color:silver;float:left;">Search result for</span>
+    <span style="float: left;">
+      &nbsp"{{ search.searchtarget }}"
+    </span>
     <br/><br/>
     <el-row>
       <span style="float: left;color:dimgrey; margin-right: 30px;line-height: 60px;">Sort</span>
       <el-button class="sortitem" type="warning">Relevance</el-button>
       <el-button class="sortitem" type="warning">Most new</el-button>
       <el-button class="sortitem" type="warning">Price <i class="el-icon-arrow-down"></i></el-button>
+    </el-row>
+    <el-row>
+      <div class="block">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage"
+          :page-size="pageSize"
+          layout="total, prev, pager, next, jumper"
+          :total="totalnum">
+        </el-pagination>
+      </div>
     </el-row>
     <br/>
     <div class="outerdiv">
@@ -26,7 +40,8 @@
                 v-for="o2 in o1*goodexhibition.col>goodexhibition.good.length?goodexhibition.good.length-(o1-1)*goodexhibition.col:goodexhibition.col"
                 :key="o2">
           <exhibition :imgurl="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].image"
-                      :id="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].id">
+                      :id="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].id"
+                      :icon="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].icon">
             <template v-slot:title>
               {{ goodexhibition.good[(o1 - 1) * goodexhibition.col + o2 - 1].name }}
             </template>
@@ -37,10 +52,26 @@
             <template v-slot:price>
               {{ goodexhibition.good[(o1 - 1) * goodexhibition.col + o2 - 1].price }}
             </template>
+            <template v-slot:nickname>
+              {{ goodexhibition.good[(o1 - 1) * goodexhibition.col + o2 - 1].nickName }}
+            </template>
           </exhibition>
         </el-col>
       </el-row>
+
     </div>
+    <el-row style="margin-top: 50px;">
+      <div class="block">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage"
+          :page-size="pageSize"
+          layout="total, prev, pager, next, jumper"
+          :total="totalnum">
+        </el-pagination>
+      </div>
+    </el-row>
 
 
   </div>
@@ -69,49 +100,69 @@ export default {
             image: "",
             id: 0,
             name: "string",
-            ownerId: 0,
-            price: 100
+            price: 100,
+            icon: '',
+            nickName: "unamed"
           }
         ],
         col: 4
+      },
+      currentPage: 1,
+      filterpage: 1,
+      pageSize: 8,
+      totalnum: 100,
+      filter: {
+        cate: 0,
+        creditLevel: 0,
+        maxPrice: 0,
+        minPrice: 0,
+        searchkey: ''
       }
-
     }
   },
   methods: {
     getSearchTarget() {
       this.search.searchtarget = this.search.searchinput;
-      if (this.search.searchtarget === '') {
-        this.getAllGoods();
-      } else {
-        axios.get(store.state.database + 'product/search/' + this.search.searchtarget).then(response => {
-          this.goodexhibition.good = response.data;
-        })
-      }
+      this.filter.searchkey = this.search.searchtarget;
+      this.getAllGoods(this.filter);
     },
-    getFilterGoods(filter) {
-      var level = filter.level;
-      var c = filter.cate;
-      console.log(level, c)
-      if (c.length === 0) {
-      } else {
-        this.goodexhibition.good = [];
-        for (let i = 0; i < c.length; i++) {
-          axios.get(store.state.database + 'product/list/' + level + '/' + c[i]).then(response => {
-
-            for (let j = 0; j < response.data.length; j++) {
-              this.goodexhibition.good.push(response.data[j]);
-            }
-          })
-        }
+    getAllGoods(filter = null) {
+      if (filter !== null) {
+        this.filter = filter;
+        this.filter.searchkey = this.search.searchtarget;
       }
-
-    },
-    getAllGoods() {
-      let goodsurl = store.state.database + 'product/listProductVO';
+      this.currentPage = 1;
+      console.log("get good", this.filter)
+      let goodsurl = store.state.database + 'product/search/' + this.currentPage + '/' + this.pageSize;
       let myurl = "@/../static/goods.json";
-      axios.get(goodsurl).then(response => {
+      axios.post(goodsurl, {
+        categoryId: this.filter.cate,
+        creditLevel: this.filter.creditLevel,
+        maxPrice: this.filter.maxPrice,
+        minPrice: this.filter.minPrice,
+        key: this.filter.searchkey
+      }).then(response => {
+        console.log(response.data);
         this.goodexhibition.good = response.data;
+      })
+    },
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      let goodsurl = store.state.database + 'product/search/' + this.currentPage + '/' + this.pageSize;
+      let myurl = "@/../static/goods.json";
+      console.log("换页", this.filter, val);
+      axios.post(goodsurl, {
+        categoryId: this.filter.cate,
+        creditLevel: this.filter.creditLevel,
+        maxPrice: this.filter.maxPrice,
+        minPrice: this.filter.minPrice,
+        key: this.filter.searchkey
+      }).then(response => {
+        this.goodexhibition.good = response.data;
+        console.log(response.data)
       })
     }
   },
@@ -149,25 +200,11 @@ export default {
   color: #fff
 }
 
-/*::-webkit-scrollbar {*/
-/*  width: 8px;*/
-
-/*}*/
-
-/*::-webkit-scrollbar-thumb {*/
-/*  background-color: #eaecf1;*/
-/*  border-radius: 3px;*/
-/*}*/
-
-/*.outerdiv::-webkit-scrollbar {*/
-/*  display: none;*/
-/*}*/
 
 .outerdiv {
   overflow-y: auto;
   overflow-x: hidden;
-  height: 530px;
-  /*height: calc(100vh);*/
+  height: 630px;
 
 }
 
