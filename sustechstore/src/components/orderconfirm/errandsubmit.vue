@@ -116,7 +116,7 @@ export default {
     }
   },
   mounted() {
-    let goodsurl = store.state.database + 'errand/findErrandVOById/' + this.task.id;
+    let goodsurl = store.state.database + 'errand/findErrandVOById/' + this.$route.params.id;
     axios.get(goodsurl).then(response => {
       this.task = response.data;
     })

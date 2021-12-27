@@ -16,7 +16,7 @@
     </div>
     <div v-if="buyerId===uid">
       <el-alert
-        title="等待卖家发货"
+        :title="tips"
         type="info"
         style="height: 50px;"
         center
@@ -55,19 +55,41 @@ export default {
   methods: {
     handlePay() {
       this.loading = true;
-      let noworderid = this.$route.query.orderid;
+      let cate = this.$route.params.category;
+      let noworderid = cate === 0 ? this.$route.query.orderid : this.$route.params.id;
+
       console.log("wait..");
-      axios.put(store.state.database + "order/confirmById/" + noworderid).then(response => {
-        this.loading = false;
-        this.$emit("nextStatus");
-      })
+      if (cate === 0) {
+        axios.put(store.state.database + "order/confirmById/" + noworderid).then(response => {
+          this.loading = false;
+          this.$emit("nextStatus");
+        })
+      } else if (cate === 1) {
+        axios.put(store.state.database + "errand/confirm/" + noworderid).then(response => {
+          this.loading = false;
+          this.$emit("nextStatus");
+        })
+      }
+
     },
     getOrder() {
-      axios.get(store.state.database + "order/getOrdersVOByOrderId/" + this.$route.query.orderid).then(response => {
-        // this.cost = response.data.cost;
-        this.buyerId = response.data.buyerId;
-        this.sellerId = response.data.sellerId;
-      })
+      if (this.$route.params.category === 0) {
+        axios.get(store.state.database + "order/getOrdersVOByOrderId/" + this.$route.query.orderid).then(response => {
+          // this.cost = response.data.cost;
+          this.buyerId = response.data.buyerId;
+          this.sellerId = response.data.sellerId;
+        })
+      } else if (this.$route.params.category === 1) {
+        axios.get(store.state.database + 'errand/findErrandVOById/' + this.$route.params.id).then(response => {
+          // this.cost = response.data.cost;
+          console.log(response.data)
+          this.sellerId = response.data.ownerId;
+          if (this.sellerId !== this.uid) {
+            this.buyerId = this.uid;
+          }
+        })
+      }
+
     },
     returnMain() {
       this.$router.push({name: "main"})
@@ -77,6 +99,15 @@ export default {
   },
   mounted() {
     this.getOrder();
+  },
+  computed: {
+    tips: function () {
+      if (this.$route.params.category === 0) {
+        return "等待卖家发货";
+      } else {
+        return "等待顾客确认";
+      }
+    }
   }
 }
 </script>

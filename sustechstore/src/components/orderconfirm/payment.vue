@@ -63,8 +63,11 @@ export default {
 
     },
     handlePay() {
-      if (this.balance < this.price) {
-        alert("No enough balance.");
+      if (this.balance < this.cost) {
+        this.$message({
+          message: "No enough balance",
+          type: "error"
+        });
       } else {
         this.loading = true;
         let noworderid = this.$route.query.orderid;

@@ -141,9 +141,21 @@ export default {
       this.chatVisible = true;
     },
     toOrder() {
-      this.$router.push({
-        name:"checkoutpage", query: {status: 0}, params:{id:this.id, category: 1}
-      });
+      axios.get(store.state.database + "user/userInfo").then(response => {
+        if (response.status === 200) {
+          console.log(response.data.uid,this.task.ownerId)
+          if (response.data.uid === this.task.ownerId) {
+            this.$message({
+              message: "You cannot task your own errand",
+              type: "error"
+            })
+          } else {
+            this.$router.push({
+              name: "checkoutpage", query: {status: 0}, params: {id: this.id, category: 1}
+            });
+          }
+        }
+      })
     },
     toUser() {
       this.$router.push({
@@ -155,6 +167,7 @@ export default {
     axios.get(store.state.database + "errand/findErrandVOById/" + this.id).then(response => {
       if (response.status === 200) {
         this.task = response.data;
+        console.log(this.task)
         this.endslocation[0].position = response.data.origin;
         this.endslocation[1].position = response.data.destination;
       }
