@@ -136,14 +136,29 @@ export default {
         password: this.loginForm.passWord,
         uid: this.loginForm.userName
       }).then(response => {
-        if (response.data.data === null || !response.data.data.tokenValue) {
+        if (response.data.code === 1000) {
+          store.state.token = response.data.data.tokenValue;
+          this.$router.push('/main');
+        } else if (response.data.code === 1003) {
           this.$message({
-            message: "No such user or password is wrong",
+            message: "未注册账号",
+            type: "error"
+          })
+        } else if (response.data.code === 1004) {
+          this.$message({
+            message: "密码错误",
+            type: "error"
+          })
+        } else if (response.data.code === 1005) {
+          this.$message({
+            message: "账号已被封号",
             type: "error"
           })
         } else {
-          store.state.token = response.data.data.tokenValue;
-          this.$router.push('/main');
+          this.$message({
+            message: "未知错误",
+            type: "error"
+          })
         }
       })
     },
