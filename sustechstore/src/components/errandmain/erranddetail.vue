@@ -143,7 +143,7 @@ export default {
     toOrder() {
       axios.get(store.state.database + "user/userInfo").then(response => {
         if (response.status === 200) {
-          console.log(response.data.uid,this.task.ownerId)
+          console.log(response.data.uid, this.task.ownerId)
           if (response.data.uid === this.task.ownerId) {
             this.$message({
               message: "You cannot task your own errand",
