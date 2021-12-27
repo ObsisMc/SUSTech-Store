@@ -29,7 +29,7 @@
       <el-col :span="2" style="border:1px solid transparent;"></el-col>
       <el-col :span="20">
         <transition name="fade" mode="out-in">
-          <component @nextStatus="nextStatus" :is="subrouter">
+          <component @nextStatus="nextStatus" :is="subrouter" :balance="user.balance" :uid="user.uid">
           </component>
         </transition>
       </el-col>
@@ -72,7 +72,11 @@ export default {
       },
       chatVisible: false,
       subrouter: '',
-      balance: 0
+      user: {
+        balance: 0,
+        uid: 0
+      }
+
     }
   },
   methods: {
@@ -128,8 +132,12 @@ export default {
   },
   mounted() {
     axios.defaults.headers.common['satoken'] = store.state.token;
+    axios.get(store.state.database + "user/userInfo").then(response => {
+      this.user = response.data;
+    })
     this.cate = this.$route.params.category;
     this.step.active = parseInt(this.$route.query.status);
+    console.log(this.$route.query.status);
     if (this.cate === 0) {
       switch (this.step.active) {
         case 0:

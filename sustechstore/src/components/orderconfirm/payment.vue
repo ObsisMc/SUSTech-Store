@@ -3,20 +3,30 @@
     <el-row>
       <span style="font-size: 30px;">Account payable: ¥ {{ cost }}</span>
     </el-row>
-    <countdown :deadline="expireTime" :showDays="false"></countdown>
-    <el-tabs v-model="activeName" @tab-click="handleClick" v-loading="loading"
-             element-loading-text="payment processing...">
-      <el-tab-pane label="Virtual coin" name="vc">
-        <span>Balance: {{ balance }}</span>
-        <el-button type="primary" @click="handlePay" size="mini">confirm</el-button>
-      </el-tab-pane>
-      <el-tab-pane label="Wechat" name="wc">
-        <div id="wechatqr" ref="wechatqrref" style="margin-left:40%;"></div>
+    <countdown :deadline="expireTime" :showDays="false" @timeElapsed="timeElapsed"></countdown>
+    <div v-if="uid===buyerId">
+      <el-tabs v-model="activeName" @tab-click="handleClick" v-loading="loading"
+               element-loading-text="payment processing...">
+        <el-tab-pane label="Virtual coin" name="vc">
+          <span>Balance: {{ balance }}</span>
+          <el-button type="primary" @click="handlePay" size="mini">confirm</el-button>
+        </el-tab-pane>
+        <el-tab-pane label="Wechat" name="wc">
+          <div id="wechatqr" ref="wechatqrref" style="margin-left:40%;"></div>
+        </el-tab-pane>
+        <el-tab-pane label="Alipay" name="ap">No support</el-tab-pane>
+      </el-tabs>
+    </div>
+    <div v-if="uid!==buyerId">
+      <el-alert
+        title="等待买家确认"
+        type="info"
+        style="height: 50px;"
+        center
+        show-icon>
+      </el-alert>
+    </div>
 
-        <!--                id cannot contain space and other letters-->
-      </el-tab-pane>
-      <el-tab-pane label="Alipay" name="ap">No support</el-tab-pane>
-    </el-tabs>
 
   </div>
 </template>
@@ -28,15 +38,16 @@ import {store} from "../../store/store";
 
 export default {
   name: "payment",
+  props: ["balance", 'uid'],
   data() {
     return {
       paymode: 0,
       cost: 1000.5,
       expireTime: '2021-12-26 10:00:00',
       activeName: 'vc',
-      balance: 0,
       qrto: 'https://www.baidu.com/',
-      loading: false
+      loading: false,
+      buyerId: 0
     }
   },
   methods: {
@@ -77,25 +88,37 @@ export default {
 
       });
     },
-    getInfo() {
-      let balanceurl = store.state.database + "user/userInfo";
-      axios.get(balanceurl).then(response => {
-        this.balance = response.data.balance;
-      })
-    },
     getOrder() {
       axios.get(store.state.database + "order/getOrdersVOByOrderId/" + this.$route.query.orderid).then(response => {
         this.cost = response.data.cost;
+        this.buyerId = response.data.buyerId;
         let time = response.data.expireTime.split("T")
+
         this.expireTime = time[0] + " " + time[1];
       })
     },
-    format() {
-      alert(this.endtime);
+    timeElapsed() {
+      axios.delete(store.state.database + "order/deleteById/" + this.$route.query.orderid).then(response => {
+        if (this.uid === this.buyerId) {
+          this.$alert('该订单已过期，请重新下单', {
+            confirmButtonText: '确定',
+            callback: action => {
+              this.$router.push({name: "selfpage"})
+            }
+          });
+        } else {
+          this.$alert('该订单已过期', {
+            confirmButtonText: '确定',
+            callback: action => {
+              this.$router.push({name: "selfpage"})
+            }
+
+          });
+        }
+      })
     }
   },
   mounted() {
-    this.getInfo();
     this.getOrder();
   },
   components: {Countdown}
