@@ -162,7 +162,7 @@ export default {
           this.subrouter = "errandsubmit";
           break;
         case 1:
-          this.subrouter = "buyer_confirm";
+          this.subrouter = "merchant_confirm";
           break;
         case 2:
           this.subrouter = "payresult";
