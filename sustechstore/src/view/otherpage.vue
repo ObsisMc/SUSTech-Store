@@ -141,10 +141,13 @@ methods:{
 <style scoped>
 .el-avatar {
   position: absolute;
-  left: 710px;
+
   margin: -10px;
   top: 150px;
+  left: 50%;
+  transform: translateX(-48%);
 }
+
 
 .el-input {
   margin: 10px;

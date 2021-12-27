@@ -69,7 +69,7 @@
     </el-dialog>
 
     <el-dialog title="购买订单" :visible.sync="BuyOrderVisible">
-      <el-table :data="formBuyOrder">
+      <el-table :data="formBuyOrder"  @row-click="gotoOrder">
         <el-table-column property="name" label="商品名称"></el-table-column>
         <el-table-column property="price" label="交易金额"></el-table-column>
         <el-table-column property="time" label="交易时间"></el-table-column>
@@ -537,26 +537,29 @@ export default {
         console.log(response);
         for (let i = 0; i < response.data.length; i++) {
           let st = null;
-          switch (response.data[i].status) {
-            case 0:
-              st = "已添加";
-              break;
-            case 1:
-              st = "已支付";
-              break;
-            case 2:
-              st = "已确认";
-              break;
-            case 3:
-              st = "已收货";
-              break;
+          if (response.data[i].status==='OPENED'){
+            st =0;
+          }
+          else if (response.data[i].status==='PAYED'){
+            st =1;
+          }
+          else if (response.data[i].status==='SHIPPED'){
+            st =2;
+          }
+          else if (response.data[i].status==='CONFIRMED'){
+            st =3;
+          }
+          else if (response.data[i].status==='CLOSED'){
+            st =4;
           }
           let temp = {
+            id : response.data[i].id,
             name: response.data[i].productName,
-            owner: response.data[i].sellerNickName,
+            owner: response.data[i].buyerNickName,
             time: response.data[i].createTime,
             price: response.data[i].cost,
-            status: st,
+            status:  response.data[i].status,
+            truestatus: st,
           };
           ans.push(temp);
         }
@@ -572,19 +575,19 @@ export default {
         for (let i = 0; i < response.data.length; i++) {
           let st = null;
           if (response.data[i].status==='OPENED'){
-              st ="已下单";
+              st =0;
           }
           else if (response.data[i].status==='PAYED'){
-            st ="已支付";
+            st =1;
           }
           else if (response.data[i].status==='SHIPPED'){
-            st ='已发货';
+            st =2;
           }
           else if (response.data[i].status==='CONFIRMED'){
-            st ='已确认';
+            st =3;
           }
           else if (response.data[i].status==='CLOSED'){
-            st ="已关闭";
+            st =4;
           }
           let temp = {
             id : response.data[i].id,
@@ -592,8 +595,8 @@ export default {
             owner: response.data[i].buyerNickName,
             time: response.data[i].createTime,
             price: response.data[i].cost,
-            status: st,
-            truestatus: response.data[i].status,
+            status: response.data[i].status,
+            truestatus:st ,
           };
           ans.push(temp);
         }
@@ -620,12 +623,13 @@ export default {
         goodid=response.data.productId;
         this.$router.push({
           name:'checkoutpage',
-          query: { status: row.truestatus},
+          query: { status: row.truestatus+1},
           params:{id:goodid, category:0}
         });
       })
 
     },
+
     fahuo(index, row){
       axios.defaults.headers.common["satoken"] = store.state.token;
       axios.put(store.state.database+"/order/confirmById/"+row.id).then(response=>{
