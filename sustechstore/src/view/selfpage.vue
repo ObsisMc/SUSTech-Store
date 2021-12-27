@@ -87,7 +87,7 @@
         <el-table-column property="status" label="订单状态"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button v-if="scope.row.status==='已支付'"
+            <el-button v-if="scope.row.status==='PAYED'"
               size="mini"
               @click.native.stop="fahuo(scope.$index, scope.row)">确认发货</el-button>
           </template>
