@@ -41,7 +41,7 @@
       <el-submenu index="2">
         <template slot="title">我的钱包</template>
         <el-menu-item index="2-1">我的余额：{{ money }} ￥</el-menu-item>
-        <el-menu-item index="2-2">充值</el-menu-item>
+        <el-menu-item index="2-2" @click="moneyVisible=true">充值</el-menu-item>
       </el-submenu>
       <el-menu-item index="3">
         <router-link to="/selfinfo"> 详细信息 </router-link></el-menu-item
@@ -348,6 +348,13 @@
       </div>
 
     </el-dialog>
+    <el-dialog title="充值" :visible.sync="moneyVisible">
+      <el-input  v-model="addMoney" label="充值金额" >
+      </el-input>
+      <el-button @click="addMoneytoAccount">
+        确定
+      </el-button>
+    </el-dialog>
   </div>
 </template>
 
@@ -435,6 +442,8 @@ export default {
 
       locationVisible: false,
       newLocation: null,
+      moneyVisible :false,
+      addMoney: 0,
       //历史订单
       BuyOrderVisible: false,
       formBuyOrder: [],
@@ -596,7 +605,10 @@ export default {
 
       }
       this.clearPhoto();
-      console.log(to)
+      if (this.formPao.price>this.money){
+        this.$message.error('Do not have enough money!')
+      }
+     else {
       axios.post(store.state.database+'/errand/add',to).then(response=>{
         if (response.data){
           this.$message({
@@ -607,7 +619,7 @@ export default {
         else {
           this.$message.error("ERROR !");
         }
-      })
+      })}
     },
     getLocation() {
       let ans = [];
@@ -811,6 +823,18 @@ export default {
           });
         }
         this.reload()
+      })
+    },
+    addMoneytoAccount(){
+      axios.defaults.headers.common["satoken"] = store.state.token;
+      axios.put(store.state.database+'/user/addBalance/'+this.addMoney).then(response=>{
+        if (response.data){
+          this.$message({
+            message: "successful!",
+            type: "success",
+          });
+          this.reload()
+        }
       })
     }
   },
