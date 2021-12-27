@@ -17,7 +17,7 @@
         <el-tab-pane label="Alipay" name="ap">No support</el-tab-pane>
       </el-tabs>
     </div>
-    <div v-if="uid!==buyerId">
+    <div v-if="uid===sellerId">
       <el-alert
         title="等待买家确认"
         type="info"
@@ -25,6 +25,13 @@
         center
         show-icon>
       </el-alert>
+    </div>
+    <div v-if="uid!==sellerId&&uid!==buyerId">
+      <el-result icon="error" title="异常订单" subTitle="请返回主界面">
+        <template slot="extra">
+          <el-button type="primary" size="medium" @click="returnMain">返回</el-button>
+        </template>
+      </el-result>
     </div>
 
 
@@ -47,7 +54,8 @@ export default {
       activeName: 'vc',
       qrto: 'https://www.baidu.com/',
       loading: false,
-      buyerId: 0
+      buyerId: 0,
+      sellerId:0
     }
   },
   methods: {
@@ -92,6 +100,7 @@ export default {
       axios.get(store.state.database + "order/getOrdersVOByOrderId/" + this.$route.query.orderid).then(response => {
         this.cost = response.data.cost;
         this.buyerId = response.data.buyerId;
+        this.sellerId = response.data.sellerId;
         let time = response.data.expireTime.split("T")
 
         this.expireTime = time[0] + " " + time[1];
@@ -116,6 +125,9 @@ export default {
           });
         }
       })
+    },
+    returnMain(){
+      this.$router.push({name: "main"})
     }
   },
   mounted() {
