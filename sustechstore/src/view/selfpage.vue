@@ -484,8 +484,35 @@ export default {
   },
   methods: {
 
-    delLocation(lid) {},
-    addLocation() {},
+    delLocation(lid) {
+      axios.defaults.headers.common["satoken"] = store.state.token;
+     axios.delete(store.state.database+'/userAddress/deleteById/'+lid).then(response=>{
+       console.log(response);
+       if (response.data){
+       this.$message({
+         message: "delete location successfully!",
+         type: "success",
+       })}
+
+  this.reload()   })
+    },
+    addLocation() {
+      axios.defaults.headers.common["satoken"] = store.state.token;
+      let to={
+        address: this.newLocation,
+        remark: "",
+        isDefault:0,
+      }
+      axios.post(store.state.database+'/userAddress/add',to).then(response=>{
+         if (response.data){
+           this.$message({
+             message: "add location successfully!",
+             type: "success",
+           })
+           this.reload();
+         }
+      })
+    },
 
     Sell() {
 
@@ -573,7 +600,7 @@ export default {
       axios.post(store.state.database+'/errand/add',to).then(response=>{
         if (response.data){
           this.$message({
-            message: "sucessful!",
+            message: "successful!",
             type: "success",
           });
         }
@@ -794,7 +821,12 @@ export default {
     axios.get(store.state.database + "user/userInfo").then((response) => {
       console.log(response);
       this.money = response.data.balance;
-      this.value = response.data.credit + 1;
+      if (response.data.credit>=100){
+        this.value=5
+      }
+      else {
+        this.value=response.data.credit/5
+      }
       this.img = response.data.icon;
       this.nickname = response.data.nickName;
       this.userId = response.data.uid;
@@ -841,7 +873,7 @@ export default {
 
 .el-rate {
   position: absolute;
-  top: 390px;
+  top: 388px;
   left: 50%;
   transform: translateX(-50%);
 }
