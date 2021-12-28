@@ -3,7 +3,7 @@
     <el-dialog
       title="Chat"
       :visible.sync="chatVisible"
-      width="50%">
+      width="60%">
       <chatwindow></chatwindow>
 
       <span slot="footer" class="dialog-footer">

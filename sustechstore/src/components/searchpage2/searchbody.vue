@@ -41,7 +41,8 @@
                 :key="o2">
           <exhibition :imgurl="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].image"
                       :id="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].id"
-                      :icon="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].icon">
+                      :icon="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].icon"
+                      :type="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].type">
             <template v-slot:title>
               {{ goodexhibition.good[(o1 - 1) * goodexhibition.col + o2 - 1].name }}
             </template>
@@ -102,7 +103,8 @@ export default {
             name: "string",
             price: 100,
             icon: '',
-            nickName: "unamed"
+            nickName: "unamed",
+            type: "SELL"
           }
         ],
         col: 4

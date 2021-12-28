@@ -11,7 +11,8 @@
                   :key="o2">
             <singlegood :imgurl="goods.good[(o1-1)*goods.col + o2 - 1].image"
                         :id="goods.good[(o1-1)*goods.col + o2 - 1].id"
-                        :icon="goods.good[(o1-1)*goods.col + o2 - 1].icon">
+                        :icon="goods.good[(o1-1)*goods.col + o2 - 1].icon"
+                        :type="goods.good[(o1-1)*goods.col + o2 - 1].type">
               <template v-slot:title>
                 {{ goods.good[(o1 - 1) * goods.col + o2 - 1].name }}
               </template>
@@ -67,11 +68,12 @@ export default {
             description: "",
             image: "",
             id: 0,
-            name: "string",
+            name: "宝能城优惠券",
             ownerId: 0,
-            price: 100,
+            price: 10000,
             icon: "string",
-            nickName: "unamed"
+            nickName: "unamed",
+            type: "SELL"
           }
         ],
         col: 4
