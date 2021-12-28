@@ -892,7 +892,7 @@ return ans;
       if (column.label==="交易方"){
       this.gotouser(row.otherid)
       }
-      else {
+      else if(row.status!=='CLOSED') {
         var goodid = 0;
         axios.get(store.state.database + '/order/getOrdersVOByOrderId/' + row.id).then(response => {
 
@@ -903,6 +903,10 @@ return ans;
             params: {id: goodid, category: 0}
           });
         })
+      }else{
+        this.$message({
+          message:"该订单已经关闭"
+        })
       }
     },
     gotoPao(row, column, cell, event){
@@ -910,6 +914,7 @@ return ans;
        if (column.label==='交易方'){
          this.gotouser(row.otherid)
        }
+
         this.$router.push({
           name:'checkoutpage',
           query: { status: row.truestatus, uid:this.userId},

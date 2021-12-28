@@ -24,7 +24,7 @@
         v-model="textarea1">
       </el-input>
     </el-col>
-    <el-button @click="submitComment">Submit</el-button>
+    <el-button @click="submitComment" :disabled="finished">Submit</el-button>
 
   </div>
 </template>
@@ -46,12 +46,15 @@ export default {
       textarea1: "",
       buyerId:-2,
       sellerId:-2,
+      finished: false
     }
   },
   methods: {
     submitComment(){
       if (this.value2 === null || this.textarea1 === ""){
-        alert("请评分和输入评价")
+        this.$alert('请完成打分和评论',  {
+          confirmButtonText: '确定'
+        });
       }else{
         if (this.$route.params.category === 0) {
           axios.get(store.state.database + "order/getOrdersVOByOrderId/" + this.$route.query.orderid).then(response => {
@@ -59,33 +62,23 @@ export default {
             this.sellerId = response.data.sellerId;
             if(this.uid === this.buyerId){
               let goodsurl = store.state.database + "ordersComment/commentOrders/"+this.$route.query.orderid+"/"+this.sellerId+"/"+this.textarea1+"/"+this.value2;
-              console.log(this.$route.query.orderid)
-              console.log(response.data.sellerId)
-              console.log(this.textarea1)
-              console.log(this.value2)
               axios.post(goodsurl).then(response=>{
-                console.log(response.data)
+                this.$message({
+                  message:"完成订单评价",
+                  type:"success"
+                })
+                this.finished = true;
               })
             }else if(this.uid === this.sellerId){
               let goodsurl = store.state.database + "ordersComment/commentOrders/"+this.$route.query.orderid+"/"+this.buyerId+"/"+this.textarea1+"/"+this.value2;
-              console.log(this.$route.query.orderid)
-              console.log(response.data.sellerId)
-              console.log(this.textarea1)
-              console.log(this.value2)
               axios.post(goodsurl).then(response=>{
-                console.log(response.data)
+                this.$message({
+                  message:"完成订单评价",
+                  type:"success"
+                })
               })
+              this.finished = true;
             }
-
-
-            let goodsurl = store.state.database + "ordersComment/commentOrders/"+this.$route.query.orderid+"/"+this.sellerId+"/"+this.textarea1+"/"+this.value2;
-            console.log(this.$route.query.orderid)
-            console.log(response.data.sellerId)
-            console.log(this.textarea1)
-            console.log(this.value2)
-            axios.post(goodsurl).then(response=>{
-              console.log(response.data)
-            })
           })
         } else if (this.$route.params.category === 1) {
           axios.get(store.state.database + 'errand/findErrandVOById/' + this.$route.params.id).then(response => {
