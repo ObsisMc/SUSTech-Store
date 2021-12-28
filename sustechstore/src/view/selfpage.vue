@@ -14,12 +14,12 @@
         <template slot="title">交易</template>
         <el-menu-item
           index="1-1"
-          @click="(BuyOrderVisible = true), (formBuyOrder = getBuyorder())"
+          @click="(BuyOrderVisible = true, formBuyOrder=getBuyorder())"
           >我的购买订单</el-menu-item
         >
         <el-menu-item
           index="1-2"
-          @click="(SellOrderVisible = true), (formSellOrder = getSellorder())"
+          @click="(SellOrderVisible = true, formSellOrder=getSellorder())"
           >我的卖出订单</el-menu-item
         >
         <el-menu-item
@@ -638,9 +638,44 @@ export default {
       return ans;
     },
     getBuyorder() {
-      let ans = [];
+      let ans=[];
       axios.defaults.headers.common["satoken"] = store.state.token;
-      console.log(store.state.token);
+      axios.get(store.state.database + "/order/listSellVO").then((response) => {
+        console.log(response);
+        for (let i = 0; i < response.data.length; i++) {
+          let st = null;
+          if (response.data[i].status==='OPENED'){
+            st =0;
+          }
+          else if (response.data[i].status==='PAYED'){
+            st =1;
+          }
+          else if (response.data[i].status==='SHIPPED'){
+            st =2;
+          }
+          else if (response.data[i].status==='CONFIRMED'){
+            st =3;
+          }
+          else if (response.data[i].status==='CLOSED'){
+            st =4;
+          }
+          let temp = {
+            id : response.data[i].id,
+            name: response.data[i].productName,
+            owner: response.data[i].buyerNickName,
+            otherid: response.data[i].buyerId,
+            time: response.data[i].createTime,
+            price: response.data[i].cost,
+            status: response.data[i].status,
+            truestatus:st ,
+            type: response.data[i].productType,
+          };
+          if (temp.type==="BUY"){
+            ans.push(temp)
+          }
+        }
+      });
+      axios.defaults.headers.common["satoken"] = store.state.token;
       axios.get(store.state.database + "//order/listBuyVO").then((response) => {
         console.log(response);
         for (let i = 0; i < response.data.length; i++) {
@@ -669,15 +704,23 @@ export default {
             status:  response.data[i].status,
             truestatus: st,
             otherid: response.data[i].sellerId,
+            type: response.data[i].productType,
           };
-          ans.push(temp);
+          if (temp.type==="SELL"){
+            ans.push(temp)
+          }
+
+
         }
       });
-      console.log(ans);
+
+
       return ans;
+
+
     },
     getSellorder() {
-      let ans = [];
+      let ans=[];
       axios.defaults.headers.common["satoken"] = store.state.token;
       axios.get(store.state.database + "/order/listSellVO").then((response) => {
         console.log(response);
@@ -707,12 +750,54 @@ export default {
             price: response.data[i].cost,
             status: response.data[i].status,
             truestatus:st ,
+            type: response.data[i].productType,
           };
-          ans.push(temp);
+          if (temp.type==="SELL"){
+           ans.push(temp)
+          }
+        }
+      });
+      axios.defaults.headers.common["satoken"] = store.state.token;
+      axios.get(store.state.database + "//order/listBuyVO").then((response) => {
+        console.log(response);
+        for (let i = 0; i < response.data.length; i++) {
+          let st = null;
+          if (response.data[i].status==='OPENED'){
+            st =0;
+          }
+          else if (response.data[i].status==='PAYED'){
+            st =1;
+          }
+          else if (response.data[i].status==='SHIPPED'){
+            st =2;
+          }
+          else if (response.data[i].status==='CONFIRMED'){
+            st =3;
+          }
+          else if (response.data[i].status==='CLOSED'){
+            st =4;
+          }
+          let temp = {
+            id : response.data[i].id,
+            name: response.data[i].productName,
+            owner: response.data[i].sellerNickName,
+            time: response.data[i].createTime,
+            price: response.data[i].cost,
+            status:  response.data[i].status,
+            truestatus: st,
+            otherid: response.data[i].sellerId,
+            type: response.data[i].productType,
+          };
+          if (temp.type==="BUY"){
+            ans.push(temp)
+          }
+
+
         }
       });
 
-      return ans;
+
+return ans;
     },
     getFaPaoOrder(){
       let ans=[];
@@ -805,7 +890,7 @@ export default {
           goodid = response.data.productId;
           this.$router.push({
             name: 'checkoutpage',
-            query: {status: row.truestatus + 1, uid: this.userId, orderid: row.id, producttype:response.data.productType},
+            query: {status: row.truestatus + 1, uid: this.userId, orderid: row.id},
             params: {id: goodid, category: 0}
           });
         })
@@ -857,7 +942,7 @@ export default {
   },
 
   mounted() {
-    console.log(store.state.token);
+
     axios.defaults.headers.common["satoken"] = store.state.token;
     axios.get(store.state.database + "user/userInfo").then((response) => {
       console.log(response);
