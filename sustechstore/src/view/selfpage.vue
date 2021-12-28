@@ -79,7 +79,7 @@
     </el-dialog>
 
     <el-dialog title="购买订单" :visible.sync="BuyOrderVisible">
-      <el-table :data="formBuyOrder"  @row-click="gotoOrder">
+      <el-table :data="formBuyOrder"   @cell-click="gotoOrder">
         <el-table-column property="name" label="商品名称"></el-table-column>
         <el-table-column property="price" label="交易金额"></el-table-column>
         <el-table-column property="time" label="交易时间"></el-table-column>
@@ -89,7 +89,7 @@
     </el-dialog>
 
     <el-dialog title="卖出订单" :visible.sync="SellOrderVisible" >
-      <el-table :data="formSellOrder" @row-click="gotoOrder">
+      <el-table :data="formSellOrder"  @cell-click="gotoOrder">
         <el-table-column property="name" label="商品名称" ></el-table-column>
         <el-table-column property="price" label="交易金额"></el-table-column>
         <el-table-column property="time" label="交易时间"></el-table-column>
@@ -105,7 +105,7 @@
       </el-table>
     </el-dialog>
     <el-dialog title="我发布的跑腿" :visible.sync="FaPaoOrderVisible">
-      <el-table :data="formFaPaoOder"  @row-click="gotoPao">
+      <el-table :data="formFaPaoOder"  @cell-click="gotoPao">
         <el-table-column property="name" label="跑腿名称"></el-table-column>
         <el-table-column property="price" label="交易金额"></el-table-column>
         <el-table-column property="origin" label="出发点"></el-table-column>
@@ -117,7 +117,7 @@
       </el-table>
     </el-dialog>
     <el-dialog title="我接受的跑腿" :visible.sync="JiePaoOrderVisible">
-      <el-table :data="formJiePaoOrder"  @row-click="gotoPao">
+      <el-table :data="formJiePaoOrder"  @cell-click="gotoPao">
         <el-table-column property="name" label="跑腿名称"></el-table-column>
         <el-table-column property="price" label="交易金额"></el-table-column>
         <el-table-column property="origin" label="出发点"></el-table-column>
@@ -663,11 +663,12 @@ export default {
           let temp = {
             id : response.data[i].id,
             name: response.data[i].productName,
-            owner: response.data[i].buyerNickName,
+            owner: response.data[i].sellerNickName,
             time: response.data[i].createTime,
             price: response.data[i].cost,
             status:  response.data[i].status,
             truestatus: st,
+            otherid: response.data[i].sellerId,
           };
           ans.push(temp);
         }
@@ -701,6 +702,7 @@ export default {
             id : response.data[i].id,
             name: response.data[i].productName,
             owner: response.data[i].buyerNickName,
+            otherid: response.data[i].buyerId,
             time: response.data[i].createTime,
             price: response.data[i].cost,
             status: response.data[i].status,
@@ -740,6 +742,7 @@ export default {
             type: response.data[i].type,
             origin: response.data[i].origin,
             destination: response.data[i].destination,
+            otherid : response.data[i].ownerId,
           };
           ans.push(temp);
         }
@@ -773,6 +776,7 @@ export default {
             type: response.data[i].type,
             origin: response.data[i].origin,
             destination: response.data[i].destination,
+            otherid : response.data[i].ownerId,
           };
           ans.push(temp);
         }
@@ -789,28 +793,41 @@ export default {
         this.formPao.destination=address;
 
     },
-    gotoOrder(row, event, column){
-      console.log(row, column);
-      var goodid=0;
-      axios.get(store.state.database+'/order/getOrdersVOByOrderId/'+row.id).then(response=>{
+    gotoOrder(row, column, cell, event){
 
-        goodid=response.data.productId;
-        this.$router.push({
-          name:'checkoutpage',
-          query: { status: row.truestatus+1, uid:this.userId, orderid: row.id},
-          params:{id:goodid, category:0}
-        });
-      })
+      if (column.label==="交易方"){
+      this.gotouser(row.otherid)
+      }
+      else {
+        var goodid = 0;
+        axios.get(store.state.database + '/order/getOrdersVOByOrderId/' + row.id).then(response => {
 
+          goodid = response.data.productId;
+          this.$router.push({
+            name: 'checkoutpage',
+            query: {status: row.truestatus + 1, uid: this.userId, orderid: row.id},
+            params: {id: goodid, category: 0}
+          });
+        })
+      }
     },
-    gotoPao(row, event, column){
-      console.log(row, column);
+    gotoPao(row, column, cell, event){
+
+       if (column.label==='交易方'){
+         this.gotouser(row.otherid)
+       }
         this.$router.push({
           name:'checkoutpage',
           query: { status: row.truestatus, uid:this.userId},
           params:{id: row.id, category:1}
       })
 
+    },
+    gotouser(id){
+      this.$router.push({
+        name:'otherpage',
+        params:{id:id}
+      })
     },
 
     fahuo(index, row){

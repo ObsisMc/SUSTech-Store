@@ -96,9 +96,8 @@ export default {
     },
 
   beforeMount() {
-    console.log(this.id)
+
   axios.get(store.state.database+'user/findById/'+this.id).then(response=>{
-    console.log(response)
     if (response.data.credit>=100){
       this.evaluate=5
     }

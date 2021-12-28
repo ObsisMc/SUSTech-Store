@@ -222,7 +222,6 @@ export default {
 
       axios.defaults.headers.common["satoken"] = store.state.token;
       axios.get(store.state.database+'/userChat/findAll/'+this.myid+"/"+this.otherid).then(response=>{
-
         for (let i=0; i<response.data.length;i++){
           if (response.data[i].sellId===this.otherid){
             let c = {
@@ -236,6 +235,7 @@ export default {
            tempDiv.push(c)
            }
           else {
+
             let d ={
               "name": this.othername,
               /*   "url": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",*/
