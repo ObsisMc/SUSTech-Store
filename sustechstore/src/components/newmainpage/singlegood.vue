@@ -15,19 +15,19 @@
         </div>
       </el-row>
       <el-row>
-        <el-col :span="16">
+        <el-col :span="15">
       <span class="info">
         <span style=" font-size: 15px;">
           <slot name="title"></slot>
         </span>
 
-        <span style=" font-size: 15px; margin-left: 20px; ">
+        <span style=" font-size: 15px; margin-left: 10px; ">
             ¥ <slot name="price"></slot>
         </span>
 
       </span>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="9">
           <el-popover
             placement="top-start"
             width="200"
@@ -51,6 +51,8 @@
             <slot name="intro">He or she is so lazy and there is nothing.</slot>
           </el-popover>
           <i class="el-icon-goods detail " @click="toGood"></i>
+          <el-tag style="float: right;margin-top: 8px;" size="mini" type="success" v-if="goodtype===0">出售</el-tag>
+          <el-tag style="float: right;margin-top: 8px;" size="mini" v-if="goodtype===1">求购</el-tag>
         </el-col>
 
       </el-row>
@@ -65,7 +67,7 @@ import axios from "axios";
 
 export default {
   name: "singlegood",
-  props: ['imgurl', 'msg', 'id','icon'],
+  props: ['imgurl', 'msg', 'id', 'icon', 'type'],
   data() {
     return {
       test: "",
@@ -88,6 +90,13 @@ export default {
   computed: {
     haveimage() {
       return this.imgurl !== "";
+    },
+    goodtype() {
+      if (this.type === "SELL") {
+        return 0;
+      } else {
+        return 1;
+      }
     }
   },
   mounted() {

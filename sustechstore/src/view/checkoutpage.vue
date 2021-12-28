@@ -13,8 +13,8 @@
         <el-steps :active="step.active" finish-status="success" v-if="cate===0" direction="horizontal" align-center>
           <el-step title="confirm order"></el-step>
           <el-step title="payment"></el-step>
-          <el-step title="merchant affirm"></el-step>
-          <el-step title="customer affirm"></el-step>
+          <el-step :title="producttype==='SELL'? 'merchant affirm':'customer affirm'"></el-step>
+          <el-step :title="producttype==='SELL'? 'customer affirm':'merchant affirm'"></el-step>
           <el-step title="trade result"></el-step>
         </el-steps>
         <el-steps :active="step.active" finish-status="success" v-if="cate===1" direction="horizontal" align-center>
@@ -43,7 +43,8 @@
     <el-dialog
       title="Chat"
       :visible.sync="chatVisible"
-      width="50%">
+      width="60%"
+    >
       <chatwindow></chatwindow>
 
       <span slot="footer" class="dialog-footer">
@@ -75,8 +76,8 @@ export default {
       user: {
         balance: 0,
         uid: 0
-      }
-
+      },
+      producttype: "BUY"
     }
   },
   methods: {
@@ -119,7 +120,7 @@ export default {
             this.subrouter = "errandsubmit";
             break;
           case 1:
-            this.subrouter = "buyer_confirm";
+            this.subrouter = "merchant_confirm";
             break;
           case 2:
             this.subrouter = "payresult";
@@ -136,8 +137,8 @@ export default {
       this.user = response.data;
     })
     this.cate = this.$route.params.category;
+    this.producttype = this.$route.query.producttype;
     this.step.active = parseInt(this.$route.query.status);
-    console.log(this.$route.query.status);
     if (this.cate === 0) {
       switch (this.step.active) {
         case 0:
@@ -169,6 +170,7 @@ export default {
           break;
       }
     }
+
   },
   beforeRouteUpdate(to, from, next) {
     next();

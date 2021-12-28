@@ -14,12 +14,12 @@
         <template slot="title">交易</template>
         <el-menu-item
           index="1-1"
-          @click="(BuyOrderVisible = true), (formBuyOrder = getBuyorder())"
+          @click="(BuyOrderVisible = true, formBuyOrder=getBuyorder())"
           >我的购买订单</el-menu-item
         >
         <el-menu-item
           index="1-2"
-          @click="(SellOrderVisible = true), (formSellOrder = getSellorder())"
+          @click="(SellOrderVisible = true, formSellOrder=getSellorder())"
           >我的卖出订单</el-menu-item
         >
         <el-menu-item
@@ -79,17 +79,24 @@
     </el-dialog>
 
     <el-dialog title="购买订单" :visible.sync="BuyOrderVisible">
-      <el-table :data="formBuyOrder"  @row-click="gotoOrder">
+      <el-table :data="formBuyOrder"   @cell-click="gotoOrder">
         <el-table-column property="name" label="商品名称"></el-table-column>
         <el-table-column property="price" label="交易金额"></el-table-column>
         <el-table-column property="time" label="交易时间"></el-table-column>
         <el-table-column property="owner" label="交易方"></el-table-column>
         <el-table-column property="status" label="订单状态"></el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button v-if="scope.row.status==='SHIPPED'"
+                       size="mini"
+                       @click.native.stop="shouhuo(scope.$index, scope.row)">确认收货</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </el-dialog>
 
     <el-dialog title="卖出订单" :visible.sync="SellOrderVisible" >
-      <el-table :data="formSellOrder" @row-click="gotoOrder">
+      <el-table :data="formSellOrder"  @cell-click="gotoOrder">
         <el-table-column property="name" label="商品名称" ></el-table-column>
         <el-table-column property="price" label="交易金额"></el-table-column>
         <el-table-column property="time" label="交易时间"></el-table-column>
@@ -105,7 +112,7 @@
       </el-table>
     </el-dialog>
     <el-dialog title="我发布的跑腿" :visible.sync="FaPaoOrderVisible">
-      <el-table :data="formFaPaoOder"  @row-click="gotoPao">
+      <el-table :data="formFaPaoOder"  @cell-click="gotoPao">
         <el-table-column property="name" label="跑腿名称"></el-table-column>
         <el-table-column property="price" label="交易金额"></el-table-column>
         <el-table-column property="origin" label="出发点"></el-table-column>
@@ -117,7 +124,7 @@
       </el-table>
     </el-dialog>
     <el-dialog title="我接受的跑腿" :visible.sync="JiePaoOrderVisible">
-      <el-table :data="formJiePaoOrder"  @row-click="gotoPao">
+      <el-table :data="formJiePaoOrder"  @cell-click="gotoPao">
         <el-table-column property="name" label="跑腿名称"></el-table-column>
         <el-table-column property="price" label="交易金额"></el-table-column>
         <el-table-column property="origin" label="出发点"></el-table-column>
@@ -158,7 +165,7 @@
       <el-rate
         v-model="value"
         :show-text="true"
-        :disabled="true"
+        disabled
         text-color="#F56C6C"
         v-bind="{ texts: texts }"
       >
@@ -638,10 +645,9 @@ export default {
       return ans;
     },
     getBuyorder() {
-      let ans = [];
+      let ans=[];
       axios.defaults.headers.common["satoken"] = store.state.token;
-      console.log(store.state.token);
-      axios.get(store.state.database + "//order/listBuyVO").then((response) => {
+      axios.get(store.state.database + "/order/listSellVO").then((response) => {
         console.log(response);
         for (let i = 0; i < response.data.length; i++) {
           let st = null;
@@ -664,19 +670,64 @@ export default {
             id : response.data[i].id,
             name: response.data[i].productName,
             owner: response.data[i].buyerNickName,
+            otherid: response.data[i].buyerId,
+            time: response.data[i].createTime,
+            price: response.data[i].cost,
+            status: response.data[i].status,
+            truestatus:st ,
+            type: response.data[i].productType,
+          };
+          if (temp.type==="BUY"){
+            ans.push(temp)
+          }
+        }
+      });
+      axios.defaults.headers.common["satoken"] = store.state.token;
+      axios.get(store.state.database + "//order/listBuyVO").then((response) => {
+        console.log(response);
+        for (let i = 0; i < response.data.length; i++) {
+          let st = null;
+          if (response.data[i].status==='OPENED'){
+            st =0;
+          }
+          else if (response.data[i].status==='PAYED'){
+            st =1;
+          }
+          else if (response.data[i].status==='SHIPPED'){
+            st =2;
+          }
+          else if (response.data[i].status==='CONFIRMED'){
+            st =3;
+          }
+          else if (response.data[i].status==='CLOSED'){
+            st =4;
+          }
+          let temp = {
+            id : response.data[i].id,
+            name: response.data[i].productName,
+            owner: response.data[i].sellerNickName,
             time: response.data[i].createTime,
             price: response.data[i].cost,
             status:  response.data[i].status,
             truestatus: st,
+            otherid: response.data[i].sellerId,
+            type: response.data[i].productType,
           };
-          ans.push(temp);
+          if (temp.type==="SELL"){
+            ans.push(temp)
+          }
+
+
         }
       });
-      console.log(ans);
+
+
       return ans;
+
+
     },
     getSellorder() {
-      let ans = [];
+      let ans=[];
       axios.defaults.headers.common["satoken"] = store.state.token;
       axios.get(store.state.database + "/order/listSellVO").then((response) => {
         console.log(response);
@@ -701,16 +752,59 @@ export default {
             id : response.data[i].id,
             name: response.data[i].productName,
             owner: response.data[i].buyerNickName,
+            otherid: response.data[i].buyerId,
             time: response.data[i].createTime,
             price: response.data[i].cost,
             status: response.data[i].status,
             truestatus:st ,
+            type: response.data[i].productType,
           };
-          ans.push(temp);
+          if (temp.type==="SELL"){
+           ans.push(temp)
+          }
+        }
+      });
+      axios.defaults.headers.common["satoken"] = store.state.token;
+      axios.get(store.state.database + "//order/listBuyVO").then((response) => {
+        console.log(response);
+        for (let i = 0; i < response.data.length; i++) {
+          let st = null;
+          if (response.data[i].status==='OPENED'){
+            st =0;
+          }
+          else if (response.data[i].status==='PAYED'){
+            st =1;
+          }
+          else if (response.data[i].status==='SHIPPED'){
+            st =2;
+          }
+          else if (response.data[i].status==='CONFIRMED'){
+            st =3;
+          }
+          else if (response.data[i].status==='CLOSED'){
+            st =4;
+          }
+          let temp = {
+            id : response.data[i].id,
+            name: response.data[i].productName,
+            owner: response.data[i].sellerNickName,
+            time: response.data[i].createTime,
+            price: response.data[i].cost,
+            status:  response.data[i].status,
+            truestatus: st,
+            otherid: response.data[i].sellerId,
+            type: response.data[i].productType,
+          };
+          if (temp.type==="BUY"){
+            ans.push(temp)
+          }
+
+
         }
       });
 
-      return ans;
+
+return ans;
     },
     getFaPaoOrder(){
       let ans=[];
@@ -732,7 +826,7 @@ export default {
             id : response.data[i].id,
             name: response.data[i].name,
             descri :response.data[i].description,
-            owner: response.data[i].ownerNickname,
+            owner: response.data[i].buyerNickname,
             time: response.data[i].createTime,
             price: response.data[i].price,
             status: response.data[i].status,
@@ -740,6 +834,7 @@ export default {
             type: response.data[i].type,
             origin: response.data[i].origin,
             destination: response.data[i].destination,
+            otherid : response.data[i].buyerId,
           };
           ans.push(temp);
         }
@@ -773,6 +868,7 @@ export default {
             type: response.data[i].type,
             origin: response.data[i].origin,
             destination: response.data[i].destination,
+            otherid : response.data[i].ownerId,
           };
           ans.push(temp);
         }
@@ -789,22 +885,29 @@ export default {
         this.formPao.destination=address;
 
     },
-    gotoOrder(row, event, column){
-      console.log(row, column);
-      var goodid=0;
-      axios.get(store.state.database+'/order/getOrdersVOByOrderId/'+row.id).then(response=>{
+    gotoOrder(row, column, cell, event){
 
-        goodid=response.data.productId;
-        this.$router.push({
-          name:'checkoutpage',
-          query: { status: row.truestatus+1, uid:this.userId, orderid: row.id},
-          params:{id:goodid, category:0}
-        });
-      })
+      if (column.label==="交易方"){
+      this.gotouser(row.otherid)
+      }
+      else {
+        var goodid = 0;
+        axios.get(store.state.database + '/order/getOrdersVOByOrderId/' + row.id).then(response => {
 
+          goodid = response.data.productId;
+          this.$router.push({
+            name: 'checkoutpage',
+            query: {status: row.truestatus + 1, uid: this.userId, orderid: row.id},
+            params: {id: goodid, category: 0}
+          });
+        })
+      }
     },
-    gotoPao(row, event, column){
-      console.log(row, column);
+    gotoPao(row, column, cell, event){
+
+       if (column.label==='交易方'){
+         this.gotouser(row.otherid)
+       }
         this.$router.push({
           name:'checkoutpage',
           query: { status: row.truestatus, uid:this.userId},
@@ -812,10 +915,28 @@ export default {
       })
 
     },
+    gotouser(id){
+      this.$router.push({
+        name:'otherpage',
+        params:{id:id}
+      })
+    },
 
     fahuo(index, row){
       axios.defaults.headers.common["satoken"] = store.state.token;
       axios.put(store.state.database+"/order/confirmById/"+row.id).then(response=>{
+        if (response.data){
+          this.$message({
+            message: "successful!",
+            type: "success",
+          });
+        }
+        this.reload()
+      })
+    },
+    shouhuo(index, row){
+      axios.defaults.headers.common["satoken"] = store.state.token;
+      axios.put(store.state.database+'/order/close/'+row.id).then(response=>{
         if (response.data){
           this.$message({
             message: "successful!",
@@ -840,7 +961,7 @@ export default {
   },
 
   mounted() {
-    console.log(store.state.token);
+
     axios.defaults.headers.common["satoken"] = store.state.token;
     axios.get(store.state.database + "user/userInfo").then((response) => {
       console.log(response);
@@ -849,7 +970,7 @@ export default {
         this.value=5
       }
       else {
-        this.value=response.data.credit/5
+        this.value=response.data.credit/20
       }
       this.img = response.data.icon;
       this.nickname = response.data.nickName;

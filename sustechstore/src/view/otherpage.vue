@@ -96,14 +96,13 @@ export default {
     },
 
   beforeMount() {
-    console.log(this.id)
+
   axios.get(store.state.database+'user/findById/'+this.id).then(response=>{
-    console.log(response)
     if (response.data.credit>=100){
       this.evaluate=5
     }
     else {
-      this.evaluate=response.data.credit/5
+      this.evaluate=response.data.credit/20
     }
     this.img=response.data.icon
     this.nickname=response.data.nickName
@@ -192,7 +191,8 @@ methods:{
 .el-rate {
   position: absolute;
   top: 364px;
-  left: 750px;
+  left: 50%;
+  transform: translateX(-10%);
 }
 
 #xinyu {

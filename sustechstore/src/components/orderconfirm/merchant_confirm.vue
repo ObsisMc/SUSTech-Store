@@ -1,20 +1,21 @@
 <template>
   <div>
-    <div v-if="uid===sellerId">
+    <div v-if="uid===sellerId&&producttype===0||uid===buyerId&&producttype===1">
       <el-button type="primary" @click="centerDialogVisible = true">确认发货<i class="el-icon-s-claim"></i></el-button>
       <el-dialog
         title="提示"
         :visible.sync="centerDialogVisible"
         width="30%"
         center>
-        <span>点击确认代表您已经确认了买家的订单</span>
+        <span v-if="producttype===0">点击确认代表您已经确认了买家的订单</span>
+        <span v-if="producttype===1">点击确认代表您已经确认了求购者的订单</span>
         <span slot="footer" class="dialog-footer">
     <el-button @click="centerDialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="handlePay()">确 定</el-button>
   </span>
       </el-dialog>
     </div>
-    <div v-if="buyerId===uid">
+    <div v-if="uid===buyerId&&producttype===0||uid===sellerId&&producttype===1">
       <el-alert
         :title="tips"
         type="info"
@@ -49,7 +50,8 @@ export default {
     return {
       centerDialogVisible: false,
       buyerId: 0,
-      sellerId: 0
+      sellerId: 0,
+      productType: "SELL"
     };
   },
   methods: {
@@ -78,6 +80,7 @@ export default {
           // this.cost = response.data.cost;
           this.buyerId = response.data.buyerId;
           this.sellerId = response.data.sellerId;
+          this.productType = response.data.productType;
         })
       } else if (this.$route.params.category === 1) {
         axios.get(store.state.database + 'errand/findErrandVOById/' + this.$route.params.id).then(response => {
@@ -99,7 +102,7 @@ export default {
   },
   mounted() {
     this.getOrder();
-    alert(this.uid);
+
   },
   computed: {
     tips: function () {
@@ -107,6 +110,13 @@ export default {
         return "等待卖家发货";
       } else {
         return "等待顾客确认";
+      }
+    },
+    producttype() {
+      if (this.productType === "SELL") {
+        return 0;
+      } else {
+        return 1;
       }
     }
   }

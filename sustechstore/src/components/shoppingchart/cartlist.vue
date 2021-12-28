@@ -2,7 +2,10 @@
   <div class="outerdiv">
     <div v-if="goods.length">
       <el-row v-for="i in goods.length" :key="i">
-        <cartitem :index="i-1" @removeGoods="removeGoods" :imgurl="goods[i-1].image" :id="goods[i-1].productId"
+        <cartitem :index="i-1" @removeGoods="removeGoods"
+                  :imgurl="goods[i-1].image"
+                  :id="goods[i-1].productId"
+                  :type="goods[i-1].productType"
                   :orderstatus="goods[i-1].orderstatus">
           <template v-slot:title>
             {{ goods[i - 1].name }}
@@ -47,7 +50,8 @@ export default {
             ownerId: 0,
             price: 200,
             orderstatus: 1,
-            productId: 734
+            productId: 734,
+            productType:"SELL"
           }
         ]
     }

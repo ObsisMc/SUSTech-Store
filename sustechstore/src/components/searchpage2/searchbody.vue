@@ -41,7 +41,8 @@
                 :key="o2">
           <exhibition :imgurl="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].image"
                       :id="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].id"
-                      :icon="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].icon">
+                      :icon="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].icon"
+                      :type="goodexhibition.good[(o1-1)*goodexhibition.col + o2 - 1].type">
             <template v-slot:title>
               {{ goodexhibition.good[(o1 - 1) * goodexhibition.col + o2 - 1].name }}
             </template>
@@ -102,7 +103,8 @@ export default {
             name: "string",
             price: 100,
             icon: '',
-            nickName: "unamed"
+            nickName: "unamed",
+            type: "SELL"
           }
         ],
         col: 4
@@ -116,6 +118,7 @@ export default {
         creditLevel: 0,
         maxPrice: 0,
         minPrice: 0,
+        productType: 'SEARCH_ALL',
         searchkey: ''
       }
     }
@@ -132,7 +135,6 @@ export default {
         this.filter.searchkey = this.search.searchtarget;
       }
       this.currentPage = 1;
-      console.log("get good", this.filter)
       let goodsurl = store.state.database + 'product/search/' + this.currentPage + '/' + this.pageSize;
       let myurl = "@/../static/goods.json";
       axios.post(goodsurl, {
@@ -140,7 +142,8 @@ export default {
         creditLevel: this.filter.creditLevel,
         maxPrice: this.filter.maxPrice,
         minPrice: this.filter.minPrice,
-        key: this.filter.searchkey
+        key: this.filter.searchkey,
+        productType: this.filter.productType
       }).then(response => {
         console.log(response.data);
         this.goodexhibition.good = response.data;

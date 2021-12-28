@@ -13,6 +13,7 @@
         <el-row>
           <discription :rating="rating"
                        :ownerid="good.ownerId"
+                       :type="good.type"
                        @toOrder="toOrder"
                        @addToCart="addToCart">
             <template v-slot:name>
@@ -68,7 +69,8 @@ export default {
         ownerId: 0,
         price: 1250,
         nickName: "string",
-        icon: "string"
+        icon: "string",
+        type: "SELL"
       }
     }
 
@@ -85,6 +87,7 @@ export default {
         this.good.price = response.data.price;
         this.good.nickName = response.data.nickName;
         this.good.icon = response.data.icon;
+        this.good.type = response.data.type;
         console.log("get product:", response.data)
       })
       axios.get(store.state.database + "productImage/listProductImageByProductId/" + goodid).then(response => {
@@ -93,11 +96,13 @@ export default {
     },
     toOrder() {
       this.$router.push({
-        name: "checkoutpage", query: {status: this.orderstatus}, params: {id: this.good.id, category: 0}
+        name: "checkoutpage",
+        query: {status: this.orderstatus, producttype: this.good.type},
+        params: {id: this.good.id, category: 0}
       });
     },
-    addToCart() {
-      axios.post(store.state.database + 'cart/addCart/' + this.good.id).then(response => {
+    addToCart(type) {
+      axios.post(store.state.database + 'cart/addCart/' + this.good.id + "/" + type).then(response => {
         if (response.status === 200) {
           this.$message({
             message: 'Adding to shopping cart successfully!',

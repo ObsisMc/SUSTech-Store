@@ -7,35 +7,20 @@
           <div class="bottom clearfix" style="height: 100px;">
             <el-row>
               <el-col :span="16">
-                <el-col :span="18">
+                <el-col :span="17">
                   <span class="title"><slot name="title"></slot></span>
                 </el-col>
-                <el-col :span="6">
-               <span style=" font-size: 15px;  float: left;">
+                <el-col :span="7">
+
+               <span style=" font-size: 12px;  float: left;">
                   ¥ <slot name="price"></slot>
               </span>
                 </el-col>
               </el-col>
               <el-col :span="8">
-                <el-popover
-                  placement="top-start"
-                  width="200"
-                  trigger="hover"
-                  :open-delay="200">
-                  <i class="el-icon-info detail" slot="reference"></i>
-                  <div style="float: left;">
-                    <el-avatar :src="icon"
-                               size="medium" style=""></el-avatar>
-                  </div>
-                  <span style="margin-left: 10px;">
-                <span class="nickname">
-                    <slot name="nickname"></slot>
-                </span>
-              </span>
-                  <div class="divider" style=""></div>
-                  <slot name="intro">He or she is so lazy and there is nothing.</slot>
-                </el-popover>
                 <i class="el-icon-goods detail " @click="toGood"></i>
+                <el-tag style="float: right;margin-top: 8px;" size="mini" type="success" v-if="goodtype===0">出售</el-tag>
+                <el-tag style="float: right;margin-top: 8px;" size="mini" v-if="goodtype===1">求购</el-tag>
               </el-col>
             </el-row>
             <el-row>
@@ -49,6 +34,8 @@
           <div slot="header" class="clearfix" style="height: 15px;">
             <span class="title" style="margin-left:0;">
               <slot name="title"></slot>
+              <el-tag style="float: right;margin-top: 8px;" size="mini" type="success" v-if="goodtype===0">出售</el-tag>
+              <el-tag style="float: right;margin-top: 8px;" size="mini" v-if="goodtype===1">求购</el-tag>
               <el-popover
                 placement="top-start"
                 width="200"
@@ -68,6 +55,7 @@
                 <slot name="intro">He or she is so lazy and there is nothing.</slot>
               </el-popover>
               <i class="el-icon-goods detail " @click="toGood"></i>
+
             </span>
           </div>
           <div style=" overflow-y: auto;height: 220px;" class="textmsg">
@@ -84,7 +72,7 @@
 <script>
 export default {
   name: 'exhibition',
-  props: ['imgurl', 'msg', 'id', 'icon']
+  props: ['imgurl', 'msg', 'id', 'icon', 'type']
   ,
   data() {
     return {
@@ -103,6 +91,13 @@ export default {
   computed: {
     haveimage() {
       return this.imgurl !== '';
+    },
+    goodtype() {
+      if (this.type === "SELL") {
+        return 0;
+      } else {
+        return 1;
+      }
     }
   }
 }
@@ -128,7 +123,7 @@ export default {
   font-weight: bold;
   float: left;
   margin-left: 5px;
-  font-size: 15px;
+  font-size: 12px;
 
 }
 

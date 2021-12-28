@@ -5,7 +5,10 @@
         <span class="title">
           <slot name="name"></slot>
         </span>
+        <el-tag style="float: left; margin-left: 5px;" size="medium" type="success" v-if="gooodtype===0">出售</el-tag>
+        <el-tag style="float: left; margin-left: 5px;" size="medium" v-if="gooodtype===1">求购</el-tag>
       </el-col>
+
     </el-row>
 
     <el-row margin="100px" id="para_margin">
@@ -74,7 +77,7 @@ import {store} from "../../store/store";
 const cityOptions = ['shanghai', 'beijing', 'guangzhou', 'shenzhen'];
 export default {
   name: "discription",
-  props: ["rating", "ownerid"],
+  props: ["rating", "ownerid","type"],
   data() {
     return {
       ratingobj: {
@@ -122,10 +125,19 @@ export default {
               type: "error"
             })
           } else {
-            this.$emit("addToCart");
+            this.$emit("addToCart",this.type);
           }
         }
       })
+    }
+  },
+  computed:{
+    gooodtype(){
+      if(this.type==="SELL"){
+        return 0;
+      }else{
+        return 1;
+      }
     }
   }
 }

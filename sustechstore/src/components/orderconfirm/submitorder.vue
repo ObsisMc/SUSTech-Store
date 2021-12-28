@@ -5,8 +5,8 @@
              element-loading-text="submiting order...">
       <el-form-item label="Good's type">
         <el-radio-group v-model="ruleForm.goodtype" disabled>
-          <el-radio :label="0"> For sale</el-radio>
-          <el-radio :label="1">Wanted</el-radio>
+          <el-radio :label="0"> 出售</el-radio>
+          <el-radio :label="1">求购</el-radio>
           {{ ruleForm.goodtype }}
         </el-radio-group>
       </el-form-item>
@@ -122,16 +122,16 @@ export default {
         ]
       },
       goods: {
-        "image": "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-        "id": 733,
-        "name": "Hambuger ad",
-        "ownerId": 'unamed',
-        "price": 1000,
-        "description": "string",
-        "icon": "string",
-        "nickName": "string"
+        image: "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
+        id: 733,
+        name: "Hambuger ad",
+        ownerId: 'unamed',
+        price: 1000,
+        description: "string",
+        icon: "string",
+        nickName: "string",
+        type:"SELL"
       },
-
       loading: false
     };
   },
@@ -169,12 +169,17 @@ export default {
   },
   mounted() {
     axios.defaults.headers.common['satoken'] = store.state.token;
-    // TODO 需要改成VO
     axios.get(store.state.database + 'product/findProductVOById/' + this.$route.params.id).then(response => {
       if (response.status === 200) {
         this.goods = response.data;
+        if(this.goods.type==="SELL"){
+          this.ruleForm.goodtype = 0;
+        }else{
+          this.ruleForm.goodtype = 1;
+        }
       }
     })
+
   },
   computed: {
     // todo 这里需要改善

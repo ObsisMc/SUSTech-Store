@@ -41,9 +41,8 @@
           </el-badge>
         </el-row>
         <el-row>
-          <el-tag :type="getOrderTagStatus(orderstatus)">
-            {{ getStrOrderStatus(orderstatus) }}
-          </el-tag>
+          <el-tag style="margin-top: 8px;"  type="success" v-if="goodtype===0">出售</el-tag>
+          <el-tag style="margin-top: 8px;"  v-if="goodtype===1">求购</el-tag>
         </el-row>
       </el-col>
       <el-col :span="3">
@@ -53,15 +52,32 @@
         <i class="el-icon-close" style="cursor: pointer;" @click="removeGoods"></i>
       </el-col>
     </el-row>
+
+    <el-dialog
+      title="Chat"
+      :visible.sync="chatVisible"
+      width="60%"
+    >
+      <chatwindow></chatwindow>
+
+      <span slot="footer" class="dialog-footer">
+  </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import {store} from "../../store/store";
+import chatwindow from "../chatroom/chatwindow";
 
 export default {
   name: "cartitem",
-  props: ['imgurl', 'index', 'id', 'orderstatus'],
+  props: ['imgurl', 'index', 'id', 'orderstatus','type'],
+  data(){
+    return{
+      chatVisible:false
+    }
+  },
   methods: {
     removeGoods() {
       this.$emit('removeGoods', this.index);
@@ -92,12 +108,25 @@ export default {
       }
     },
     toChat() {
-      alert("chat");
+      this.chatVisible=true;
     },
     testClick() {
       alert("hi");
     }
-  }
+  },
+  computed:{
+    goodtype(){
+      if(this.type === "SELL"){
+        return 0;
+      }else{
+        return 1;
+      }
+    }
+  },
+  mounted() {
+
+  },
+  components:{chatwindow}
 }
 
 </script>
