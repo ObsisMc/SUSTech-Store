@@ -721,7 +721,7 @@ export default {
         }
       });
 
-
+ ans.reverse();
       return ans;
 
 
@@ -803,7 +803,7 @@ export default {
         }
       });
 
-
+ans.reverse();
 return ans;
     },
     getFaPaoOrder(){
@@ -839,6 +839,7 @@ return ans;
           ans.push(temp);
         }
       })
+      ans.reverse()
    return ans },
     getJiePaoOrder(){
       let ans=[];
@@ -873,6 +874,7 @@ return ans;
           ans.push(temp);
         }
       })
+      ans.reverse()
  return ans   },
 
   clearPhoto(){

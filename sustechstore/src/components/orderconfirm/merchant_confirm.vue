@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div v-if="uid===sellerId&&producttype===0||uid===buyerId&&producttype===1">
+    <div
+      v-if="productType==null&&uid===sellerId||productType!=null&&(uid===sellerId&&producttype===0||uid===buyerId&&producttype===1) ">
       <el-button type="primary" @click="centerDialogVisible = true">确认发货<i class="el-icon-s-claim"></i></el-button>
       <el-dialog
         title="提示"
@@ -15,7 +16,7 @@
   </span>
       </el-dialog>
     </div>
-    <div v-if="uid===buyerId&&producttype===0||uid===sellerId&&producttype===1">
+    <div v-if="productType==null&&uid===buyerId||productType!=null&&(uid===buyerId&&producttype===0||uid===sellerId&&producttype===1)">
       <el-alert
         :title="tips"
         type="info"
@@ -51,7 +52,7 @@ export default {
       centerDialogVisible: false,
       buyerId: 0,
       sellerId: 0,
-      productType: "SELL"
+      productType: null
     };
   },
   methods: {
@@ -85,7 +86,6 @@ export default {
       } else if (this.$route.params.category === 1) {
         axios.get(store.state.database + 'errand/findErrandVOById/' + this.$route.params.id).then(response => {
           // this.cost = response.data.cost;
-          console.log(response.data)
           this.sellerId = response.data.ownerId;
           if (this.sellerId !== this.uid) {
             this.buyerId = this.uid;
