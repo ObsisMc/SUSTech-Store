@@ -43,7 +43,8 @@
     <el-dialog
       title="Chat"
       :visible.sync="chatVisible"
-      width="50%">
+      width="60%"
+    >
       <chatwindow></chatwindow>
 
       <span slot="footer" class="dialog-footer">
@@ -119,7 +120,7 @@ export default {
             this.subrouter = "errandsubmit";
             break;
           case 1:
-            this.subrouter = "buyer_confirm";
+            this.subrouter = "merchant_confirm";
             break;
           case 2:
             this.subrouter = "payresult";
@@ -169,6 +170,7 @@ export default {
           break;
       }
     }
+
   },
   beforeRouteUpdate(to, from, next) {
     next();

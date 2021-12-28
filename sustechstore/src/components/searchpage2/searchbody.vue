@@ -118,6 +118,7 @@ export default {
         creditLevel: 0,
         maxPrice: 0,
         minPrice: 0,
+        productType: 'SEARCH_ALL',
         searchkey: ''
       }
     }
@@ -134,7 +135,6 @@ export default {
         this.filter.searchkey = this.search.searchtarget;
       }
       this.currentPage = 1;
-      console.log("get good", this.filter)
       let goodsurl = store.state.database + 'product/search/' + this.currentPage + '/' + this.pageSize;
       let myurl = "@/../static/goods.json";
       axios.post(goodsurl, {
@@ -142,7 +142,8 @@ export default {
         creditLevel: this.filter.creditLevel,
         maxPrice: this.filter.maxPrice,
         minPrice: this.filter.minPrice,
-        key: this.filter.searchkey
+        key: this.filter.searchkey,
+        productType: this.filter.productType
       }).then(response => {
         console.log(response.data);
         this.goodexhibition.good = response.data;

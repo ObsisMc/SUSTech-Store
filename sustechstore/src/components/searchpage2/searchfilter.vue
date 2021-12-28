@@ -40,17 +40,17 @@
       <el-divider></el-divider>
     </el-row>
     <el-row>
-      <span class="filtertitle">User Type</span><br/><br/>
+      <span class="filtertitle">Prodct Type</span><br/><br/>
       <el-button :type="usrfilter.hasselect" @click="validchanusr" circle size="normal"
-                 icon="el-icon-user-solid" style="margin-bottom: 5px;"></el-button>
+                 icon="el-icon-shopping-cart-1" style="margin-bottom: 5px;"></el-button>
       <br/>
       <el-switch
         v-model="usrfilter.value"
         :disabled="usrfilter.changeusrvalid"
         active-color="#13ce66"
         inactive-color="#ff4949"
-        active-text="买家"
-        inactive-text="卖家">
+        active-text="出售"
+        inactive-text="求购">
       </el-switch>
       <br/>
       <el-divider></el-divider>
@@ -196,11 +196,16 @@ export default {
       let creditLevel = this.ratingfilter.ratingvalid ? this.ratingfilter.rating : 0;
       let maxPrice = this.pricefilter.confirmmax !== "∞" ? this.pricefilter.confirmmax : 0;
       let minPrice = this.pricefilter.confirmmin;
+      var productType = 'SEARCH_ALL';
+      if (!this.usrfilter.changeusrvalid) {
+        productType = this.usrfilter.value ? "SELL" : "BUY";
+      }
       this.$emit('getFilterGoods', {
         cate: cateid,
         creditLevel: creditLevel,
         maxPrice: maxPrice,
         minPrice: minPrice,
+        productType: productType
       });
     },
     validchanusr() {
