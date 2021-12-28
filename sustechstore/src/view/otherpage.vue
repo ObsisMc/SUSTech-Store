@@ -192,7 +192,7 @@ methods:{
   position: absolute;
   top: 364px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-10%);
 }
 
 #xinyu {
