@@ -36,6 +36,8 @@ import axios from "axios";
 
 export default {
   name: "payresult",
+  props:['uid'],
+  // 现在我的id
   data() {
     return {
       rated: false,
@@ -48,37 +50,61 @@ export default {
   },
   methods: {
     submitComment(){
-      if (this.$route.params.category === 0) {
-        axios.get(store.state.database + "order/getOrdersVOByOrderId/" + this.$route.query.orderid).then(response => {
-          // this.cost = response.data.cost;
-          this.buyerId = response.data.buyerId;
-          this.sellerId = response.data.sellerId;
-          let goodsurl = store.state.database + "ordersComment/commentOrders/"+this.$route.query.orderid+"/"+this.sellerId+"/"+this.textarea1+"/"+this.value2;
-          console.log(this.$route.query.orderid)
-          console.log(response.data.sellerId)
-          console.log(this.textarea1)
-          console.log(this.value2)
-          axios.post(goodsurl).then(response=>{
-            console.log(response.data)
+      if (this.value2 === null || this.textarea1 === ""){
+        alert("请评分和输入评价")
+      }else{
+        if (this.$route.params.category === 0) {
+          axios.get(store.state.database + "order/getOrdersVOByOrderId/" + this.$route.query.orderid).then(response => {
+            this.buyerId = response.data.buyerId;
+            this.sellerId = response.data.sellerId;
+            if(this.uid === this.buyerId){
+              let goodsurl = store.state.database + "ordersComment/commentOrders/"+this.$route.query.orderid+"/"+this.sellerId+"/"+this.textarea1+"/"+this.value2;
+              console.log(this.$route.query.orderid)
+              console.log(response.data.sellerId)
+              console.log(this.textarea1)
+              console.log(this.value2)
+              axios.post(goodsurl).then(response=>{
+                console.log(response.data)
+              })
+            }else if(this.uid === this.sellerId){
+              let goodsurl = store.state.database + "ordersComment/commentOrders/"+this.$route.query.orderid+"/"+this.buyerId+"/"+this.textarea1+"/"+this.value2;
+              console.log(this.$route.query.orderid)
+              console.log(response.data.sellerId)
+              console.log(this.textarea1)
+              console.log(this.value2)
+              axios.post(goodsurl).then(response=>{
+                console.log(response.data)
+              })
+            }
+
+
+            let goodsurl = store.state.database + "ordersComment/commentOrders/"+this.$route.query.orderid+"/"+this.sellerId+"/"+this.textarea1+"/"+this.value2;
+            console.log(this.$route.query.orderid)
+            console.log(response.data.sellerId)
+            console.log(this.textarea1)
+            console.log(this.value2)
+            axios.post(goodsurl).then(response=>{
+              console.log(response.data)
+            })
           })
-        })
-      } else if (this.$route.params.category === 1) {
-        axios.get(store.state.database + 'errand/findErrandVOById/' + this.$route.params.id).then(response => {
-          console.log(response.data)
-          this.sellerId = response.data.ownerId;
-          if (this.sellerId !== this.uid) {
-            this.buyerId = this.uid;
-          }
-        })
+        } else if (this.$route.params.category === 1) {
+          axios.get(store.state.database + 'errand/findErrandVOById/' + this.$route.params.id).then(response => {
+            console.log(response.data)
+            this.sellerId = response.data.ownerId;
+            if (this.sellerId !== this.uid) {
+              this.buyerId = this.uid;
+            }
+          })
+        }
+        // let goodsurl = store.state.database + "ordersComment/commentOrders/"+this.$route.query.orderid+"/"+this.sellerId+"/"+this.textarea1+"/"+this.value2;
+        // console.log(this.$route.query.orderid)
+        // console.log(this.sellerId)
+        // console.log(this.textarea1)
+        // console.log(this.value2)
+        // axios.post(goodsurl).then(response=>{
+        //   console.log(response.data)
+        // })
       }
-      // let goodsurl = store.state.database + "ordersComment/commentOrders/"+this.$route.query.orderid+"/"+this.sellerId+"/"+this.textarea1+"/"+this.value2;
-      // console.log(this.$route.query.orderid)
-      // console.log(this.sellerId)
-      // console.log(this.textarea1)
-      // console.log(this.value2)
-      // axios.post(goodsurl).then(response=>{
-      //   console.log(response.data)
-      // })
     },
     returncart() {
       this.$emit("nextStatus");
