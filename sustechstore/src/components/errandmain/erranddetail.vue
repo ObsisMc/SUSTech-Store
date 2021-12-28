@@ -167,7 +167,6 @@ export default {
     axios.get(store.state.database + "errand/findErrandVOById/" + this.id).then(response => {
       if (response.status === 200) {
         this.task = response.data;
-        console.log(this.task)
         this.endslocation[0].position = response.data.origin;
         this.endslocation[1].position = response.data.destination;
       }

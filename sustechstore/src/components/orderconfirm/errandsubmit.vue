@@ -119,6 +119,8 @@ export default {
     let goodsurl = store.state.database + 'errand/findErrandVOById/' + this.$route.params.id;
     axios.get(goodsurl).then(response => {
       this.task = response.data;
+      this.endslocation[0].position = response.data.origin;
+      this.endslocation[1].position = response.data.destination;
     })
   }
 }
