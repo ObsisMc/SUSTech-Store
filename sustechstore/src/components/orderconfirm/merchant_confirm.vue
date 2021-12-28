@@ -99,7 +99,7 @@ export default {
   },
   mounted() {
     this.getOrder();
-    alert(this.uid);
+
   },
   computed: {
     tips: function () {
