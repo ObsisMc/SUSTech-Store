@@ -85,6 +85,13 @@
         <el-table-column property="time" label="交易时间"></el-table-column>
         <el-table-column property="owner" label="交易方"></el-table-column>
         <el-table-column property="status" label="订单状态"></el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button v-if="scope.row.status==='SHIPPED'"
+                       size="mini"
+                       @click.native.stop="shouhuo(scope.$index, scope.row)">确认收货</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </el-dialog>
 
@@ -918,6 +925,18 @@ return ans;
     fahuo(index, row){
       axios.defaults.headers.common["satoken"] = store.state.token;
       axios.put(store.state.database+"/order/confirmById/"+row.id).then(response=>{
+        if (response.data){
+          this.$message({
+            message: "successful!",
+            type: "success",
+          });
+        }
+        this.reload()
+      })
+    },
+    shouhuo(index, row){
+      axios.defaults.headers.common["satoken"] = store.state.token;
+      axios.put(store.state.database+'/order/close/'+row.id).then(response=>{
         if (response.data){
           this.$message({
             message: "successful!",
