@@ -87,6 +87,7 @@ export default {
         this.good.price = response.data.price;
         this.good.nickName = response.data.nickName;
         this.good.icon = response.data.icon;
+        this.good.type = response.data.type;
         console.log("get product:", response.data)
       })
       axios.get(store.state.database + "productImage/listProductImageByProductId/" + goodid).then(response => {
