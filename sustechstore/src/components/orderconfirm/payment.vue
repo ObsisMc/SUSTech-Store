@@ -4,7 +4,7 @@
       <span style="font-size: 30px;">Account payable: ¥ {{ cost }}</span>
     </el-row>
     <countdown :deadline="expireTime" :showDays="false" @timeElapsed="timeElapsed"></countdown>
-    <div v-if="uid===buyerId">
+    <div v-if="uid===buyerId&&producttype===0||uid===sellerId&&producttype===1">
       <el-tabs v-model="activeName" @tab-click="handleClick" v-loading="loading"
                element-loading-text="payment processing...">
         <el-tab-pane label="Virtual coin" name="vc">
@@ -17,9 +17,9 @@
         <el-tab-pane label="Alipay" name="ap">No support</el-tab-pane>
       </el-tabs>
     </div>
-    <div v-if="uid===sellerId">
+    <div v-if="uid===sellerId&&producttype===0||uid===buyerId&&producttype===1">
       <el-alert
-        title="等待买家确认"
+        :title="producttype===0?'等待买家付款':'等待求购者付款'"
         type="info"
         style="height: 50px;"
         center
@@ -55,7 +55,8 @@ export default {
       qrto: 'https://www.baidu.com/',
       loading: false,
       buyerId: 0,
-      sellerId:0
+      sellerId: 0,
+      productType: "SELL"
     }
   },
   methods: {
@@ -104,8 +105,9 @@ export default {
         this.cost = response.data.cost;
         this.buyerId = response.data.buyerId;
         this.sellerId = response.data.sellerId;
+        this.productType = response.data.productType;
+        console.log("getorder",this.productType)
         let time = response.data.expireTime.split("T")
-
         this.expireTime = time[0] + " " + time[1];
       })
     },
@@ -129,12 +131,21 @@ export default {
         }
       })
     },
-    returnMain(){
+    returnMain() {
       this.$router.push({name: "main"})
     }
   },
   mounted() {
     this.getOrder();
+  },
+  computed: {
+    producttype() {
+      if (this.productType === "SELL") {
+        return 0;
+      } else {
+        return 1;
+      }
+    }
   },
   components: {Countdown}
 }

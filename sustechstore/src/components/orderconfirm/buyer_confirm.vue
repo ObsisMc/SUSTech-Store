@@ -1,7 +1,6 @@
 <template>
   <div>
-    <!--    <el-button type="text" @click="centerDialogVisible = true">点击打开 Dialog</el-button>-->
-    <div v-if="uid===buyerId">
+    <div v-if="uid===buyerId&&producttype===0||uid===sellerId&&producttype===1">
       <el-button type="primary" @click="centerDialogVisible = true">确认收货<i class="el-icon-s-claim"></i></el-button>
       <el-dialog
         title="提示"
@@ -17,9 +16,9 @@
   </span>
       </el-dialog>
     </div>
-    <div v-if="sellerId===uid">
+    <div v-if="uid===sellerId&&producttype===0||uid===buyerId&&producttype===1">
       <el-alert
-        title="等待买家确认收货"
+        :title="productType===0?'等待买家确认收货':'等待求购者确认收货'"
         type="info"
         style="height: 50px;"
         center
@@ -51,7 +50,8 @@ export default {
     return {
       centerDialogVisible: false,
       buyerId: 0,
-      sellerId: 0
+      sellerId: 0,
+      productType: "SELL"
     };
   },
   methods: {
@@ -91,11 +91,21 @@ export default {
         // this.cost = response.data.cost;
         this.buyerId = response.data.buyerId;
         this.sellerId = response.data.sellerId;
+        this.productType = response.data.productType;
       })
     }
   },
   mounted() {
     this.getOrder();
+  },
+  computed: {
+    producttype() {
+      if (this.productType === "SELL") {
+        return 0;
+      } else {
+        return 1;
+      }
+    }
   }
 }
 </script>
