@@ -734,7 +734,7 @@ export default {
             id : response.data[i].id,
             name: response.data[i].name,
             descri :response.data[i].description,
-            owner: response.data[i].ownerNickname,
+            owner: response.data[i].buyerNickname,
             time: response.data[i].createTime,
             price: response.data[i].price,
             status: response.data[i].status,
@@ -742,7 +742,7 @@ export default {
             type: response.data[i].type,
             origin: response.data[i].origin,
             destination: response.data[i].destination,
-            otherid : response.data[i].ownerId,
+            otherid : response.data[i].buyerId,
           };
           ans.push(temp);
         }
@@ -805,7 +805,7 @@ export default {
           goodid = response.data.productId;
           this.$router.push({
             name: 'checkoutpage',
-            query: {status: row.truestatus + 1, uid: this.userId, orderid: row.id},
+            query: {status: row.truestatus + 1, uid: this.userId, orderid: row.id, producttype:response.data.productType},
             params: {id: goodid, category: 0}
           });
         })
