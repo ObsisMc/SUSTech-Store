@@ -96,7 +96,9 @@ export default {
     },
     toOrder() {
       this.$router.push({
-        name: "checkoutpage", query: {status: this.orderstatus}, params: {id: this.good.id, category: 0}
+        name: "checkoutpage",
+        query: {status: this.orderstatus, producttype: this.good.type},
+        params: {id: this.good.id, category: 0}
       });
     },
     addToCart(type) {
