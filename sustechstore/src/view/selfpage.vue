@@ -158,7 +158,7 @@
       <el-rate
         v-model="value"
         :show-text="true"
-        :disabled="true"
+        disabled
         text-color="#F56C6C"
         v-bind="{ texts: texts }"
       >
@@ -866,7 +866,7 @@ export default {
         this.value=5
       }
       else {
-        this.value=response.data.credit/5
+        this.value=response.data.credit/20
       }
       this.img = response.data.icon;
       this.nickname = response.data.nickName;

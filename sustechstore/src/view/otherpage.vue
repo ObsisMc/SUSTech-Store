@@ -102,7 +102,7 @@ export default {
       this.evaluate=5
     }
     else {
-      this.evaluate=response.data.credit/5
+      this.evaluate=response.data.credit/20
     }
     this.img=response.data.icon
     this.nickname=response.data.nickName
