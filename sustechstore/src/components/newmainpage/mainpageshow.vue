@@ -2,7 +2,7 @@
   <div class="background">
 
     <el-carousel indicator-position="outside" height="400px">
-      <el-carousel-item  v-for="item in showimg" :key="item.name" >
+      <el-carousel-item v-for="item in showimg" :key="item.name">
         <img alt="" :src="item.url" style="width:100%;height: auto;"/>
       </el-carousel-item>
     </el-carousel>
@@ -20,30 +20,34 @@ export default {
       bigimg: "require('@/assets/mainpage/10univ.png')",
       showimg: [
         {
-          url:"@/../static/img/redis.jpg",
-          name:"redis"
+          url: "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
+          name: "demo"
         },
         {
-          url:"@/../static/img/identification.jpg",
-          name:"identification"
+          url: "@/../static/img/redis.jpg",
+          name: "redis"
+        },
+        {
+          url: "@/../static/img/identification.jpg",
+          name: "identification"
         }
       ],
-      imgheight:'0'
+      imgheight: '0'
     }
   },
-  methods:{
-    imgLoad(){
-      this.$nextTick(()=>{
+  methods: {
+    imgLoad() {
+      this.$nextTick(() => {
         this.imgheight = '${this.$refs.imgh[0].height}px';
       })
     }
   },
   mounted() {
     this.imgLoad();
-    window.addEventListener("resize",this.imgLoad,false);
+    window.addEventListener("resize", this.imgLoad, false);
   },
   destroyed() {
-    window.removeEventListener("resize",this.imgLoad,false);
+    window.removeEventListener("resize", this.imgLoad, false);
   }
 }
 </script>
@@ -66,6 +70,7 @@ export default {
   opacity: 0.75;
   margin: 0;
 }
+
 .el-carousel__item:nth-child(2n) {
   background-color: rgba(237, 108, 0, 0.4);
 }
@@ -73,12 +78,14 @@ export default {
 .el-carousel__item:nth-child(2n+1) {
   background-color: rgba(237, 108, 0, 0.2);
 }
+
 .el-carousel {
   width: 50%;
   float: left;
   margin: 30px 0;
 }
-.image{
+
+.image {
   /*width: 100%;*/
   /*height:100%;*/
 }
