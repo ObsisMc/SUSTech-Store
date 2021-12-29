@@ -2,7 +2,15 @@
   <div>
     <div
       v-if="productType==null&&uid===sellerId||productType!=null&&(uid===sellerId&&producttype===0||uid===buyerId&&producttype===1) ">
-      <el-button type="primary" @click="centerDialogVisible = true">确认发货<i class="el-icon-s-claim"></i></el-button>
+      <el-button type="primary" @click="centerDialogVisible = true">
+        <span v-if="productType!=null">
+          确认发货
+        </span >
+        <span v-if="productType==null">
+          确认跑腿完成
+        </span>
+
+        <i class="el-icon-s-claim"></i></el-button>
       <el-dialog
         title="提示"
         :visible.sync="centerDialogVisible"
