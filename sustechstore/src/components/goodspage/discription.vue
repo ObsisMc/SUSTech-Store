@@ -51,10 +51,10 @@
       <el-row>
       </el-row>
 
-      <el-checkbox-group v-model="products.checkedCities" @change="handleCheckedCitiesChange"
+      <el-checkbox-group v-model="products.checkedtiems" @change="handleCheckedCitiesChange"
                          style="float: left; margin-top: 10px;">
-        <div v-for="city in products.cities" :key="city">
-          <el-checkbox :label="city" style="float: left; margin-bottom: 10px;">{{ city }}</el-checkbox>
+        <div v-for="item in products.items" :key="item">
+          <el-checkbox :label="item" style="float: left; margin-bottom: 10px;">{{ item }}</el-checkbox>
         </div>
       </el-checkbox-group>
     </el-row>
@@ -74,7 +74,7 @@
 import axios from "axios";
 import {store} from "../../store/store";
 
-const cityOptions = ['shanghai', 'beijing', 'guangzhou', 'shenzhen'];
+const itemOptions = ['1st product', '2nd product', '3rd product', '4th product'];
 export default {
   name: "discription",
   props: ["rating", "ownerid","type"],
@@ -85,21 +85,21 @@ export default {
       },
       products: {
         checkAll: false,
-        checkedCities: ['shanghai', 'beijing'],
-        cities: cityOptions,
+        checkedtiems: ['1st product'],
+        items: itemOptions,
         isIndeterminate: true
       }
     }
   },
   methods: {
     handleCheckAllChange(val) {
-      this.products.checkedCities = val ? cityOptions : [];
+      this.products.checkedtiems = val ? itemOptions : [];
       this.products.isIndeterminate = false;
     },
     handleCheckedCitiesChange(value) {
       let checkedCount = value.length;
-      this.products.checkAll = checkedCount === this.products.cities.length;
-      this.products.isIndeterminate = checkedCount > 0 && checkedCount < this.products.cities.length;
+      this.products.checkAll = checkedCount === this.products.items.length;
+      this.products.isIndeterminate = checkedCount > 0 && checkedCount < this.products.items.length;
     },
     toOrder() {
       axios.get(store.state.database + "user/userInfo").then(response => {
