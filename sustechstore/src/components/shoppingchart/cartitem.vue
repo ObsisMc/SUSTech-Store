@@ -41,8 +41,8 @@
           </el-badge>
         </el-row>
         <el-row>
-          <el-tag style="margin-top: 8px;"  type="success" v-if="goodtype===0">出售</el-tag>
-          <el-tag style="margin-top: 8px;"  v-if="goodtype===1">求购</el-tag>
+          <el-tag style="margin-top: 8px;" type="success" v-if="goodtype===0">出售</el-tag>
+          <el-tag style="margin-top: 8px;" v-if="goodtype===1">求购</el-tag>
         </el-row>
       </el-col>
       <el-col :span="3">
@@ -58,7 +58,11 @@
       :visible.sync="chatVisible"
       width="60%"
     >
-      <chatwindow></chatwindow>
+      <chatwindow :otherid="otherid" :othername="othername"
+                  :otherphoto="othericon" :myid="myid"
+                  :myname="myname" :myphoto="myicon">
+
+      </chatwindow>
 
       <span slot="footer" class="dialog-footer">
   </span>
@@ -72,10 +76,11 @@ import chatwindow from "../chatroom/chatwindow";
 
 export default {
   name: "cartitem",
-  props: ['imgurl', 'index', 'id', 'orderstatus','type'],
-  data(){
-    return{
-      chatVisible:false
+  props: ['imgurl', 'index', 'id', 'orderstatus', 'type',
+          'myid', 'myname', 'myicon', 'otherid', 'othername', 'othericon'],
+  data() {
+    return {
+      chatVisible: false
     }
   },
   methods: {
@@ -108,25 +113,24 @@ export default {
       }
     },
     toChat() {
-      this.chatVisible=true;
+      this.chatVisible = true;
     },
     testClick() {
       alert("hi");
     }
   },
-  computed:{
-    goodtype(){
-      if(this.type === "SELL"){
+  computed: {
+    goodtype() {
+      if (this.type === "SELL") {
         return 0;
-      }else{
+      } else {
         return 1;
       }
     }
   },
   mounted() {
-
   },
-  components:{chatwindow}
+  components: {chatwindow}
 }
 
 </script>

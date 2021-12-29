@@ -6,7 +6,13 @@
                   :imgurl="goods[i-1].image"
                   :id="goods[i-1].productId"
                   :type="goods[i-1].productType"
-                  :orderstatus="goods[i-1].orderstatus">
+                  :orderstatus="goods[i-1].orderstatus"
+                  :myid="myself.uid"
+                  :myname="myself.uname"
+                  :myicon="myself.uicon"
+                  :otherid="goods[i-1].ownerId"
+                  :othername="goods[i-1].nickName"
+                  :othericon="goods[i-1].icon">
           <template v-slot:title>
             {{ goods[i - 1].name }}
           </template>
@@ -51,9 +57,14 @@ export default {
             price: 200,
             orderstatus: 1,
             productId: 734,
-            productType:"SELL"
+            productType: "SELL"
           }
-        ]
+        ],
+      myself: {
+        uid: 0,
+        uname: "unamed",
+        uicon: "null"
+      }
     }
   },
   mounted() {
@@ -63,22 +74,23 @@ export default {
       this.goods = response.data;
       this.calcTotalPrice();
     })
+    this.getMyInfo();
   },
   methods: {
     removeGoods(index) {
       axios.delete(store.state.database + 'cart/deleteByCartId/' + this.goods[index].id).then(response => {
         if (response.status === 200) {
           console.log(this.goods[index])
-          this.goods.splice(index,1);
+          this.goods.splice(index, 1);
           this.$message({
-            message:"Remove collection successfully!",
-            type:'success'
+            message: "Remove collection successfully!",
+            type: 'success'
           })
           this.calcTotalPrice();
-        }else{
+        } else {
           this.$message({
-            message:"Error happens",
-            type:'danger'
+            message: "Error happens",
+            type: 'danger'
           })
         }
       })
@@ -92,6 +104,15 @@ export default {
 
       this.$emit('setTotalPrice', p);
 
+    },
+    getMyInfo() {
+      axios.get(store.state.database + 'user/userInfo').then(response => {
+        if (response.status === 200) {
+          this.myself.uid = response.data.uid;
+          this.myself.uname = response.data.nickName;
+          this.myself.uicon = response.data.icon;
+        }
+      });
     }
   },
   computed: {},
