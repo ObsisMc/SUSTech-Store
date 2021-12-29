@@ -2,8 +2,8 @@
   <div class="background">
 
     <el-carousel indicator-position="outside" height="400px">
-      <el-carousel-item v-for="item in showimg" :key="item.name">
-        <el-image :src="item.url" class="image" ></el-image>
+      <el-carousel-item  v-for="item in showimg" :key="item.name">
+        <el-image  :src="item.url"  fit="cover"></el-image>
       </el-carousel-item>
     </el-carousel>
 
@@ -20,12 +20,12 @@ export default {
       bigimg: "require('@/assets/mainpage/10univ.png')",
       showimg: [
         {
-          url: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
-          name: "yidan_luori"
+          url:"@/../static/img/redis.jpg",
+          name:"redis"
         },
         {
-          url:"https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
-          name:"hambao"
+          url:"@/../static/img/identification.jpg",
+          name:"identification"
         }
       ]
     }
@@ -64,8 +64,7 @@ export default {
   margin: 30px 0;
 }
 .image{
-  width: 100%;
-  height:100%;
+  /*width: 100%;*/
+  /*height:100%;*/
 }
-
 </style>
