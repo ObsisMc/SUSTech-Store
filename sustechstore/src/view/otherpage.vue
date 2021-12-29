@@ -4,14 +4,14 @@
              background-color="#545c64"
              text-color="#fff"
              active-text-color="#ffd04b">
-      <el-submenu index='1'>
+      <!--el-submenu index='1'>
         <template slot='title'>用户</template>
         <el-menu-item index="1-1">查看与该用户交易记录</el-menu-item>
         <el-menu-item index="1-2">评价该用户</el-menu-item>
       </el-submenu>
 
-      <el-menu-item index="2">举报</el-menu-item>
-      <el-menu-item index="3" @click="dialogShow">
+      <el-menu-item index="2">举报</el-menu-item-->
+      <el-menu-item index="1" @click="dialogShow">
 
         聊天
 
@@ -19,7 +19,7 @@
     </el-menu>
 
     <div id="back">
-      <el-dialog title="聊天" :visible.sync="dialog" id="talk" width="60%">
+      <el-dialog title="聊天" :visible.sync="dialog" id="talk"  width="60%">
       <chatwindow :otherid="id" :myid="myid" :othername="nickname" :myname="myname" :myphoto="myimg" :otherphoto='img'>
       </chatwindow>
    </el-dialog>
@@ -54,7 +54,7 @@
 
 
     </div>
-    <div id='oper'>
+    <!--div id='oper'>
       <el-row>
         <el-button-group id="bas">
           <el-button type="primary" id='searchSell' icon="el-icon-sold-out"> 查看该用户的求购商品
@@ -63,7 +63,7 @@
           </el-button>
         </el-button-group>
       </el-row>
-    </div>
+    </div-->
 
   </div>
 
