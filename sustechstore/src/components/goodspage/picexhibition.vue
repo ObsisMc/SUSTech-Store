@@ -88,15 +88,14 @@ export default {
       lastchosenidx = index - 1;
     },
     getRelatedProducts() {
-      console.log("get related",this.$route.query.id)
       let goodsurl = store.state.database + "/product/findRelated/" + this.$route.query.id;
 
       var url = "@/../static/goods2.json";
       axios.get(goodsurl).then(response => {
-        for(let i=0;i<response.data.length;i++){
-          this.goods.good.push(response.data[i]);
+          this.goods.good = response.data;
+          for(let i=0;i<response.data.length;i++){
+            console.log("id:",this.goods.good[i].id)
         }
-
       })
     },
     getImage() {
