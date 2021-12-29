@@ -566,7 +566,7 @@ export default {
       axios.defaults.headers.common["satoken"] = store.state.token;
       console.log('Buy')
       let to = {
-        categoryleveloneId: this.selectedSell,
+        categoryleveloneId: this.selectedBuy,
         categorylevelthreeId: 0,
         categoryleveltwoId: 0,
         createTime: "",
