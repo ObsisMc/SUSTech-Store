@@ -548,8 +548,19 @@ export default {
         updateTime: "",
         type: "SELL"
       };
+
     this.clearPhoto();
-      axios.post(store.state.database + "/product/add",to).then((response) => {
+      var config = {
+        onUploadProgress: progressEvent => {
+          var complete = (progressEvent.loaded / progressEvent.total * 100 | 0) + '%'
+          this.progress = complete
+          this.$message({
+            message: complete
+
+          });
+        }
+      }
+      axios.post(store.state.database + "/product/add",to,config).then((response) => {
         console.log(response);
         if (response.data) {
           this.$message({
@@ -564,7 +575,6 @@ export default {
     },
     Buy(){
       axios.defaults.headers.common["satoken"] = store.state.token;
-      console.log('Buy')
       let to = {
         categoryleveloneId: this.selectedBuy,
         categorylevelthreeId: 0,
@@ -580,11 +590,21 @@ export default {
         type: "BUY"
       };
       this.clearPhoto();
-      axios.post(store.state.database + "/product/add",to).then((response) => {
+      var config = {
+        onUploadProgress: progressEvent => {
+          var complete = (progressEvent.loaded / progressEvent.total * 100 | 0) + '%'
+          this.progress = complete
+          this.$message({
+            message: complete
+
+          });
+        }
+      }
+      axios.post(store.state.database + "/product/add",to, config).then((response) => {
         console.log(response);
         if (response.data) {
           this.$message({
-            message: "sucessful!",
+            message: "successful!",
             type: "success",
           });
         } else {
@@ -616,7 +636,17 @@ export default {
         this.$message.error('Do not have enough money!')
       }
      else {
-      axios.post(store.state.database+'/errand/add',to).then(response=>{
+        var config = {
+          onUploadProgress: progressEvent => {
+            var complete = (progressEvent.loaded / progressEvent.total * 100 | 0) + '%'
+            this.progress = complete
+            this.$message({
+              message: complete
+
+            });
+          }
+        }
+      axios.post(store.state.database+'/errand/add',to, config).then(response=>{
         if (response.data){
           this.$message({
             message: "successful!",
