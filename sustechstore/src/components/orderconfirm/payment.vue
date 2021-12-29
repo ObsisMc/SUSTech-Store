@@ -106,7 +106,6 @@ export default {
         this.buyerId = response.data.buyerId;
         this.sellerId = response.data.sellerId;
         this.productType = response.data.productType;
-        console.log("getorder",this.productType)
         let time = response.data.expireTime.split("T")
         this.expireTime = time[0] + " " + time[1];
       })
