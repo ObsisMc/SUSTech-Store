@@ -64,11 +64,15 @@
         <el-select v-if="ruleForm.region==='SUSTECH'" v-model="ruleForm.detailaddress"
                    placeholder="Select detail address">
           <el-option :label="this.ruleForm.schoolregin.dorm2" :value="this.ruleForm.schoolregin.dorm2"></el-option>
-          <el-option :label="this.ruleForm.schoolregin.lakedorm" :value="this.ruleForm.schoolregin.lakedorm"></el-option>
-          <el-option :label="this.ruleForm.schoolregin.xingdorm" :value="this.ruleForm.schoolregin.xingdorm"></el-option>
+          <el-option :label="this.ruleForm.schoolregin.lakedorm"
+                     :value="this.ruleForm.schoolregin.lakedorm"></el-option>
+          <el-option :label="this.ruleForm.schoolregin.xingdorm"
+                     :value="this.ruleForm.schoolregin.xingdorm"></el-option>
           <el-option :label="this.ruleForm.schoolregin.lidorm" :value="this.ruleForm.schoolregin.lidorm"></el-option>
-          <el-option :label="this.ruleForm.schoolregin.librarydan" :value="this.ruleForm.schoolregin.librarydan"></el-option>
-          <el-option :label="this.ruleForm.schoolregin.engineerbuliding" :value="this.ruleForm.schoolregin.engineerbuliding"></el-option>
+          <el-option :label="this.ruleForm.schoolregin.librarydan"
+                     :value="this.ruleForm.schoolregin.librarydan"></el-option>
+          <el-option :label="this.ruleForm.schoolregin.engineerbuliding"
+                     :value="this.ruleForm.schoolregin.engineerbuliding"></el-option>
         </el-select>
         <el-input v-if="ruleForm.region==='others'" v-model="ruleForm.detailaddress"
                   placeholder="Enter detail address"
@@ -130,7 +134,7 @@ export default {
         description: "string",
         icon: "string",
         nickName: "string",
-        type:"SELL"
+        type: "SELL"
       },
       loading: false
     };
@@ -165,6 +169,9 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
+    },
+    giveChatParameter() {
+      this.$emit("giveChatParameter", [this.goods.ownerId, this.goods.icon, this.goods.nickName])
     }
   },
   mounted() {
@@ -172,11 +179,12 @@ export default {
     axios.get(store.state.database + 'product/findProductVOById/' + this.$route.params.id).then(response => {
       if (response.status === 200) {
         this.goods = response.data;
-        if(this.goods.type==="SELL"){
+        if (this.goods.type === "SELL") {
           this.ruleForm.goodtype = 0;
-        }else{
+        } else {
           this.ruleForm.goodtype = 1;
         }
+        this.giveChatParameter();
       }
     })
 

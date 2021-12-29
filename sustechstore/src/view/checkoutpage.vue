@@ -27,9 +27,10 @@
     <el-divider></el-divider>
     <el-row>
       <el-col :span="2" style="border:1px solid transparent;"></el-col>
-      <el-col :span="20">
+      <el-col :span="20" class="support">
         <transition name="fade" mode="out-in">
-          <component @nextStatus="nextStatus" :is="subrouter" :balance="user.balance" :uid="user.uid">
+          <component @nextStatus="nextStatus" :is="subrouter" :balance="user.balance" :uid="user.uid"
+                     @giveChatParameter="getChatParameter">
           </component>
         </transition>
       </el-col>
@@ -45,7 +46,8 @@
       :visible.sync="chatVisible"
       width="60%"
     >
-      <chatwindow></chatwindow>
+      <chatwindow :otherid="owner.id" :othername="owner.nickname" :otherphoto="owner.icon"
+                  :myid="user.uid" :myname="user.nickName" :myphoto="user.icon"></chatwindow>
 
       <span slot="footer" class="dialog-footer">
   </span>
@@ -75,7 +77,14 @@ export default {
       subrouter: '',
       user: {
         balance: 0,
-        uid: 0
+        uid: 0,
+        icon: "string",
+        nickName: "string",
+      },
+      owner: {
+        id: 0,
+        icon: "string",
+        nickname: "string"
       },
       producttype: "BUY"
     }
@@ -129,6 +138,12 @@ export default {
             this.$router.push({name: "errandmain"})
         }
       }
+    },
+    getChatParameter(ownerInfo) {
+      this.owner.id = ownerInfo[0];
+      this.owner.icon = ownerInfo[1];
+      this.owner.nickName = ownerInfo[2];
+      console.log(this.owner.id, this.owner.icon, this.owner.nickName);
     }
   },
   mounted() {
@@ -204,6 +219,10 @@ export default {
 </script>
 
 <style scoped>
+.support {
+  border: 1px solid transparent;
+}
+
 /deep/ .el-divider--horizontal {
   margin: 0 10px 20px 10px;
   width: 95%;
