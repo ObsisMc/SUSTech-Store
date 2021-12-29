@@ -24,9 +24,9 @@
       </el-row>
       <el-row style="margin-top: 25px;" :gutter="45">
         <el-col :span="2" style="border:1px solid transparent;"></el-col>
-        <el-col :span="22/goods.good.length"
+        <el-col :span="21/goods.good.length"
                 v-for="o1 in goods.good.length" :key="o1">
-          <relatedgoods :imgurl="goods.good[o1-1].fileName"
+          <relatedgoods :imgurl="goods.good[o1-1].image"
                         :id="goods.good[o1-1].id">
             <template v-slot:title>
               {{ goods.good[o1 - 1].name }}
@@ -35,7 +35,7 @@
               {{ goods.good[o1 - 1].description }}
             </template>
             <template v-slot:username>
-              {{ goods.good[o1 - 1].username }}
+              {{ goods.good[o1 - 1].nickName }}
             </template>
             <template v-slot:price>
               {{ goods.good[o1 - 1].price }}
@@ -51,6 +51,7 @@
 <script>
 import Relatedgoods from "./relatedgoods";
 import axios from "axios";
+import {store} from "../../store/store";
 
 var lastchosenidx = 0;
 export default {
@@ -65,12 +66,14 @@ export default {
             categorylevelthreeId: 0,
             categoryleveltwoId: 0,
             description: "",
-            fileName: "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
+            image: "https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png",
             id: 0,
             name: "string",
             ownerId: 0,
-            username: "username",
-            price: 100
+            nickName: "username",
+            price: 100,
+            icon: "string",
+            type: "SELL"
           }
         ]
       }
@@ -85,11 +88,17 @@ export default {
       lastchosenidx = index - 1;
     },
     getRelatedProducts() {
-      var url = "@/../static/goods2.json";
-      axios.get(url).then(response => {
-        this.goods.good = response.data.goods;
-      })
+      console.log(this.$route.query.id)
+      let goodsurl = store.state.database + "/product/findRelated/"+ this.$route.query.id;
 
+      var url = "@/../static/goods2.json";
+      // axios.get(url).then(response => {
+      //   this.goods.good = response.data.goods;
+      // })
+      axios.get(goodsurl).then(response => {
+        console.log(response.data)
+        this.goods.good = response.data
+      })
     },
     getImage(){
       console.log(this.imgurllist);

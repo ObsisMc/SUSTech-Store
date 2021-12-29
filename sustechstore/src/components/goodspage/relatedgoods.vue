@@ -136,11 +136,12 @@ export default {
 .info {
   float: left;
   margin: 10px 0;
+  font-size: 10px;
 }
 .priceshow{
   float: right;
   margin: 10px 0;
-  font-size: 18px;
+  font-size: 15px;
 }
 
 .detail {
