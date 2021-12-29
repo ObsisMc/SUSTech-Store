@@ -124,7 +124,7 @@ const router = new Router({
 
 
 router.beforeEach((to, from, next) => {
-  axios.defaults.headers.common['satoken'] = JSON.parse(sessionStorage.getItem('token'));
+  axios.defaults.headers.common['satoken'] = store.state.token;
   const toflea = ['main', 'search2', "shoppingcart"]
   const toerrand = ['errandmain', "errandtask"]
   if (toflea.indexOf(to.name) > -1) {
