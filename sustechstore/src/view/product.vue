@@ -4,7 +4,7 @@
     <div style="height: 70px;"></div>
     <el-row>
       <el-col :span="12">
-        <picexhibition :imgurllist="good.image" :mainimg="good.image[0]"></picexhibition>
+        <picexhibition :imgurllist="good.image" :mainimg="good.image[0]" ref="picexhibition"></picexhibition>
       </el-col>
       <el-col :span="1">
         <el-divider direction="vertical"><i class="el-icon-mobile-phone"></i></el-divider>
@@ -119,6 +119,10 @@ export default {
   mounted() {
     axios.defaults.headers.common['satoken'] = store.state.token;
     this.getProductInformation();
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.getProductInformation();
+    next();
   }
 }
 </script>

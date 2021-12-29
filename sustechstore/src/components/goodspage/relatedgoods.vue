@@ -3,7 +3,7 @@
     <el-row>
       <el-row>
         <div v-if="haveimage">
-          <el-image :src="imgurl" :preview-src-list="[imgurl]" class="image"></el-image>
+          <el-image :src="imgurl" class="image" @click="toProduct" style="cursor: pointer;"></el-image>
         </div>
         <div v-if=!haveimage>
           <div :style="{backgroundImage: color, backgroundSize:'contain'}"
@@ -19,22 +19,18 @@
         </div>
       </el-row>
       <el-row>
-        <el-col :span="16">
+        <el-col :span="14">
       <span class="info">
         <slot name="title"></slot>
       </span>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="10">
           <span class="priceshow">
             ¥ <slot name="price"></slot>
         </span>
         </el-col>
       </el-row>
     </el-row>
-
-
-
-
   </div>
 </template>
 
@@ -51,7 +47,8 @@ export default {
     }
   },
   methods: {
-    toGood() {
+    toProduct() {
+      console.log(this.id)
       this.$router.push({name: 'product', query: {id: this.id}});
     }
   },
@@ -61,8 +58,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.imgurl)
-
     if (this.imgurl === '') {
       console.log("into")
       console.log(this.imgurl)

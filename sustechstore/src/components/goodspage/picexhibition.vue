@@ -56,7 +56,7 @@ import {store} from "../../store/store";
 var lastchosenidx = 0;
 export default {
   name: "picexhibition",
-  props: ["imgurllist","mainimg"],
+  props: ["imgurllist", "mainimg"],
   data() {
     return {
       goods: {
@@ -88,19 +88,18 @@ export default {
       lastchosenidx = index - 1;
     },
     getRelatedProducts() {
-      console.log(this.$route.query.id)
-      let goodsurl = store.state.database + "/product/findRelated/"+ this.$route.query.id;
+      console.log("get related",this.$route.query.id)
+      let goodsurl = store.state.database + "/product/findRelated/" + this.$route.query.id;
 
       var url = "@/../static/goods2.json";
-      // axios.get(url).then(response => {
-      //   this.goods.good = response.data.goods;
-      // })
       axios.get(goodsurl).then(response => {
-        console.log(response.data)
-        this.goods.good = response.data
+        for(let i=0;i<response.data.length;i++){
+          this.goods.good.push(response.data[i]);
+        }
+
       })
     },
-    getImage(){
+    getImage() {
       console.log(this.imgurllist);
     }
   },
