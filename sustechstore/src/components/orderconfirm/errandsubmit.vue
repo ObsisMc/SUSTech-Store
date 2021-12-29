@@ -87,7 +87,11 @@ export default {
         origin: -1,
         price: -1,
         tips: 0,
-        destination: -1
+        destination: -1,
+        buyerId: 0,
+        buyerNickname: "string",
+        ownerId: 0,
+        type: "FETCH"
 
       },
       endslocation: [
@@ -113,6 +117,9 @@ export default {
           this.$emit("nextStatus");
         }
       })
+    },
+    giveChatParameter() {
+      this.$emit("giveChatParameter", [this.task.ownerId, this.task.ownerIcon, this.task.ownerNickname])
     }
   },
   mounted() {
@@ -121,6 +128,8 @@ export default {
       this.task = response.data;
       this.endslocation[0].position = response.data.origin;
       this.endslocation[1].position = response.data.destination;
+      this.giveChatParameter();
+
     })
   }
 }
