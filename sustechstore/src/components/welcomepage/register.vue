@@ -31,7 +31,7 @@
               <el-input v-model.number="ruleForm.code"></el-input>
             </el-col>
             <el-col :span="14">
-              <el-button type="success" plain @click="verifyEmail" style="padding: 10px 40px;" >Verify Email</el-button>
+              <el-button type="success" plain @click="verifyEmail" style="padding: 10px 40px;">Verify Email</el-button>
             </el-col>
           </el-row>
         </el-form-item>
@@ -159,8 +159,15 @@ export default {
         console.log(this.ruleForm.studentID)
         console.log(response)
         if (response.data.data !== '注册成功') {
-          alert(response.data.data)
+          this.$message({
+            message: response.data.data,
+            type: "error"
+          })
         } else {
+          this.$message({
+            message: "注册成功",
+            type: "success"
+          })
           this.$router.push('/')
         }
       })
@@ -180,8 +187,12 @@ export default {
     },
     verifyEmail() {
       let email = this.ruleForm.studentID + "@mail.sustech.edu.cn";
-      axios.post(store.state.database + "user/verifyEmail/"+email ).then(response => {
+      axios.post(store.state.database + "user/verifyEmail/" + email).then(response => {
         this.ruleForm.verifiedcode = response.data;
+        this.$message({
+          message: "已发送邮箱验证码",
+          type: "success"
+        })
       })
     }
   },
