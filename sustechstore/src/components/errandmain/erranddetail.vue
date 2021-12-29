@@ -4,7 +4,9 @@
       title="Chat"
       :visible.sync="chatVisible"
       width="60%">
-      <chatwindow></chatwindow>
+      <chatwindow :otherid="task.ownerId" :othername="task.ownerNickname"
+                  :otherphoto="task.ownerIcon" :myid="myself.uid"
+                  :myname="myself.uname" :myphoto="myself.uicon"></chatwindow>
 
       <span slot="footer" class="dialog-footer">
   </span>
@@ -133,7 +135,12 @@ export default {
           end: "Destination",
           position: "南方科技大学1号门"
         }
-      ]
+      ],
+      myself: {
+        uid: 0,
+        uname: "unamed",
+        uicon: "null"
+      }
     }
   },
   methods: {
@@ -141,29 +148,35 @@ export default {
       this.chatVisible = true;
     },
     toOrder() {
-      axios.get(store.state.database + "user/userInfo").then(response => {
-        if (response.status === 200) {
-          console.log(response.data.uid, this.task.ownerId)
-          if (response.data.uid === this.task.ownerId) {
-            this.$message({
-              message: "You cannot task your own errand",
-              type: "error"
-            })
-          } else {
-            this.$router.push({
-              name: "checkoutpage", query: {status: 0}, params: {id: this.id, category: 1}
-            });
-          }
-        }
-      })
+      if (this.myself.uid === this.task.ownerId) {
+        this.$message({
+          message: "You cannot task your own errand",
+          type: "error"
+        })
+      } else {
+        this.$router.push({
+          name: "checkoutpage", query: {status: 0}, params: {id: this.id, category: 1}
+        });
+      }
     },
     toUser() {
       this.$router.push({
-        path: "/otherpage"
+        name: "otherpage",
+        params: {id: this.task.ownerId}
       })
+    },
+    getMyInfo() {
+      axios.get(store.state.database + 'user/userInfo').then(response => {
+        if (response.status === 200) {
+          this.myself.uid = response.data.uid;
+          this.myself.uname = response.data.nickName;
+          this.myself.uicon = response.data.icon;
+        }
+      });
     }
   },
   mounted() {
+    this.getMyInfo();
     axios.get(store.state.database + "errand/findErrandVOById/" + this.id).then(response => {
       if (response.status === 200) {
         this.task = response.data;
