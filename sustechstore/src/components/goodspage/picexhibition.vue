@@ -27,7 +27,8 @@
         <el-col :span="21/goods.good.length"
                 v-for="o1 in goods.good.length" :key="o1">
           <relatedgoods :imgurl="goods.good[o1-1].image"
-                        :id="goods.good[o1-1].id">
+                        :id="goods.good[o1-1].id"
+                        @changeupdaten="changeupdaten">
             <template v-slot:title>
               {{ goods.good[o1 - 1].name }}
             </template>
@@ -92,14 +93,17 @@ export default {
 
       var url = "@/../static/goods2.json";
       axios.get(goodsurl).then(response => {
-          this.goods.good = response.data;
-          for(let i=0;i<response.data.length;i++){
-            console.log("id:",this.goods.good[i].id)
+        this.goods.good = response.data;
+        for (let i = 0; i < response.data.length; i++) {
+          console.log("id:", this.goods.good[i].id)
         }
       })
     },
     getImage() {
       console.log(this.imgurllist);
+    },
+    changeupdaten() {
+      this.$emit("changeupdaten");
     }
   },
   mounted() {

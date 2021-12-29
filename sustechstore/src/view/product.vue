@@ -4,7 +4,8 @@
     <div style="height: 70px;"></div>
     <el-row>
       <el-col :span="12">
-        <picexhibition :imgurllist="good.image" :mainimg="good.image[0]" ref="picexhibition"></picexhibition>
+        <picexhibition :imgurllist="good.image" :mainimg="good.image[0]" ref="picexhibition"
+                       @changeupdaten="changeupdaten"></picexhibition>
       </el-col>
       <el-col :span="1">
         <el-divider direction="vertical"><i class="el-icon-mobile-phone"></i></el-divider>
@@ -54,6 +55,7 @@ import Userinfo from "../components/goodspage/userinfo";
 export default {
   name: 'product',
   components: {Userinfo, Discription, Picexhibition, Searchnavigator},
+  inject: ['reload'],
   data() {
     return {
       rating: 3.7,
@@ -72,7 +74,8 @@ export default {
         nickName: "string",
         icon: "string",
         type: "SELL"
-      }
+      },
+      updaten: 0
     }
 
   },
@@ -114,14 +117,23 @@ export default {
           });
         }
       });
+    },
+    changeupdaten() {
+      this.updaten = 0;
     }
   },
   mounted() {
     axios.defaults.headers.common['satoken'] = store.state.token;
     this.getProductInformation();
   },
-  beforeRouteUpdate(to, from, next) {
+  beforeUpdate(to, from, next) {
+    // console.log(this.updaten)
+    // if (this.updaten < 10) {
+
     this.getProductInformation();
+    // }
+    // this.updaten++;
+    // this.$refs.picexhibition.getRelatedProducts();
     next();
   }
 }

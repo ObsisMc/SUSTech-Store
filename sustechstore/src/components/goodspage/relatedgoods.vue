@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     toProduct() {
-      console.log(this.id)
+      this.$emit("changeupdaten");
       this.$router.push({name: 'product', query: {id: this.id}});
     }
   },
@@ -59,8 +59,6 @@ export default {
   },
   mounted() {
     if (this.imgurl === '') {
-      console.log("into")
-      console.log(this.imgurl)
       axios.get("@/../static/color_gradient.json").then(response => {
         let len = Object.keys(response.data).length;
         this.color = response.data[Math.floor(Math.random() * len)].color;

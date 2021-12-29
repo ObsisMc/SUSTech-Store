@@ -3,7 +3,7 @@
 
     <el-carousel indicator-position="outside" height="400px">
       <el-carousel-item  v-for="item in showimg" :key="item.name" >
-        <el-image  :src="item.url"  fit="cover" @load="imgLoad" ref="imgh" ></el-image>
+        <img alt="" :src="item.url" style="width:100%;height: auto;"/>
       </el-carousel-item>
     </el-carousel>
 
