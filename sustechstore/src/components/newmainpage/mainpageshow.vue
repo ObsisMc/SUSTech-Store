@@ -2,8 +2,8 @@
   <div class="background">
 
     <el-carousel indicator-position="outside" height="400px">
-      <el-carousel-item  v-for="item in showimg" :key="item.name">
-        <el-image  :src="item.url"  fit="cover"></el-image>
+      <el-carousel-item  v-for="item in showimg" :key="item.name" >
+        <el-image  :src="item.url"  fit="cover" @load="imgLoad" ref="imgh" ></el-image>
       </el-carousel-item>
     </el-carousel>
 
@@ -27,8 +27,23 @@ export default {
           url:"@/../static/img/identification.jpg",
           name:"identification"
         }
-      ]
+      ],
+      imgheight:'0'
     }
+  },
+  methods:{
+    imgLoad(){
+      this.$nextTick(()=>{
+        this.imgheight = '${this.$refs.imgh[0].height}px';
+      })
+    }
+  },
+  mounted() {
+    this.imgLoad();
+    window.addEventListener("resize",this.imgLoad,false);
+  },
+  destroyed() {
+    window.removeEventListener("resize",this.imgLoad,false);
   }
 }
 </script>

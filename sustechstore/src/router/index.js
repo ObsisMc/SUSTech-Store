@@ -124,6 +124,7 @@ const router = new Router({
 
 
 router.beforeEach((to, from, next) => {
+  axios.defaults.headers.common['satoken'] = JSON.parse(sessionStorage.getItem('token'));
   const toflea = ['main', 'search2', "shoppingcart"]
   const toerrand = ['errandmain', "errandtask"]
   if (toflea.indexOf(to.name) > -1) {
@@ -131,24 +132,25 @@ router.beforeEach((to, from, next) => {
   } else if (toerrand.indexOf(to.name) > -1) {
     store.state.storetype = "2";
   }
-  next();
-  // let goodsurl = store.state.database + 'user/isLogin';
-  // const nextRoute = ['main', 'errandmain', 'search2', 'test', 'selfpage', 'otherpage', 'shoppingcart', 'errandtask', 'product', 'checkoutpage', 'success', 'selfinfo']
-  // if (from.name !== "login" && nextRoute.indexOf(to.name) >= 0) {
-  //   axios.get(goodsurl).then(
-  //     response => {
-  //       if (response.data !== true && response.data !== "true") {
-  //         if (from.name === ('login' || 'register')) {
-  //           next('/');
-  //           return
-  //         }
-  //         next({name: 'login', params: {redirect: to.fullPath}});
-  //       }
-  //       next();
-  //     })
-  // } else {
-  //   next();
-  // }
+  // next();
+  let goodsurl = store.state.database + 'user/isLogin';
+  const nextRoute = ['main', 'errandmain', 'search2', 'test', 'selfpage', 'otherpage', 'shoppingcart', 'errandtask', 'product', 'checkoutpage', 'success', 'selfinfo']
+  if (from.name !== "login" && nextRoute.indexOf(to.name) >= 0) {
+    axios.get(goodsurl).then(
+      response => {
+        console.log(response.data);
+        if (response.data !== true && response.data !== "true") {
+          if (from.name === ('login' || 'register')) {
+            next('/');
+            return
+          }
+          next({name: 'login', params: {redirect: to.fullPath}});
+        }
+        next();
+      })
+  } else {
+    next();
+  }
 })
 
 
