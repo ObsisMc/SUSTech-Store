@@ -19,7 +19,7 @@
     </el-menu>
 
     <div id="back">
-      <el-dialog title="聊天" :visible.sync="dialog" id="talk" >
+      <el-dialog title="聊天" :visible.sync="dialog" id="talk" width="60%">
       <chatwindow :otherid="id" :myid="myid" :othername="nickname" :myname="myname" :myphoto="myimg" :otherphoto='img'>
       </chatwindow>
    </el-dialog>

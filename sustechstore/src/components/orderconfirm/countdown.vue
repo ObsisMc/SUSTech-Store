@@ -119,6 +119,7 @@ export default {
       this.now = Math.trunc(new Date().getTime() / 1000);
       if(this.date-this.now<=0){
         this.$emit("timeElapsed");
+        window.clearInterval(this.interval);
       }
     }, 1000);
   },
