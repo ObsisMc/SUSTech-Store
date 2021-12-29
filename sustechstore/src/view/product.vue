@@ -31,7 +31,8 @@
         <el-row>
           <userinfo :rating="rating"
                     :ownerid="good.ownerId"
-                    :icon="good.icon">
+                    :icon="good.icon"
+                    :ownernickname="good.nickName">
             <template v-slot:owner>
               {{ good.nickName }}
             </template>
@@ -88,7 +89,10 @@ export default {
         this.good.nickName = response.data.nickName;
         this.good.icon = response.data.icon;
         this.good.type = response.data.type;
-        console.log("get product:", response.data)
+        axios.get(store.state.database + "user/findById/" + this.good.ownerId).then(response => {
+          let rating = response.data.credit / 20
+          this.rating = rating > 5 ? 5 : rating;
+        })
       })
       axios.get(store.state.database + "productImage/listProductImageByProductId/" + goodid).then(response => {
         this.good.image = response.data;
