@@ -30,7 +30,8 @@
       title="Chat"
       :visible.sync="chatVisible"
       width="60%">
-      <chatwindow></chatwindow>
+      <chatwindow :otherid="ownerid" :othername="ownernickname" :myid="uid" :myname="uname"
+                  :otherphoto="icon" :myphoto="uicon"></chatwindow>
 
       <span slot="footer" class="dialog-footer">
   </span>
@@ -46,13 +47,16 @@ import {store} from "../../store/store";
 export default {
   name: "userinfo",
   components: {Chatwindow},
-  props: ["rating","ownerid",'icon'],
+  props: ["rating", "ownerid", 'icon', 'ownernickname'],
   data() {
     return {
       ratingobj: {
         colors: ['#99A9BF', '#F7BA2A', '#FF9900']
       },
-      chatVisible: false
+      chatVisible: false,
+      uid: 0,
+      uname: "unamed",
+      uicon: "null"
     }
   },
   methods: {
@@ -60,17 +64,24 @@ export default {
       this.chatVisible = true;
     },
     toOthers() {
+      if (this.uid === this.ownerid) {
+        this.$router.push({name: "selfpage"})
+      } else {
+        this.$router.push({name: "otherpage", params: {id: this.ownerid}})
+      }
+    },
+    getMyInfo() {
       axios.get(store.state.database + 'user/userInfo').then(response => {
         if (response.status === 200) {
-          if(response.data.uid === this.ownerid){
-            this.$router.push({name: "selfpage"})
-          }else{
-            this.$router.push({name: "otherpage", params: {id: this.ownerid}})
-          }
+          this.uid = response.data.uid;
+          this.uname = response.data.nickName;
+          this.uicon = response.data.icon;
         }
       });
-
     }
+  },
+  mounted() {
+    this.getMyInfo();
   }
 }
 </script>

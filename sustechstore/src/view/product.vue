@@ -31,7 +31,8 @@
         <el-row>
           <userinfo :rating="rating"
                     :ownerid="good.ownerId"
-                    :icon="good.icon">
+                    :icon="good.icon"
+                    :ownernickname="good.nickName">
             <template v-slot:owner>
               {{ good.nickName }}
             </template>
