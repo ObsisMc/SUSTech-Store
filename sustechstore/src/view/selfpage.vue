@@ -560,6 +560,10 @@ export default {
           });
         }
       }
+      if (to.price==null||to.name==null ||to.images===''||to.categoryleveloneId==null){
+        this.$message.error('Please input all the information !')
+      }
+      else {
       axios.post(store.state.database + "/product/add",to,config).then((response) => {
         console.log(response);
         if (response.data) {
@@ -571,7 +575,7 @@ export default {
           this.$message.error("ERROR !");
         }
 
-      });
+      });}
     },
     Buy(){
       axios.defaults.headers.common["satoken"] = store.state.token;
@@ -600,6 +604,10 @@ export default {
           });
         }
       }
+     if (to.price==null||to.name==null ||to.images===''||to.categoryleveloneId==null){
+       this.$message.error('Please input all the information')
+     }
+     else {
       axios.post(store.state.database + "/product/add",to, config).then((response) => {
         console.log(response);
         if (response.data) {
@@ -611,9 +619,10 @@ export default {
           this.$message.error("ERROR !");
         }
 
-      });
+      });}
     },
     Pao(){
+
       axios.defaults.headers.common["satoken"] = store.state.token;
       let to ={
         buyerId:0,
@@ -635,6 +644,9 @@ export default {
       if (this.formPao.price>this.money){
         this.$message.error('Do not have enough money!')
       }
+      else if (to.name===''||to.price===0 ||to.origin===''){
+        this.$message.error('Please input all the rows!')
+      }
      else {
         var config = {
           onUploadProgress: progressEvent => {
@@ -642,7 +654,6 @@ export default {
             this.progress = complete
             this.$message({
               message: complete
-
             });
           }
         }
