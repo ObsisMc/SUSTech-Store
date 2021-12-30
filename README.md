@@ -1,9 +1,11 @@
-# sustechstore
+# 2021 SUSTech store
 
-> A Vue.js project
+This repo is the **front end** of our OOAD project, SUSTech store, in 2021 autumn in SUSTech. **Back-end repo** please visit https://github.com/Evens1sen/CS309_SUSTech_Store_Backend.
+Online demo is http://120.76.174.231:8080/.
+
 
 ## Build Setup
-
+### Fundamental setup
 ``` bash
 # install dependencies
 npm install
@@ -29,7 +31,7 @@ npm test
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
-## Necessary requirement
+### Necessary requirement
 
 ```bash
 # particles effect
