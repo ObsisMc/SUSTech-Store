@@ -1,11 +1,32 @@
 # 2021 SUSTech store
 
-This repo is the **front end** of our OOAD project, SUSTech store, in 2021 autumn in SUSTech. **Back-end repo** please visit https://github.com/Evens1sen/CS309_SUSTech_Store_Backend.
+This repo is the **front end** of our OOAD project, SUSTech store, in 2021 autumn in SUSTech. **Back-end repo** please visit [CS309-SUSTech-Store-Backend](https://github.com/Evens1sen/CS309_SUSTech_Store_Backend).
+
+| Teammates              | Contributions                                               |
+| ---------------------- | ----------------------------------------------------------- |
+| Ruihao Zhang (ObsisMc) | Team Leader; UI Design; Main Pages; Trading & Errand System |
+| Zichen Xu (0d00)       | Chat System; User Profile Pages; Product & Errand System    |
+| Jiewen Liu (ak-maker)  | Login & Product Pages; Routing                              |
+
+
+
+## Simple Demo
+
+https://user-images.githubusercontent.com/71996633/210502563-641b1b88-2392-493e-a207-5d21c39acbd7.mp4
+
 
 
 ## Build Setup
-### Fundamental setup
+### Back End
+Please see [CS309-SUSTech-Store-Backend](https://github.com/Evens1sen/CS309_SUSTech_Store_Backend).
+### Front End
+Pay attention: modify `store.state.database` in `sustechstore/src/store/store.js` to set url of your back end
+
+#### Fundamental setup
 ``` bash
+# get into project root directory
+cd ./sustechstore
+
 # install dependencies
 npm install
 
@@ -30,7 +51,7 @@ npm test
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
-### Necessary requirement
+#### Necessary requirement
 
 ```bash
 # particles effect
